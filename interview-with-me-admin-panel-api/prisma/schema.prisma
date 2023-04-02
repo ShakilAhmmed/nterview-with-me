@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id         Int      @id @default(autoincrement())
+  firstName  String   @map("first_name") @db.VarChar(50)
+  lastName   String?  @map("last_name") @db.VarChar(50)
+  email      String   @unique @db.VarChar(50)
+  password   String   @db.VarChar(255)
+  totpSecret String?  @map("totp_secret") @db.VarChar(16)
+  lastLogin  String?  @map("last_login") @db.VarChar(50)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  Course     Course[]
+
+  @@map("admin_users")
+}
+
+model CourseCategory {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(50)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Course    Course[]
+
+  @@map("course_categories")
+}
+
+model Course {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(191)
+  status     Boolean  @default(false)
+  categoryId Int      @map("course_category_id")
+  createdBy  Int      @map("created_by")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  createdByUser     AdminUser               @relation(fields: [createdBy], references: [id])
+  courseCategory    CourseCategory?         @relation(fields: [categoryId], references: [id])
+  contentCategories CourseContentCategory[]
+  CourseContent     CourseContent[]
+  CourseQuestion    CourseQuestion[]
+
+  @@map("courses")
+}
+
+model CourseContentCategory {
+  id                   Int    @id @default(autoincrement())
+  courseId             Int    @map("course_id")
+  contentCategoryTitle String @map("content_category_title")
+
+  course         Course?          @relation(fields: [courseId], references: [id])
+  courseContent  CourseContent[]
+  CourseQuestion CourseQuestion[]
+
+  @@map("course_content_categories")
+}
+
+model CourseContent {
+  id                Int    @id @default(autoincrement())
+  courseId          Int    @map("course_id")
+  contentCategoryId Int    @map("content_category_id")
+  contentTitle      String @map("content_title") @db.VarChar(255)
+  content           String @db.Text()
+
+  course          Course?                @relation(fields: [courseId], references: [id])
+  contentCategory CourseContentCategory? @relation(fields: [contentCategoryId], references: [id])
+
+  @@map("course_contents")
+}
+
+model CourseQuestion {
+  id                Int    @id @default(autoincrement())
+  courseId          Int    @map("course_id")
+  contentCategoryId Int    @map("content_category_id")
+  question          String @map("question") @db.Text()
+  choiceOne         String @map("choice_one") @db.Text()
+  choiceTwo         String @map("choice_two") @db.Text()
+  choiceThree       String @map("choice_three") @db.Text()
+  choiceFour        String @map("choice_four") @db.Text()
+  correntChoice     String @map("correct_choice") @db.Text()
+
+  course          Course?                @relation(fields: [courseId], references: [id])
+  contentCategory CourseContentCategory? @relation(fields: [contentCategoryId], references: [id])
+
+  @@map("course_questions")
+}

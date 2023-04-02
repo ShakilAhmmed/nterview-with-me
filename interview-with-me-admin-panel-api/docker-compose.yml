@@ -1,0 +1,53 @@
+version: '3.7'
+services:
+  interview-with-me-application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+    container_name: interview-with-me-application
+    expose:
+      - ${PORT}
+    ports:
+      - "${PORT}:${PORT}"
+    networks:
+      - interview-with-me-network
+    depends_on:
+      - interview-with-me-database
+      - interview-with-me-phpmyadmin
+  interview-with-me-database:
+    image: mysql:8.0.13
+    container_name: interview-with-me-database
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - interview-with-me-network
+  interview-with-me-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: interview-with-me-phpmyadmin
+    restart: unless-stopped
+    tty: true
+    depends_on:
+      - interview-with-me-database
+    ports:
+      - "${PMA_PORT}:80"
+    environment:
+      PMA_HOST: interview-with-me-database
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      UPLOAD_LIMIT: 2048M
+    networks:
+      - interview-with-me-network
+
+networks:
+  interview-with-me-network:
+    driver: bridge
