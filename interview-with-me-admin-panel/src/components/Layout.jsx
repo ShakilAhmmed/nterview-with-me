@@ -4,6 +4,7 @@ import RightBar from "./layouts/RightBar";
 import Footer from "./layouts/Footer";
 import Home from "./pages/Home";
 import {Route, Routes} from "react-router-dom";
+import PrivateComponent from "./PrivateComponent";
 
 const Layout = () => {
     return (
@@ -15,7 +16,11 @@ const Layout = () => {
                     <div className="page-content-tab">
                         <div className="container-fluid">
                             <Routes>
-                                <Route path="/" element={<Home/>}/>
+                                <Route path="/home" element={
+                                    <PrivateComponent>
+                                        <Home/>
+                                    </PrivateComponent>
+                                }/>
                             </Routes>
                         </div>
                         <RightBar/>

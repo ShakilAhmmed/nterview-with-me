@@ -1,7 +1,17 @@
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {logout} from "../../slices/authSlice";
 
 const TopBar = () => {
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/', {replace: true})
+    }
 
     return (
         <>
@@ -128,7 +138,7 @@ const TopBar = () => {
                                 <a className="dropdown-item" href="#"><i
                                     className="ti ti-settings font-16 me-1 align-text-bottom"/> Settings</a>
                                 <div className="dropdown-divider mb-0"/>
-                                <a className="dropdown-item" href="#"><i
+                                <a onClick={handleLogout} className="dropdown-item" href="#"><i
                                     className="ti ti-power font-16 me-1 align-text-bottom"/> Logout</a>
                             </div>
                         </li>
