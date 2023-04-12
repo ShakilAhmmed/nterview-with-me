@@ -30,7 +30,7 @@ application.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 application.use(logger('dev'));
 application.use(httpLoggerService);
 application.use(express.json());
-application.use(express.urlencoded({extended: false}));
+application.use(express.urlencoded({extended: true}));
 application.use(cookieParser());
 application.use(cors());
 application.use('/api/v1', router);
