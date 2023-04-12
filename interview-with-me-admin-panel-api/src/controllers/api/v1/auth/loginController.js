@@ -55,7 +55,7 @@ const register = async (request, response) => {
     try {
         const errors = validationResult(request);
         if (!errors.isEmpty()) {
-            response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
+            return response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
         }
         let {first_name, last_name, email, password} = request.body;
         let encryptPassword = await bcrypt.hash(password, 10);

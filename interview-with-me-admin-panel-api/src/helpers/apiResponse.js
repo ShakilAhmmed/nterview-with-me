@@ -1,8 +1,9 @@
-export const success = (data = [], message = '', code = 200) => {
+export const success = (data = [], message = '', code = 200, meta = {}) => {
     return {
+        meta,
         data,
         message,
-        code
+        code,
     };
 };
 
