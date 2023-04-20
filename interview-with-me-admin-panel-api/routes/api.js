@@ -25,11 +25,11 @@ router.put('/course-categories/:id', courseCategoryUpdateRequestValidate(), cour
 router.delete('/course-categories/:id', courseCategoryController.destroy);
 
 //course
-router.get('/course', courseController.index);
-router.post('/course', courseRequestValidate(), courseController.store);
-router.get('/course/:id', courseController.show);
-router.put('/course/:id', courseUpdateRequestValidate(), courseController.update);
-router.delete('/course/:id', courseController.destroy);
+router.get('/courses', courseController.index);
+router.post('/courses', courseRequestValidate(), courseController.store);
+router.get('/courses/:id', courseController.show);
+router.put('/courses/:id', courseUpdateRequestValidate(), courseController.update);
+router.delete('/courses/:id', courseController.destroy);
 
 
 export default router;
