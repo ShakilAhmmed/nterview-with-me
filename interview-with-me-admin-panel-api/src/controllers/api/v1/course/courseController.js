@@ -13,7 +13,7 @@ import {validationResult} from "express-validator";
 const index = async (request, response) => {
     try {
         const {offset, limit} = getLimitOffset(request);
-        const course = await prisma.Course.findMany({
+        const course = await prisma.course.findMany({
             skip : offset,
             take: limit
         });
@@ -36,7 +36,7 @@ const store = async (request, response) => {
         }
         let {name, status,} = request.body;
 
-        const course = await prisma.Course.create({
+        const course = await prisma.course.create({
             data: {
                 name,
                 status,
@@ -59,7 +59,7 @@ const store = async (request, response) => {
 const show = async (request, response) => {
     try {
         const id = parseInt(request.params.id) || 0;
-        const course = await prisma.Course.findUnique({
+        const course = await prisma.course.findUnique({
             where: {
                 id: id
             }
@@ -79,7 +79,7 @@ const update = async (request, response) => {
         }
         const id = parseInt(request.params.id) || 0;
         let {name, status} = request.body;
-        const course = await prisma.Course.update({
+        const course = await prisma.course.update({
             where: {
                 id: id
             },
@@ -105,13 +105,13 @@ const update = async (request, response) => {
 const destroy = async (request, response) => {
     try {
         const id = parseInt(request.params.id) || 0;
-        const course = await prisma.Course.findUnique({
+        const course = await prisma.course.findUnique({
             where: {
                 id: id
             }
         });
         if (course) {
-            const course = await prisma.Course.delete({
+            const course = await prisma.course.delete({
                 where: {
                     id: id
                 }
