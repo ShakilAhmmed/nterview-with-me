@@ -10,8 +10,107 @@ import {
 import logger from "../../../../services/logger/loggerService";
 import {validationResult} from "express-validator";
 
-const index = {}
-const store = {}
-const update = {}
-const show = {}
-const destroy = {}
+const index = async (request, response) => {
+    try {
+        const {offset, limit} = getLimitOffset(request);
+        const course = await prisma.CourseContentCategory.findMany({
+            skip: offset,
+            take: limit
+        });
+        return response.status(HTTP_OK).send(success(course,
+            'Course Content Category fetched successfully',
+            HTTP_OK,
+            getResponseMeta(request)
+        ));
+    } catch (exception) {
+        logger.error(`courses fetching : ${exception.message} `);
+        return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));
+    }
+}
+const store = async (request, response) => {
+    try {
+        const errors = validationResult(request);
+        if (!errors.isEmpty()) {
+            return response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
+        }
+        let {content_category_title, course_id} = request.body;
+
+        const courseContentCategory = await prisma.courseContentCategory.create({
+            data: {
+                contentCategoryTitle: content_category_title,
+                course: {
+                    connect: {id: course_id}
+                }
+            }
+        })
+        logger.info('create course content category');
+        return response.status(HTTP_OK).send(success(courseContentCategory, 'course content category created successfully', HTTP_CREATED));
+    } catch (exception) {
+        logger.error(`create course content category: ${exception.message} `);
+        return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));
+    }
+}
+
+const show = async (request, response) => {
+    try {
+        const id = parseInt(request.params.id) || 0;
+        const courseContentCategory = await prisma.courseContentCategory.findUnique({
+            where: {
+                id: id
+            }
+        })
+        return response.status(HTTP_OK).send(success(courseContentCategory, 'course content category fetched successfully', HTTP_OK));
+    } catch (exception) {
+        logger.error(`course content category fetching : ${exception.message} `);
+        return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));
+    }
+}
+const update = async (request, response) => {
+    try {
+        const errors = validationResult(request);
+        if (!errors.isEmpty()) {
+            return response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
+        }
+        const id = parseInt(request.params.id) || 0;
+        let {content_category_title, course_id} = request.body;
+        const courseContentCategory = await prisma.courseContentCategory.update({
+            where: {
+                id: id
+            },
+            data: {
+                contentCategoryTitle: content_category_title,
+                course: {
+                    connect: {id: course_id}
+                }
+            }
+        })
+        logger.info('update course content category');
+        return response.status(HTTP_OK).send(success(courseContentCategory, 'course content category update successfully', HTTP_CREATED));
+    } catch (exception) {
+        logger.error(`update course content category: ${exception.message} `);
+        return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));
+    }
+}
+const destroy = async (request, response) => {
+    try {
+        const id = parseInt(request.params.id) || 0;
+        const courseContentCategory = await prisma.courseContentCategory.findUnique({
+            where: {
+                id: id
+            }
+        });
+        if (courseContentCategory) {
+            const courseContentCategory = await prisma.courseContentCategory.delete({
+                where: {
+                    id: id
+                }
+            });
+        }
+        return response.status(HTTP_OK).send(success([], 'course content category deleted successfully', HTTP_OK));
+    } catch (exception) {
+        logger.error(`course content category deleting : ${exception.message} `);
+        return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));
+    }
+}
+
+export {index, store, show, update, destroy}
