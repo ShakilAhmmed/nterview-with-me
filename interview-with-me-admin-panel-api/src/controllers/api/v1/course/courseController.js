@@ -34,14 +34,14 @@ const store = async (request, response) => {
         if (!errors.isEmpty()){
             return response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
         }
-        let {name, status,} = request.body;
+        let {name, status,course_category_id} = request.body;
 
         const course = await prisma.course.create({
             data: {
                 name,
                 status,
                 courseCategory : {
-                    connect: { id : 1 }
+                    connect: { id : course_category_id }
                 },
                 createdByUser : {
                     connect: { id: 1}
