@@ -100,31 +100,31 @@ router.put('/course-progress/:id', courseProgressRequestValidate(), courseProgre
 router.delete('/course-progress/:id', courseProgressController.destroy);
 
 //quiz
-router.get('/quiz', quizController.index);
-router.get('/quiz', quizRequestValidate(), quizController.store);
-router.get('/quiz/:id', quizController.show);
-router.get('/quiz/:id', quizRequestUpdateValidate(), quizController.update);
-router.get('/quiz/:id', quizController.destroy);
+router.get('/quizs', quizController.index);
+router.post('/quizs', quizRequestValidate(), quizController.store);
+router.get('/quizs/:id', quizController.show);
+router.put('/quizs/:id', quizRequestUpdateValidate(), quizController.update);
+router.delete('/quizs/:id', quizController.destroy);
 
 //quizQuestion
-router.get('/quiz-question', quizQuestionController.index);
-router.get('/quiz-question', quizQuestionRequestValidate(), quizQuestionController.store);
-router.get('/quiz-question/:id', quizQuestionController.show);
-router.get('/quiz-question/:id', quizQuestionRequestValidate(), quizQuestionController.update);
-router.get('/quiz-question/:id', quizQuestionController.destroy);
+router.get('/quiz-questions', quizQuestionController.index);
+router.post('/quiz-questions', quizQuestionRequestValidate(), quizQuestionController.store);
+router.get('/quiz-questions/:id', quizQuestionController.show);
+router.put('/quiz-questions/:id', quizQuestionRequestValidate(), quizQuestionController.update);
+router.delete('/quiz-questions/:id', quizQuestionController.destroy);
 
 //quizParticipators
-router.get('/quiz-participator', quizQuestionController.index);
-router.get('/quiz-participator', quizParticipatorRequestValidate(), quizQuestionController.store);
-router.get('/quiz-participator/:id', quizQuestionController.show);
-router.get('/quiz-participator/:id', quizParticipatorRequestValidate(), quizQuestionController.update);
-router.get('/quiz-participator/:id', quizQuestionController.destroy);
+router.get('/quiz-participators', quizParticipatorsController.index);
+router.post('/quiz-participators', quizParticipatorRequestValidate(), quizParticipatorsController.store);
+router.get('/quiz-participators/:id', quizParticipatorsController.show);
+router.put('/quiz-participators/:id', quizParticipatorRequestValidate(), quizParticipatorsController.update);
+router.delete('/quiz-participators/:id', quizParticipatorsController.destroy);
 
 //participatorProgress
 router.get('/participator-progress', participatorProgressController.index);
-router.get('/participator-progress', participatorProgressRequestValidate(), participatorProgressController.store);
+router.post('/participator-progress', participatorProgressRequestValidate(), participatorProgressController.store);
 router.get('/participator-progress/:id', participatorProgressController.show);
-router.get('/participator-progress/:id', participatorProgressRequestValidate(), participatorProgressController.update);
-router.get('/participator-progress/:id', participatorProgressController.destroy);
+router.put('/participator-progress/:id', participatorProgressRequestValidate(), participatorProgressController.update);
+router.delete('/participator-progress/:id', participatorProgressController.destroy);
 
 export default router;
