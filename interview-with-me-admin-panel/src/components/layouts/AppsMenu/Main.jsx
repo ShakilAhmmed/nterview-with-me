@@ -15,7 +15,7 @@ const Main = () => {
                         </li> */}
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/add-articles">Add Articles</Link>
+                            <Link className="nav-link" to="/course-categories">Course Categories</Link>
                         </li>
 
                         <li className="nav-item">

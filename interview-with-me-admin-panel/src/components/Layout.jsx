@@ -5,6 +5,7 @@ import Footer from "./layouts/Footer";
 import Home from "./pages/Home";
 import {Route, Routes} from "react-router-dom";
 import PrivateComponent from "./PrivateComponent";
+import CourseCategory from "./pages/Domain/courseCategory/courseCategory"
 
 const Layout = () => {
     return (
@@ -21,6 +22,7 @@ const Layout = () => {
                                         <Home/>
                                     </PrivateComponent>
                                 }/>
+                                <Route path="/course-categories" element={<CourseCategory />} />s
                             </Routes>
                         </div>
                         <RightBar/>
