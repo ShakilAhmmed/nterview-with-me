@@ -62,12 +62,12 @@ const LeftBarTab = () => {
                     {/*end /div*/}
                 </div>
                 {/*end main-icon-menu-body*/}
-                <div className="pro-metrica-end">
-                    <a href="#" className="profile">
-                        <img src="assets/images/users/user-4.jpg" alt="profile-user"
-                             className="rounded-circle thumb-sm"/>
-                    </a>
-                </div>
+                {/*<div className="pro-metrica-end">*/}
+                {/*    <a href="#" className="profile">*/}
+                {/*        <img src="assets/images/users/user-4.jpg" alt="profile-user"*/}
+                {/*             className="rounded-circle thumb-sm"/>*/}
+                {/*    </a>*/}
+                {/*</div>*/}
                 {/*end pro-metrica-end*/}
             </div>
             {/*end main-icon-menu*/}
@@ -75,16 +75,17 @@ const LeftBarTab = () => {
                 {/* LOGO */}
                 <div className="topbar-left">
                     <a href="/" className="logo">
-          <span>
-            <img src="assets/images/document.webp" style={{height: '55px'}} alt="logo-large"
-                 className="logo-lg logo-dark"/>
-             <span style={{
-                 fontSize: '14px', fontWeight: 'bold', color: '#4d86b7'
-             }}></span>
-            <img src="assets/images/logo.png" alt="logo-large" className="logo-lg logo-light"/>
-          </span>
-                    </a>{/*end logo*/}
+                          <span>
+                            <img src="assets/images/document.webp" style={{height: '55px'}} alt="logo-large"
+                                 className="logo-lg logo-dark"/>
+                             <span style={{
+                                 fontSize: '14px', fontWeight: 'bold', color: '#4d86b7'
+                             }}></span>
+                            <img src="assets/images/logo.png" alt="logo-large" className="logo-lg logo-light"/>
+                          </span>
+                    </a>
                 </div>
+                {/*end logo*/}
                 {mainMenu && (<Main/>)}
             </div>
             {/* end main-menu-inner*/}

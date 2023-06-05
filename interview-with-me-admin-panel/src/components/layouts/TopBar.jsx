@@ -123,8 +123,8 @@ const TopBar = () => {
                             <a className="nav-link dropdown-toggle nav-user" data-bs-toggle="dropdown" href="#"
                                role="button" aria-haspopup="false" aria-expanded="false">
                                 <div className="d-flex align-items-center">
-                                    <img src="assets/images/users/user-4.jpg" alt="profile-user"
-                                         className="rounded-circle me-2 thumb-sm"/>
+                                    {/*<img src="assets/images/users/user-4.jpg" alt="profile-user"*/}
+                                    {/*     className="rounded-circle me-2 thumb-sm"/>*/}
                                     <div>
                                         <small className="d-none d-md-block font-11">Admin</small>
                                         <span className="d-none d-md-block fw-semibold font-12">Maria Gibson <i

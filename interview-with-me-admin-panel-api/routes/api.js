@@ -13,6 +13,8 @@ import * as quizQuestionController from "../src/controllers/api/v1/quizQuestion/
 import * as quizParticipatorsController from "../src/controllers/api/v1/quizParticipators/quizParticipatorsController";
 import * as participatorProgressController from "../src/controllers/api/v1/participatorProgress/participatorProgressController";
 
+import * as commonApiController from "../src/controllers/api/v1/commonAPI/commonAPIController";
+
 import loginRequestValidate from "../src/formRequests/v1/auth/loginRequest";
 import registerRequest from "../src/formRequests/v1/auth/registerRequest";
 import courseCategoryRequestValidate from "../src/formRequests/v1/courseCategory/courseCategoryRequestValidate";
@@ -126,5 +128,12 @@ router.post('/participator-progress', participatorProgressRequestValidate(), par
 router.get('/participator-progress/:id', participatorProgressController.show);
 router.put('/participator-progress/:id', participatorProgressRequestValidate(), participatorProgressController.update);
 router.delete('/participator-progress/:id', participatorProgressController.destroy);
+
+//common api
+router.get('/fetch-course-category', commonApiController.courseCategory);
+router.get('/fetch-courses', commonApiController.course);
+router.get('/fetch-course-content-category', commonApiController.courseContentCategory);
+router.get('/fetch-course-questions', commonApiController.courseQuestion);
+router.get('/fetch-quizs', commonApiController.quiz);
 
 export default router;

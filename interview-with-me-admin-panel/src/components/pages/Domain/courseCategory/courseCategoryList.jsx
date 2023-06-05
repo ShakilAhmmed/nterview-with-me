@@ -23,7 +23,7 @@ const courseCategoryList = (props) => {
                               return (<tr key={index}>
                                   <td>{ index + 1 }</td>
                                   <td>{ category.name }</td>
-                                  <td>{ category.status == 1 ? 'Active' : 'In Active' } </td>
+                                  <td>{ category.status === 1 ? 'Active' : 'In Active' } </td>
                                   <td className="text-end">
                                       <button onClick={() => editCategory(category.id)} className="btn btn-de-dashed-info">
                                           <i className="fa fa-edit"></i>

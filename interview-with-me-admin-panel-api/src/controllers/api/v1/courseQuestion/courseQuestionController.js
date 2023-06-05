@@ -15,7 +15,11 @@ const index = async (request, response) => {
         const {offset, limit} = getLimitOffset(request);
         const courseQuestion = await prisma.courseQuestion.findMany({
             skip: offset,
-            take: limit
+            take: limit,
+            include: {
+                course: true,
+                contentCategory: true
+            }
         });
         return response.status(HTTP_OK).send(success(courseQuestion,
             'course question fetched successfully',
@@ -47,10 +51,10 @@ const store = async (request,response) => {
         const courseQuestion = await prisma.courseQuestion.create({
             data : {
                 course : {
-                    connect : {id : course_id}
+                    connect : {id : parseInt(course_id)}
                 },
                 contentCategory : {
-                    connect : {id : content_category_id}
+                    connect : {id : parseInt(content_category_id)}
                 },
                 question : question,
                 choiceOne : choice_one,
