@@ -10,7 +10,7 @@ export default function Course() {
     <>
       <Header />
       <Offcanvas />
-      <PageBannerStart />
+      <PageBannerStart name="Courses" />
       <CourseList />
       <Footer />
     </>

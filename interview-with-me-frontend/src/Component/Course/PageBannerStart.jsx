@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PageBannerStart() {
+export default function PageBannerStart(props) {
     return (
         <>
             <div className="section page-banner-section bg-color-1">
@@ -11,11 +11,7 @@ export default function PageBannerStart() {
                 <img className="shape-5" src="assets/images/shape/shape-21.png" alt="shape" />
                 <div className="container">
                     <div className="page-banner-content">
-                        <h2 className="title">Course List</h2>
-                        <ul className="breadcrumb justify-content-center">
-                            <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li className="breadcrumb-item active">Course</li>
-                        </ul>
+                        <h2 className="title">{props.name}</h2>
                     </div>
                 </div>
             </div>

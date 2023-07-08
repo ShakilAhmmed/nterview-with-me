@@ -9,7 +9,7 @@ export default function CourseDetails() {
         <>
             <Header />
             <Offcanvas />
-            <PageBannerStart />
+            <PageBannerStart  />
             <div className="section section-padding">
                 <div className="container">
 

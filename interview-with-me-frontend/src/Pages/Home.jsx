@@ -20,7 +20,7 @@ export default function Home() {
             <Header />
             <Offcanvas />
             <Slider />
-            <Counter />
+            {/*<Counter />*/}
             <Course />
             <Category />
             <Testimonial />

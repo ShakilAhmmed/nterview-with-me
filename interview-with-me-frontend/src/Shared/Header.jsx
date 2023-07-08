@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import {useSelector} from "react-redux";
 
 
 export default function Header() {
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     return (
         <>
             <div id="header" className="header section">
@@ -45,18 +47,21 @@ export default function Header() {
                                 </form>
                             </div>
 
+                            {!isLoggedIn ?
                             <div className="header-login d-none d-lg-flex">
-                                <a className="link" href="login-register.html"><i className="fa fa-user-o"></i> Login</a>
-                                <a className="link" href="login-register.html">Register</a>
-                            </div>
+                                <Link to="/login"><i className="fa fa-user-o"></i> Login/</Link>
+                                <Link to="/register">Register</Link>
+                            </div> :
+                                <div className="header-toggle d-lg-none">
+                                    <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </button>
+                                </div>
+                            }
 
-                            <div className="header-toggle d-lg-none">
-                                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </button>
-                            </div>
+
 
                         </div>
                         {/* Header Meta End */}

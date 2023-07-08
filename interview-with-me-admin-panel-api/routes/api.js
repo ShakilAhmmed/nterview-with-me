@@ -14,6 +14,7 @@ import * as quizParticipatorsController from "../src/controllers/api/v1/quizPart
 import * as participatorProgressController from "../src/controllers/api/v1/participatorProgress/participatorProgressController";
 
 import * as commonApiController from "../src/controllers/api/v1/commonAPI/commonAPIController";
+import * as frontendApiController from "../src/controllers/api/v1/frontend/frontendApiController";
 
 import loginRequestValidate from "../src/formRequests/v1/auth/loginRequest";
 import registerRequest from "../src/formRequests/v1/auth/registerRequest";
@@ -40,6 +41,7 @@ import quizQuestionRequestValidate from "../src/formRequests/v1/quizQuestion/qui
 import quizParticipatorRequestValidate from "../src/formRequests/v1/quizParticipators/quizParticipatorRequestValidate";
 import participatorProgressRequestValidate
     from "../src/formRequests/v1/participatorProgress/participatorProgressRequestValidate";
+import {fetchCourseContent} from "../src/controllers/api/v1/frontend/frontendApiController";
 
 
 const router = Router();
@@ -135,5 +137,7 @@ router.get('/fetch-courses', commonApiController.course);
 router.get('/fetch-course-content-category', commonApiController.courseContentCategory);
 router.get('/fetch-course-questions', commonApiController.courseQuestion);
 router.get('/fetch-quizs', commonApiController.quiz);
+
+router.get('/frontend/fetch-course-content-category', frontendApiController.fetchCourseContent);
 
 export default router;

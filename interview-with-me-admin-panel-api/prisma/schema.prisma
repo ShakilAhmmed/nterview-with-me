@@ -65,7 +65,7 @@ model Course {
   updatedAt  DateTime @updatedAt @map("updated_at")
 
   createdByUser     AdminUser               @relation(fields: [createdBy], references: [id])
-  courseCategory    CourseCategory?         @relation(fields: [categoryId], references: [id])
+  courseCategory    CourseCategory?         @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   contentCategories CourseContentCategory[]
   CourseContent     CourseContent[]
   CourseQuestion    CourseQuestion[]
