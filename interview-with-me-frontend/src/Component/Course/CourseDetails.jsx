@@ -1,10 +1,29 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Header from '../../Shared/Header'
 import Offcanvas from '../../Shared/Offcanvas'
 import PageBannerStart from './PageBannerStart'
 import Footer from '../../Shared/Footer'
+import axios from "axios";
+import { Link,Route,useParams } from 'react-router-dom'
 
 export default function CourseDetails() {
+    const { id } = useParams();
+    const [courseDetail, setCourseDetail] = useState([]);
+
+    const getCourseDetail = async () => {
+        try {
+            const {data:data} = await axios.get(`http://localhost:8000/api/v1/frontend/fetch-course-details/${id}`)
+            console.log(data.data,'data')
+            setCourseDetail(data.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getCourseDetail();
+    }, []);
+
     return (
         <>
             <Header />
@@ -22,22 +41,22 @@ export default function CourseDetails() {
                                 {/* <!-- Course Overview Start --> */}
                                 <div className="course-overview">
                                     <h3 className="title">Course Overview</h3>
-                                    <p>World-className training and development programs developed by top teachers. Build skills with courses, certificates, and degrees online from world-className universities and companies. from the National Research University Higher School of Economics (HSE University) is the first fully online.</p>
+                                    <p>{courseDetail.courseOverview}</p>
                                 </div>
                                 {/* <!-- Course Overview End --> */}
 
                                 {/* <!-- Course Learn List Start --> */}
-                                <div className="course-learn-list">
-                                    <h3 className="title">What you will learn</h3>
-                                    <ul>
-                                        <li>Become a UX designer.</li>
-                                        <li>Become a UX designer.</li>
-                                        <li>You will be able to add UX designer to your CV</li>
-                                        <li>You will be able to add UX designer to your CV</li>
-                                        <li>Build & test a full website design.</li>
-                                        <li>Build & test a full website design.</li>
-                                    </ul>
-                                </div>
+                                {/*<div className="course-learn-list">*/}
+                                {/*    <h3 className="title">What you will learn</h3>*/}
+                                {/*    <ul>*/}
+                                {/*        <li>Become a UX designer.</li>*/}
+                                {/*        <li>Become a UX designer.</li>*/}
+                                {/*        <li>You will be able to add UX designer to your CV</li>*/}
+                                {/*        <li>You will be able to add UX designer to your CV</li>*/}
+                                {/*        <li>Build & test a full website design.</li>*/}
+                                {/*        <li>Build & test a full website design.</li>*/}
+                                {/*    </ul>*/}
+                                {/*</div>*/}
                                 {/* <!-- Course Learn List End --> */}
 
                                 {/* <!-- Course Lessons Start --> */}
@@ -97,153 +116,51 @@ export default function CourseDetails() {
                                 </div>
                                 {/* <!-- Course Lessons End --> */}
 
-                                {/* <!-- Course Instructor Start --> */}
-                                <div className="course-instructor">
-                                    <h3 className="title">Course Instructor</h3>
+                                <div className="sidebar-details-course">
+                                    <h4 className="sidebar-details-title">Releted Courses</h4>
 
-                                    <div className="instructor-profile">
-                                        <div className="profile-images">
-                                            <img src="assets/images/author-7.jpg" alt="author" />
-                                        </div>
-                                        <div className="profile-content">
-                                            <h5 className="name">Alena Hedge</h5>
-
-                                            <div className="profile-meta">
-                                                <div className="rating">
-                                                    <div className="rating-star">
-                                                        <div className="rating-active" style={{ width: '60%;' }}></div>
-                                                    </div>
-                                                    <span>(4.5)</span>
+                                    <ul className="sidebar-details-courses">
+                                        <li>
+                                            {/* <!-- Single Course Start --> */}
+                                            <div className="sidebar-course-item">
+                                                <div className="item-image">
+                                                    <a href="course-details.html"><img src="/assets/images/courses/courses-1.jpg" alt="Courses" /></a>
                                                 </div>
-                                                <span className="meta-action"><i className="fa fa-play-circle"></i> 10 Tutorials</span>
-                                                <span className="meta-action"><i className="fa fa-user-o"></i> 134 Students</span>
+                                                <div className="item-content">
+                                                    <h3 className="title"><a href="course-details.html">Cupidatat non proident sunt culpa officia deserunt</a></h3>
+                                                    <span className="price">Price  <strong>$45</strong></span>
+                                                </div>
                                             </div>
-
-                                            <p>World-className training and development programs developed by top teachers. Build skills with courses, certificates, and degrees online from world-className universities </p>
-
-                                        </div>
-                                    </div>
+                                            {/* <!-- Single Course End --> */}
+                                        </li>
+                                        <li>
+                                            {/* <!-- Single Course Start --> */}
+                                            <div className="sidebar-course-item">
+                                                <div className="item-image">
+                                                    <a href="course-details.html"><img src="/assets/images/courses/courses-2.jpg" alt="Courses" /></a>
+                                                </div>
+                                                <div className="item-content">
+                                                    <h3 className="title"><a href="course-details.html">Cupidatat non proident sunt culpa officia deserunt</a></h3>
+                                                    <span className="price">Price  <strong>$45</strong></span>
+                                                </div>
+                                            </div>
+                                            {/* <!-- Single Course End --> */}
+                                        </li>
+                                        <li>
+                                            {/* <!-- Single Course Start --> */}
+                                            <div className="sidebar-course-item">
+                                                <div className="item-image">
+                                                    <a href="course-details.html"><img src="/assets/images/courses/courses-3.jpg" alt="Courses" /></a>
+                                                </div>
+                                                <div className="item-content">
+                                                    <h3 className="title"><a href="course-details.html">Cupidatat non proident sunt culpa officia deserunt</a></h3>
+                                                    <span className="price">Price  <strong>$45</strong></span>
+                                                </div>
+                                            </div>
+                                            {/* <!-- Single Course End --> */}
+                                        </li>
+                                    </ul>
                                 </div>
-                                {/* <!-- Course Instructor End --> */}
-
-                                {/* <!-- Course Review Start --> */}
-                                <div className="course-review">
-                                    <h3 className="title">Review</h3>
-
-                                    {/* <!-- Review Rating Start --> */}
-                                    <div className="review-rating">
-
-                                        <div className="rating-box">
-                                            <span className="count">5.0</span>
-                                            <div className="rating-star">
-                                                <div className="rating-active" style={{ width: '60%;' }}></div>
-                                            </div>
-                                            <p>Total 2 Ratings</p>
-                                        </div>
-                                        <div className="rating-percentage">
-
-                                            {/* <!-- Course Review Start --> */}
-                                            <div className="single-rating-percentage">
-                                                <span className="label">5 Star</span>
-                                                <div className="rating-line">
-                                                    <div className="line-bar" style={{ width: '90%;' }}></div>
-                                                </div>
-                                                <span className="label">90%</span>
-                                            </div>
-                                            {/* <!-- Course Review End --> */}
-
-                                            {/* <!-- Course Review Start --> */}
-                                            <div className="single-rating-percentage">
-                                                <span className="label">4 Star</span>
-                                                <div className="rating-line">
-                                                    <div className="line-bar" style={{ width: '40%;' }}></div>
-                                                </div>
-                                                <span className="label">40%</span>
-                                            </div>
-                                            {/* <!-- Course Review End --> */}
-
-                                            {/* <!-- Course Review Start --> */}
-                                            <div className="single-rating-percentage">
-                                                <span className="label">3 Star</span>
-                                                <div className="rating-line">
-                                                    <div className="line-bar" style={{ width: '20%;' }}></div>
-                                                </div>
-                                                <span className="label">20%</span>
-                                            </div>
-                                            {/* <!-- Course Review End --> */}
-
-                                            {/* <!-- Course Review Start --> */}
-                                            <div className="single-rating-percentage">
-                                                <span className="label">2 Star</span>
-                                                <div className="rating-line">
-                                                    <div className="line-bar" style={{ width: '0%;' }}></div>
-                                                </div>
-                                                <span className="label">0%</span>
-                                            </div>
-                                            {/* <!-- Course Review End --> */}
-
-                                            {/* <!-- Course Review Start --> */}
-                                            <div className="single-rating-percentage">
-                                                <span className="label">1 Star</span>
-                                                <div className="rating-line">
-                                                    <div className="line-bar" style={{ width: '10%;' }}></div>
-                                                </div>
-                                                <span className="label">10%</span>
-                                            </div>
-                                            {/* <!-- Course Review End --> */}
-
-                                        </div>
-
-                                    </div>
-                                    {/* <!-- Review Rating End --> */}
-
-                                    {/* <!-- Review Items Start --> */}
-                                    <div className="review-items">
-                                        <ul>
-                                            <li>
-                                                {/* <!-- Single Review Start --> */}
-                                                <div className="single-review">
-                                                    <div className="review-author">
-                                                        <img src="assets/images/author-1.jpg" alt="Author" />
-                                                    </div>
-                                                    <div className="review-content">
-                                                        <div className="review-top">
-                                                            <h4 className="name">David Gea</h4>
-                                                            <div className="rating-star">
-                                                                <div className="rating-active" style={{ width: '60%;' }}></div>
-                                                            </div>
-                                                            <span className="date">4 Months Ago</span>
-                                                        </div>
-                                                        <p>World-className training and development programs developed by top teachers. Build skills with courses, certificates, and degrees online from world-className.</p>
-                                                    </div>
-                                                </div>
-                                                {/* <!-- Single Review End --> */}
-                                            </li>
-                                            <li>
-                                                {/* <!-- Single Review Start --> */}
-                                                <div className="single-review">
-                                                    <div className="review-author">
-                                                        <img src="assets/images/author-3.jpg" alt="Author" />
-                                                    </div>
-                                                    <div className="review-content">
-                                                        <div className="review-top">
-                                                            <h4 className="name">David Gea</h4>
-                                                            <div className="rating-star">
-                                                                <div className="rating-active" style={{ width: '60%;' }}></div>
-                                                            </div>
-                                                            <span className="date">4 Months Ago</span>
-                                                        </div>
-                                                        <p>World-className training and development programs developed by top teachers. Build skills with courses, certificates, and degrees online from world-className.</p>
-                                                    </div>
-                                                </div>
-                                                {/* <!-- Single Review End --> */}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    {/* <!-- Review Items End --> */}
-
-                                </div>
-                                {/* <!-- Course Review End --> */}
 
                             </div>
                             {/* <!-- Course Details Wrapper End --> */}
@@ -256,16 +173,16 @@ export default function CourseDetails() {
 
                                 {/* <!-- Sidebar Details Video Description Start --> */}
                                 <div className="sidebar-details-video-description">
-                                    <div className="sidebar-video">
-                                        <img src="assets/images/sidebar-video.jpg" alt="video" />
-                                        <a href="https://youtu.be/cdZHQFCqK3g" className="play videoLightbox"><i className="fa fa-play"></i></a>
-                                    </div>
+                                    {/*<div className="sidebar-video">*/}
+                                    {/*    <img src="/assets/images/sidebar-video.jpg" alt="video" />*/}
+                                    {/*    <a href="https://youtu.be/cdZHQFCqK3g" className="play videoLightbox"><i className="fa fa-play"></i></a>*/}
+                                    {/*</div>*/}
                                     <div className="sidebar-description">
-                                        <div className="price">
-                                            <span className="sale-price">$49.99</span>
-                                            <span className="regular-price">$102</span>
-                                        </div>
-                                        <a className="btn btn-primary btn-hover-heading-color w-100" href=".">Add To Cart</a>
+                                        {/*<div className="price">*/}
+                                        {/*    <span className="sale-price">$49.99</span>*/}
+                                        {/*    <span className="regular-price">$102</span>*/}
+                                        {/*</div>*/}
+                                        {/*<a className="btn btn-primary btn-hover-heading-color w-100" href=".">Add To Cart</a>*/}
                                         <ul className="description-list">
                                             <li><i className="fa fa-clock-o"></i> Duration <span>52 mins</span></li>
                                             <li><i className="fa fa-sliders"></i> Level <span>Expert</span></li>
@@ -273,57 +190,13 @@ export default function CourseDetails() {
                                             <li><i className="fa fa-language"></i> Language <span>English</span></li>
                                             <li><i className="fa fa-user-o"></i> Enrolled <span>4 Enrolled</span></li>
                                         </ul>
-                                        <a className="btn btn-outline-primary w-100" href="."><i className="fa fa-share"></i> Share This Course</a>
+                                        {/*<a className="btn btn-outline-primary w-100" href="."><i className="fa fa-share"></i> Share This Course</a>*/}
                                     </div>
                                 </div>
                                 {/* <!-- Sidebar Details Video Description End --> */}
 
                                 {/* <!-- Sidebar Course Start --> */}
-                                <div className="sidebar-details-course">
-                                    <h4 className="sidebar-details-title">Releted Courses</h4>
 
-                                    <ul className="sidebar-details-courses">
-                                        <li>
-                                            {/* <!-- Single Course Start --> */}
-                                            <div className="sidebar-course-item">
-                                                <div className="item-image">
-                                                    <a href="course-details.html"><img src="assets/images/courses/courses-1.jpg" alt="Courses" /></a>
-                                                </div>
-                                                <div className="item-content">
-                                                    <h3 className="title"><a href="course-details.html">Cupidatat non proident sunt culpa officia deserunt</a></h3>
-                                                    <span className="price">Price  <strong>$45</strong></span>
-                                                </div>
-                                            </div>
-                                            {/* <!-- Single Course End --> */}
-                                        </li>
-                                        <li>
-                                            {/* <!-- Single Course Start --> */}
-                                            <div className="sidebar-course-item">
-                                                <div className="item-image">
-                                                    <a href="course-details.html"><img src="assets/images/courses/courses-2.jpg" alt="Courses" /></a>
-                                                </div>
-                                                <div className="item-content">
-                                                    <h3 className="title"><a href="course-details.html">Cupidatat non proident sunt culpa officia deserunt</a></h3>
-                                                    <span className="price">Price  <strong>$45</strong></span>
-                                                </div>
-                                            </div>
-                                            {/* <!-- Single Course End --> */}
-                                        </li>
-                                        <li>
-                                            {/* <!-- Single Course Start --> */}
-                                            <div className="sidebar-course-item">
-                                                <div className="item-image">
-                                                    <a href="course-details.html"><img src="assets/images/courses/courses-3.jpg" alt="Courses" /></a>
-                                                </div>
-                                                <div className="item-content">
-                                                    <h3 className="title"><a href="course-details.html">Cupidatat non proident sunt culpa officia deserunt</a></h3>
-                                                    <span className="price">Price  <strong>$45</strong></span>
-                                                </div>
-                                            </div>
-                                            {/* <!-- Single Course End --> */}
-                                        </li>
-                                    </ul>
-                                </div>
                                 {/* <!-- Sidebar Course End --> */}
 
                             </div>

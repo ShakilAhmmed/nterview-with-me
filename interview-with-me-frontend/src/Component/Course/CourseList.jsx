@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
-import { Link } from 'react-router-dom'
+import { Link,Route,useParams } from 'react-router-dom'
 
 export default function CourseList() {
     const [courseCategories, setCourseCategories] = useState([]);
+    const [courses, setCourses] = useState([]);
     const getCourseCategories = async () => {
         try {
             const {data:data} = await axios.get(`http://localhost:8000/api/v1/fetch-course-category`)
@@ -13,8 +14,18 @@ export default function CourseList() {
         }
     }
 
+    const getCourses = async () => {
+        try {
+            const {data:data} = await axios.get(`http://localhost:8000/api/v1/frontend/fetch-course`)
+            setCourses(data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getCourseCategories();
+        getCourses();
     }, []);
     return (
         <>
@@ -58,28 +69,19 @@ export default function CourseList() {
                                         <div className="course-list-items">
 
                                             {/* <!-- Course List Start --> */}
-                                            <div className="single-course-list">
+                                            {courses.map((course) =>
+                                            <div className="single-course-list" key={course.id}>
                                                 {/*<div className="course-image">*/}
                                                 {/*    <a href="course-details.html"><img src="assets/images/courses/courses-5.jpg" alt="Courses" /></a>*/}
                                                 {/*</div>*/}
                                                 <div className="course-content">
-                                                    <h3 className="title"><Link to="/course-details">Design 101: Product & Web Design Course</Link></h3>
-                                                    <span className="author-name">Andrew paker</span>
-
-                                                    <p>Managing a popular open source project can be daunting at first. How do we maintain all these issues, or automatically trigger</p>
-
-                                                    <div className="bottom-meta">
-                                                        <p className="meta-action"><i className="fa fa-clock-o"></i> Student</p>
-                                                        <p className="meta-action"><i className="fa fa-signal"></i> Student</p>
-                                                        <div className="rating">
-                                                            <div className="rating-star">
-                                                                <div className="rating-active" style={{ width: '60%;' }}></div>
-                                                            </div>
-                                                            <span>(4.5)</span>
-                                                        </div>
-                                                    </div>
+                                                    <h3 className="title">
+                                                        <Link to={`/course-details/${course.id}`}>{course.name}</Link>
+                                                    </h3>
+                                                    <p>{course.shortDescription}</p>
                                                 </div>
                                             </div>
+                                            )}
                                             {/* <!-- Course List End --> */}
 
                                         </div>
@@ -99,7 +101,7 @@ export default function CourseList() {
                                         <div className="widget-checkbox">
                                             <ul className="checkbox-list">
                                                 {courseCategories.map(({id,name}, index) =>
-                                                <li className="form-check">
+                                                <li className="form-check" key={id}>
                                                     <input className="form-check-input" type="checkbox" value="" id={id} />
                                                     <label className="form-check-label" for="checkbox3">{ name }</label>
                                                 </li>

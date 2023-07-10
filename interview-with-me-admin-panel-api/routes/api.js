@@ -41,7 +41,7 @@ import quizQuestionRequestValidate from "../src/formRequests/v1/quizQuestion/qui
 import quizParticipatorRequestValidate from "../src/formRequests/v1/quizParticipators/quizParticipatorRequestValidate";
 import participatorProgressRequestValidate
     from "../src/formRequests/v1/participatorProgress/participatorProgressRequestValidate";
-import {fetchCourseContent} from "../src/controllers/api/v1/frontend/frontendApiController";
+import {fetchCourse, fetchCourseContent} from "../src/controllers/api/v1/frontend/frontendApiController";
 
 
 const router = Router();
@@ -138,6 +138,7 @@ router.get('/fetch-course-content-category', commonApiController.courseContentCa
 router.get('/fetch-course-questions', commonApiController.courseQuestion);
 router.get('/fetch-quizs', commonApiController.quiz);
 
-router.get('/frontend/fetch-course-content-category', frontendApiController.fetchCourseContent);
+router.get('/frontend/fetch-course', frontendApiController.fetchCourse);
+router.get('/frontend/fetch-course-details/:id',frontendApiController.fetchCourseDetails);
 
 export default router;

@@ -37,11 +37,13 @@ const store = async (request, response) => {
         if (!errors.isEmpty()){
             return response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
         }
-        let {name, status,course_category_id} = request.body;
+        let {name,short_description, course_overview, status,course_category_id} = request.body;
 
         const course = await prisma.course.create({
             data: {
                 name,
+                shortDescription : short_description,
+                courseOverview : course_overview,
                 status,
                 courseCategory : {
                     connect: { id : parseInt(course_category_id)}
@@ -81,16 +83,18 @@ const update = async (request, response) => {
             return response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
         }
         const id = parseInt(request.params.id) || 0;
-        let {name, status} = request.body;
+        let {name, short_description, course_overview, status,course_category_id} = request.body;
         const course = await prisma.course.update({
             where: {
                 id: id
             },
             data: {
                 name,
+                shortDescription : short_description,
+                courseOverview : course_overview,
                 status,
                 courseCategory : {
-                    connect: { id : 1 }
+                    connect: { id : parseInt(course_category_id)}
                 },
                 createdByUser : {
                     connect: { id: 1}
