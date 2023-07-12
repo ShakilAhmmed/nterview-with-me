@@ -33,6 +33,9 @@ export default function Header() {
                                 <li>
                                     <Link to="/course">Course</Link>
                                 </li>
+                                <li>
+                                    <Link to="/quiz">Quiz</Link>
+                                </li>
                             </ul>
                         </div>
                         {/* Header Menu End */}

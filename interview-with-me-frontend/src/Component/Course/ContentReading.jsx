@@ -9,11 +9,21 @@ export default function ContentReading(){
     let navigate = useNavigate();
     const {courseId,id } = useParams();
     const [courseRead, setCourseRead] = useState([]);
+    const [courseContentCategory, setCourseContentCategory] = useState([]);
 
     const getReadContent = async () => {
         try {
             const {data:data} = await axios.get(`http://localhost:8000/api/v1/frontend/fetch-reading-content/${courseId}/${id}`)
             setCourseRead(data.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getCourseContent = async () => {
+        try {
+            const {data:data} = await axios.get(`http://localhost:8000/api/v1/frontend/fetch-course-contents/${courseId}`)
+            setCourseContentCategory(data.data);
         } catch (error) {
             console.log(error)
         }
@@ -31,8 +41,15 @@ export default function ContentReading(){
         window.location.reload();
     }
 
+    function contentRead(content){
+        let path = `/course-content-reading/${content.courseId}/${content.id}`;
+        navigate(path);
+        window.location.reload();
+    }
+
     useEffect(() => {
         getReadContent();
+        getCourseContent();
     }, []);
     return (
         <>
@@ -48,16 +65,28 @@ export default function ContentReading(){
                         <div className="row">
                             <div className="col-lg-3">
                                 {/* <!-- Sidebar Wrapper Start --> */}
-                                <div className="sidebar-wrap-02">
+                                <div >
 
                                     {/* <!-- Sidebar Wrapper Start --> */}
-                                    <div className="sidebar-widget-02">
-                                        <h3 className="widget-title">Categories</h3>
+                                    <div>
+                                        <h3 className="widget-title">Contents</h3>
 
-                                        <div className="widget-checkbox">
-                                            <ul className="checkbox-list">
+                                        <div className="course-accordion accordion" id="accordionCourse">
+                                            {courseContentCategory.map((category) =>
+                                                <div className="accordion-item" key={category.id}>
+                                                    <button data-bs-toggle="collapse" data-bs-target="#collapseOne">{category.contentCategoryTitle} </button>
+                                                    <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionCourse">
+                                                        <div className="accordion-body">
+                                                            {category.courseContent.map((content) =>
+                                                                <ul className="lessons-list" key={content.id}>
+                                                                    <a onClick={() => contentRead(content)}> {content.contentTitle} </a>
+                                                                </ul>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
 
-                                            </ul>
                                         </div>
                                     </div>
                                     {/* <!-- Sidebar Wrapper End --> */}

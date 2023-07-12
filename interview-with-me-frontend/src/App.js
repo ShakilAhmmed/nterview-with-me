@@ -8,6 +8,7 @@ import CourseDetails from "./Component/Course/CourseDetails";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import ContentReading from "./Component/Course/ContentReading";
+import Quiz from "./Pages/Quiz";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/course-content-reading/:courseId/:id" element={<ContentReading />}/>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path='/quiz' element={<Quiz />} />
         </Routes>
     </div>
   );
