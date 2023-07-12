@@ -9,12 +9,21 @@ import { Link,Route,useParams } from 'react-router-dom'
 export default function CourseDetails() {
     const { id } = useParams();
     const [courseDetail, setCourseDetail] = useState([]);
+    const [courseContentCategory, setCourseContentCategory] = useState([]);
 
     const getCourseDetail = async () => {
         try {
             const {data:data} = await axios.get(`http://localhost:8000/api/v1/frontend/fetch-course-details/${id}`)
-            console.log(data.data,'data')
             setCourseDetail(data.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getCourseContent = async () => {
+        try {
+            const {data:data} = await axios.get(`http://localhost:8000/api/v1/frontend/fetch-course-contents/${id}`)
+            setCourseContentCategory(data.data);
         } catch (error) {
             console.log(error)
         }
@@ -22,6 +31,7 @@ export default function CourseDetails() {
 
     useEffect(() => {
         getCourseDetail();
+        getCourseContent();
     }, []);
 
     return (
@@ -43,21 +53,6 @@ export default function CourseDetails() {
                                     <h3 className="title">Course Overview</h3>
                                     <p>{courseDetail.courseOverview}</p>
                                 </div>
-                                {/* <!-- Course Overview End --> */}
-
-                                {/* <!-- Course Learn List Start --> */}
-                                {/*<div className="course-learn-list">*/}
-                                {/*    <h3 className="title">What you will learn</h3>*/}
-                                {/*    <ul>*/}
-                                {/*        <li>Become a UX designer.</li>*/}
-                                {/*        <li>Become a UX designer.</li>*/}
-                                {/*        <li>You will be able to add UX designer to your CV</li>*/}
-                                {/*        <li>You will be able to add UX designer to your CV</li>*/}
-                                {/*        <li>Build & test a full website design.</li>*/}
-                                {/*        <li>Build & test a full website design.</li>*/}
-                                {/*    </ul>*/}
-                                {/*</div>*/}
-                                {/* <!-- Course Learn List End --> */}
 
                                 {/* <!-- Course Lessons Start --> */}
                                 <div className="course-lessons">
@@ -72,44 +67,33 @@ export default function CourseDetails() {
 
                                     {/* <!-- Course Accordion Start --> */}
                                     <div className="course-accordion accordion" id="accordionCourse">
-                                        <div className="accordion-item">
-                                            <button data-bs-toggle="collapse" data-bs-target="#collapseOne">Introduction </button>
+                                        {courseContentCategory.map((category) =>
+                                        <div className="accordion-item" key={category.id}>
+                                            <button data-bs-toggle="collapse" data-bs-target="#collapseOne">{category.contentCategoryTitle} </button>
                                             <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionCourse">
                                                 <div className="accordion-body">
-                                                    <ul className="lessons-list">
-                                                        <li><a href="."><i className="fa fa-play-circle"></i> Greetings and Introductions <span>5:00</span></a></li>
-                                                        <li><a href="."><i className="fa fa-play-circle"></i> 5 Business English Phrasal Verbs <span>3:17</span></a></li>
-                                                        <li><a href="."><i className="fa fa-question-circle"></i> Quizz 1 : How to start?</a></li>
+                                                    {category.courseContent.map((content) =>
+                                                    <ul className="lessons-list" key={content.id}>
+                                                        <li> <Link to={`/course-content-reading/${content.courseId}/${content.id}`}> {content.contentTitle}</Link></li>
                                                     </ul>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
+                                        )}
 
-                                        <div className="accordion-item">
-                                            <button className="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">Analysis</button>
-                                            <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionCourse">
-                                                <div className="accordion-body">
-                                                    <ul className="lessons-list">
-                                                        <li><a href="."><i className="fa fa-play-circle"></i> Greetings and Introductions <span>5:00</span></a></li>
-                                                        <li><a href="."><i className="fa fa-play-circle"></i> 5 Business English Phrasal Verbs <span>3:17</span></a></li>
-                                                        <li><a href="."><i className="fa fa-question-circle"></i> Quizz 1 : How to start?</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="accordion-item">
-                                            <button className="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">Practical</button>
-                                            <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionCourse">
-                                                <div className="accordion-body">
-                                                    <ul className="lessons-list">
-                                                        <li><a href="."><i className="fa fa-play-circle"></i> Greetings and Introductions <span>5:00</span></a></li>
-                                                        <li><a href="."><i className="fa fa-play-circle"></i> 5 Business English Phrasal Verbs <span>3:17</span></a></li>
-                                                        <li><a href="."><i className="fa fa-question-circle"></i> Quizz 1 : How to start?</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {/*<div className="accordion-item">*/}
+                                        {/*    <button className="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">Analysis</button>*/}
+                                        {/*    <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionCourse">*/}
+                                        {/*        <div className="accordion-body">*/}
+                                        {/*            <ul className="lessons-list">*/}
+                                        {/*                <li><a href="."><i className="fa fa-play-circle"></i> Greetings and Introductions <span>5:00</span></a></li>*/}
+                                        {/*                <li><a href="."><i className="fa fa-play-circle"></i> 5 Business English Phrasal Verbs <span>3:17</span></a></li>*/}
+                                        {/*                <li><a href="."><i className="fa fa-question-circle"></i> Quizz 1 : How to start?</a></li>*/}
+                                        {/*            </ul>*/}
+                                        {/*        </div>*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
                                     </div>
                                     {/* <!-- Course Accordion End --> */}
 
@@ -190,7 +174,7 @@ export default function CourseDetails() {
                                             <li><i className="fa fa-language"></i> Language <span>English</span></li>
                                             <li><i className="fa fa-user-o"></i> Enrolled <span>4 Enrolled</span></li>
                                         </ul>
-                                        {/*<a className="btn btn-outline-primary w-100" href="."><i className="fa fa-share"></i> Share This Course</a>*/}
+                                        <Link to='' className="btn btn-outline-primary w-100">Subscribed Course</Link>
                                     </div>
                                 </div>
                                 {/* <!-- Sidebar Details Video Description End --> */}

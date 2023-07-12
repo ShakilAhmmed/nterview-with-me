@@ -7,6 +7,7 @@ import Course from "./Pages/Course";
 import CourseDetails from "./Component/Course/CourseDetails";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
+import ContentReading from "./Component/Course/ContentReading";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/about" element={<About />}/>
           <Route path="/course" element={<Course />}/>
           <Route path="/course-details/:id" element={<CourseDetails />}/>
+          <Route path="/course-content-reading/:courseId/:id" element={<ContentReading />}/>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
