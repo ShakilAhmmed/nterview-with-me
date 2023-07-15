@@ -9,6 +9,7 @@ import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import ContentReading from "./Component/Course/ContentReading";
 import Quiz from "./Pages/Quiz";
+import QuizQuestion from "./Component/quiz/QuizQuestion";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path='/quiz' element={<Quiz />} />
+          <Route path='/quiz-question/:quiz_id' element={<QuizQuestion />} />
         </Routes>
     </div>
   );
