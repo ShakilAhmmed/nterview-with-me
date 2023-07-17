@@ -4,7 +4,7 @@ const CourseContentCategoryForm = (props) => {
         <>
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Course Content Category Form</h4>
+                    <h4 className="card-title">Course Content</h4>
                 </div>
                 <div className="card-body">
                     <form className="row g-3 needs-validation" noValidate onSubmit={courseContentCategoryForm.handleSubmit}>

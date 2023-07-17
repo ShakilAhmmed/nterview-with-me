@@ -12,6 +12,7 @@ import CourseContent from "./pages/Domain/courseContent/courseContent";
 import CourseQuestion from "./pages/Domain/courseQuestion/courseQuestion";
 import Quiz from "./pages/Domain/Quiz/quiz";
 import QuizQuestion from "./pages/Domain/quizQuestion/quizQuestion";
+import CourseContentForm from "./pages/Domain/courseContent/courseContentForm";
 
 const Layout = () => {
     return (
@@ -35,6 +36,7 @@ const Layout = () => {
                                 <Route path="/course-question" element={<CourseQuestion />} />
                                 <Route path="/quizs" element={<Quiz />} />
                                 <Route path="/quiz-questions" element={<QuizQuestion />} />
+                                <Route path="/new-course-content" element={<CourseContentForm />} />
                             </Routes>
                         </div>
                         <RightBar/>

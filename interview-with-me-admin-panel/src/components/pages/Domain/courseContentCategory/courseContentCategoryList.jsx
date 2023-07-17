@@ -5,7 +5,7 @@ const CourseContentCategoryList = (props) => {
         <>
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Course Content Category</h4>
+                    <h4 className="card-title">Course Contents</h4>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">

@@ -19,11 +19,11 @@ const Main = () => {
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/course-content-categories">Course Content Category</Link>
+                            <Link className="nav-link" to="/course-content-categories">Course Content</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/course-content">Course Content</Link>
+                            <Link className="nav-link" to="/course-content">Content Details</Link>
                         </li>
 
                         <li className="nav-item">

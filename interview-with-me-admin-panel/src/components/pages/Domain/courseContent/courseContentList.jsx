@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 const CourseContentList = (props) => {
     const {courseContents,editCourseContent} = props;
 
@@ -5,7 +7,9 @@ const CourseContentList = (props) => {
         <>
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Course Content List</h4>
+                    <Link to='/new-course-content'>
+                        <button className="btn btn-sm btn-success">New Content</button>
+                    </Link>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -16,7 +20,7 @@ const CourseContentList = (props) => {
                                 <th>Course</th>
                                 <th>Course Content Category</th>
                                 <th>Title</th>
-                                <th>Content</th>
+                                {/*<th>Content</th>*/}
                                 <th className="text-end">Action</th>
                             </tr>
                             </thead>
@@ -27,7 +31,7 @@ const CourseContentList = (props) => {
                                         <td>{ course.course.name }</td>
                                         <td>{ course.contentCategory.contentCategoryTitle }</td>
                                         <td>{ course.contentTitle } </td>
-                                        <td>{ course.content } </td>
+                                        {/*<td>{ course.content } </td>*/}
                                         <td className="text-end">
                                             <button onClick={() => editCourseContent(course.id)} className="btn btn-de-dashed-info">
                                                 <i className="fa fa-edit"></i>
