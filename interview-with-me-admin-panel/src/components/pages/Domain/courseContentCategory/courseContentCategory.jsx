@@ -25,6 +25,7 @@ const CourseContentCategory = () => {
                 .then(() => {
                     toast.success("Course Content Category Added Successfully");
                     resetForm({values: ''});
+                    return getCourseContentCategories();
                 })
                 .catch(({error}) => {
                     console.log(error)

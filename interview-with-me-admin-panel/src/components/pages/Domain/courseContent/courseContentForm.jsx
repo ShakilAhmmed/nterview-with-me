@@ -21,9 +21,12 @@ const CourseContentForm = () => {
             content: Yup.string().required('Content Is Required'),
         }),
         onSubmit: (values, {resetForm}) => {
+            console.log(values,'values')
             http.post(`/course-content`, values)
                 .then(() => {
                     toast.success("Course Content Added Successfully");
+                    // console.log(CKEditor,'content')
+                    // CKEditor.instances['content'].setData('');
                     resetForm({values: ''});
                 })
                 .catch(({error}) => {
@@ -66,7 +69,7 @@ const CourseContentForm = () => {
                 <div className="col-lg-10">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">Course Content Form</h4>
+                            <h4 className="card-title">Content Details</h4>
                         </div>
                         <div className="card-body">
                             <form className="row g-3 needs-validation" noValidate
@@ -142,9 +145,7 @@ const CourseContentForm = () => {
                                         name="content"
                                         onChange={ ( event, editor ) => {
                                             const data = editor.getData();
-                                            courseContentForm.setFieldValue(data)
-                                            courseContentForm.handleChange(data)
-                                            // console.log( { event, editor, data } );
+                                            courseContentForm.setFieldValue('content',data)
                                         } }
 
                                     />

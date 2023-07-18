@@ -33,14 +33,12 @@ const CourseContentList = (props) => {
                                         <td>{ course.contentTitle } </td>
                                         {/*<td>{ course.content } </td>*/}
                                         <td className="text-end">
-                                            <button onClick={() => editCourseContent(course.id)} className="btn btn-de-dashed-info">
+                                            <button title='Edit Content' onClick={() => editCourseContent(course.id)} className="btn btn-de-dashed-info">
                                                 <i className="fa fa-edit"></i>
                                             </button>
-
-                                            <button className="btn btn-de-dashed-danger">
+                                            <button title='Delete Content' className="btn btn-de-dashed-danger">
                                                 <i className="fa fa-times"></i>
                                             </button>
-
                                         </td>
                                     </tr>
                                 );

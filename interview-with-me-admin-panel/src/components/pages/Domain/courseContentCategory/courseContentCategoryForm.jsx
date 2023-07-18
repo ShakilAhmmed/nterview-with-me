@@ -9,7 +9,7 @@ const CourseContentCategoryForm = (props) => {
                 <div className="card-body">
                     <form className="row g-3 needs-validation" noValidate onSubmit={courseContentCategoryForm.handleSubmit}>
 
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <label htmlFor="course_id" className="form-label">Status</label>
                             <select
                                 className="form-control"
@@ -31,7 +31,7 @@ const CourseContentCategoryForm = (props) => {
                             </div>
                         </div>
 
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <label htmlFor="content_category_title" className="form-label">Title</label>
                             <input type="text"
                                    className="form-control"

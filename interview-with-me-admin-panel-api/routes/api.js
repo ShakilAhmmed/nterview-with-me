@@ -13,6 +13,8 @@ import * as quizQuestionController from "../src/controllers/api/v1/quizQuestion/
 import * as quizParticipatorsController from "../src/controllers/api/v1/quizParticipators/quizParticipatorsController";
 import * as participatorProgressController from "../src/controllers/api/v1/participatorProgress/participatorProgressController";
 
+import * as fetchCourseContentDetails from "../src/controllers/api/v1/courseContent/fetchCourseContentDetails";
+
 import * as commonApiController from "../src/controllers/api/v1/commonAPI/commonAPIController";
 import * as frontendApiController from "../src/controllers/api/v1/frontend/frontendApiController";
 
@@ -42,6 +44,7 @@ import quizParticipatorRequestValidate from "../src/formRequests/v1/quizParticip
 import participatorProgressRequestValidate
     from "../src/formRequests/v1/participatorProgress/participatorProgressRequestValidate";
 import {fetchCourse, fetchCourseContent} from "../src/controllers/api/v1/frontend/frontendApiController";
+import {contentDetails} from "../src/controllers/api/v1/courseContent/fetchCourseContentDetails";
 
 
 const router = Router();
@@ -131,6 +134,9 @@ router.get('/participator-progress/:id', participatorProgressController.show);
 router.put('/participator-progress/:id', participatorProgressRequestValidate(), participatorProgressController.update);
 router.delete('/participator-progress/:id', participatorProgressController.destroy);
 
+//fetch content details
+router.get('/fetch-content-details/:id',fetchCourseContentDetails.contentDetails);
+
 //common api
 router.get('/fetch-course-category', commonApiController.courseCategory);
 router.get('/fetch-courses', commonApiController.course);
@@ -142,5 +148,7 @@ router.get('/frontend/fetch-course', frontendApiController.fetchCourse);
 router.get('/frontend/fetch-course-details/:id',frontendApiController.fetchCourseDetails);
 router.get('/frontend/fetch-course-contents/:id', frontendApiController.fetchCourseContent)
 router.get('/frontend/fetch-reading-content/:course_id/:id',frontendApiController.fetchReadingContent);
+router.get('/frontend/fetch-quiz',frontendApiController.fetchQuizTopic);
+router.get('/frontend/search-quiz-question',frontendApiController.searchQuizQuestion);
 
 export default router;

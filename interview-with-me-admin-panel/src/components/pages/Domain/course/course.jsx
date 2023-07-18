@@ -14,12 +14,16 @@ const Course = () => {
         initialValues : {
             name : '',
             status : '',
-            course_category_id: ''
+            course_category_id: '',
+            short_description: '',
+            course_overview: ''
         },
         validationSchema: Yup.object({
             course_category_id: Yup.string().required('Course Category Is Required'),
             name: Yup.string().required('Name Is Required'),
             status: Yup.string().required('Status Is Required'),
+            short_description: Yup.string().required('Short Description Is Required'),
+            course_overview: Yup.string().required('Overview Is Required'),
         }),
         onSubmit: (values, {resetForm}) => {
             values['status'] = values['status'] === "1";
@@ -27,6 +31,7 @@ const Course = () => {
                 .then(() => {
                     toast.success("Course Added Successfully");
                     resetForm({values: ''});
+                    return getCourses();
                 })
                 .catch(({error}) => {
                     console.log(error)

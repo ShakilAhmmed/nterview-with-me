@@ -6,11 +6,11 @@ const courseForm = (props) => {
         <>
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Course Form</h4>
+                    <h4 className="card-title">Course</h4>
                 </div>
                 <div className="card-body">
                     <form className="row g-3 needs-validation" noValidate onSubmit={courseForm.handleSubmit}>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <label htmlFor="course_category_id" className="form-label">Course Category</label>
                             <select
                                 className="form-control"
@@ -31,7 +31,7 @@ const courseForm = (props) => {
                                 }
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <label htmlFor="name" className="form-label">Name</label>
                             <input type="text"
                                    className="form-control"
@@ -49,7 +49,46 @@ const courseForm = (props) => {
                                 }
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
+                            <label htmlFor="short_description" className="form-label">Short Description</label>
+
+                            <textarea
+                                rows="8"
+                                className="form-control"
+                                id="short_description"
+                                name="short_description"
+                                onChange={courseForm.handleChange}
+                                onBlur={courseForm.handleBlur}
+                                value={courseForm.values.short_description}
+                            />
+                            <div className="text-danger">
+                                {
+                                    courseForm.touched.short_description &&
+                                    courseForm.errors.short_description &&
+                                    (<div>{courseForm.errors.short_description}</div>)
+                                }
+                            </div>
+                        </div>
+                        <div className="col-md-12">
+                            <label htmlFor="course_overview" className="form-label">Course Overview</label>
+                            <textarea
+                                rows="8"
+                                className="form-control"
+                                id="course_overview"
+                                name="course_overview"
+                                onChange={courseForm.handleChange}
+                                onBlur={courseForm.handleBlur}
+                                value={courseForm.values.course_overview}
+                            />
+                            <div className="text-danger">
+                                {
+                                    courseForm.touched.course_overview &&
+                                    courseForm.errors.course_overview &&
+                                    (<div>{courseForm.errors.course_overview}</div>)
+                                }
+                            </div>
+                        </div>
+                        <div className="col-md-12">
                             <label htmlFor="status" className="form-label">Status</label>
                             <select
                                 className="form-control"

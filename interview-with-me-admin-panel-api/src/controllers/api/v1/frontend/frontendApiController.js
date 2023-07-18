@@ -5,6 +5,7 @@ import {
     HTTP_OK
 } from "../../../../constants/statusCode";
 import logger from "../../../../services/logger/loggerService";
+import {re} from "@babel/core/lib/vendor/import-meta-resolve";
 
 const fetchCourse = async (request,response) => {
     try {
@@ -69,4 +70,53 @@ const fetchReadingContent = async (request,response) => {
     }
 }
 
-export {fetchCourse,fetchCourseDetails,fetchCourseContent,fetchReadingContent}
+const fetchQuizTopic = async (request,response) => {
+    try {
+        const quiz = await prisma.quiz.findMany();
+        const format = quiz.map((item) => {
+            return {
+                'value': item.id,
+                'label': item.QuizTitle
+            }
+        })
+        return response.status(HTTP_OK).send(success(format, 'quiz fetched successfully', HTTP_OK));
+    } catch (exception) {
+        logger.error(`quiz fetching : ${exception.message} `);
+        return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));
+    }
+}
+
+const searchQuizQuestion = async (request,response) => {
+    try {
+        const quizIds = request.params;
+        const quizQuestion = await prisma.quizQuestion.findMany({
+            where: {
+                quizId: {
+                    in: quizIds.id
+                },
+            },
+            include:{
+                quiz: true,
+                courseQuestion: true
+            }
+        });
+        const questionFormat = quizQuestion.map((question) => {
+            return {
+                'question': question.courseQuestion.question,
+                'choices': {
+                        'choice_one': question.courseQuestion.choiceOne,
+                        'choice_two':question.courseQuestion.choiceTwo,
+                        'choice_three':question.courseQuestion.choiceThree,
+                        'choice_four':question.courseQuestion.choiceFour,
+                },
+                'correct_choice' : question.courseQuestion.correntChoice
+            }
+        })
+        return response.status(HTTP_OK).send(success(questionFormat, 'Quiz Question fetched successfully', HTTP_OK));
+    } catch (exception) {
+        logger.error(`quiz question fetching : ${exception.message} `);
+        return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));
+    }
+}
+
+export {fetchCourse,fetchCourseDetails,fetchCourseContent,fetchReadingContent,fetchQuizTopic,searchQuizQuestion}
