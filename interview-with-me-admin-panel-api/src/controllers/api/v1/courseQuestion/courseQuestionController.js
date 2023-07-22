@@ -46,7 +46,8 @@ const store = async (request,response) => {
             choice_two,
             choice_three,
             choice_four,
-            correct_choice
+            correct_choice,
+            is_multi
         } = request.body;
         const courseQuestion = await prisma.courseQuestion.create({
             data : {
@@ -61,7 +62,8 @@ const store = async (request,response) => {
                 choiceTwo : choice_two,
                 choiceThree : choice_three,
                 choiceFour : choice_four,
-                correntChoice : correct_choice
+                correntChoice : correct_choice,
+                isMulti : is_multi
             }
         });
         logger.info('create course question');

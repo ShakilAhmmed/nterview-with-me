@@ -12,6 +12,7 @@ import * as quizController from "../src/controllers/api/v1/quiz/quizController";
 import * as quizQuestionController from "../src/controllers/api/v1/quizQuestion/quizQuestionController";
 import * as quizParticipatorsController from "../src/controllers/api/v1/quizParticipators/quizParticipatorsController";
 import * as participatorProgressController from "../src/controllers/api/v1/participatorProgress/participatorProgressController";
+import * as questionGenerateController from "../src/controllers/api/v1/questionGenerate/questionGenerateController"
 
 import * as fetchCourseContentDetails from "../src/controllers/api/v1/courseContent/fetchCourseContentDetails";
 
@@ -45,6 +46,7 @@ import participatorProgressRequestValidate
     from "../src/formRequests/v1/participatorProgress/participatorProgressRequestValidate";
 import {fetchCourse, fetchCourseContent} from "../src/controllers/api/v1/frontend/frontendApiController";
 import {contentDetails} from "../src/controllers/api/v1/courseContent/fetchCourseContentDetails";
+import {generateQuestion} from "../src/controllers/api/v1/questionGenerate/questionGenerateController";
 
 
 const router = Router();
@@ -133,6 +135,9 @@ router.post('/participator-progress', participatorProgressRequestValidate(), par
 router.get('/participator-progress/:id', participatorProgressController.show);
 router.put('/participator-progress/:id', participatorProgressRequestValidate(), participatorProgressController.update);
 router.delete('/participator-progress/:id', participatorProgressController.destroy);
+
+//question generate
+router.post('/question-generate', questionGenerateController.generateQuestion);
 
 //fetch content details
 router.get('/fetch-content-details/:id',fetchCourseContentDetails.contentDetails);

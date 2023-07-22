@@ -1,10 +1,14 @@
+import {Link} from "react-router-dom";
+
 const CourseQuestionList = (props) => {
     const {courseQuestions,editCourseQuestion} = props
     return (
         <>
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Course Question List</h4>
+                    <Link to='/new-course-question'>
+                        <button className="btn btn-sm btn-success">New Question</button>
+                    </Link>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">

@@ -111,7 +111,8 @@ model CourseQuestion {
   choiceTwo         String @map("choice_two") @db.Text()
   choiceThree       String @map("choice_three") @db.Text()
   choiceFour        String @map("choice_four") @db.Text()
-  correntChoice     String @map("correct_choice") @db.Text()
+  correntChoice     Json   @map("correct_choice") @db.Json()
+  isMulti           String @map("is_multi")
 
   course               Course?                @relation(fields: [courseId], references: [id])
   contentCategory      CourseContentCategory? @relation(fields: [contentCategoryId], references: [id])
