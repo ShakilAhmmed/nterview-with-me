@@ -9,7 +9,9 @@ import http from "../interceptors/http";
 import {current} from "@reduxjs/toolkit";
 import {array} from "yup";
 
+
 export default function Quiz() {
+    let navigate = useNavigate();
     const [courses, setCourse] = useState([]);
     const [courseSelect, selectedCourse] = useState([]);
 
@@ -29,6 +31,7 @@ export default function Quiz() {
    async function handleJump(){
         try {
             const {data} = await http.post(`question-generate`,courseSelect);
+            navigate(`/quiz-question/${data.data.id}`)
             console.log(data,'data')
         } catch (error) {
             console.log(error)

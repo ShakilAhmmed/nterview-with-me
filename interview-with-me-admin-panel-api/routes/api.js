@@ -154,6 +154,6 @@ router.get('/frontend/fetch-course-details/:id',frontendApiController.fetchCours
 router.get('/frontend/fetch-course-contents/:id', frontendApiController.fetchCourseContent)
 router.get('/frontend/fetch-reading-content/:course_id/:id',frontendApiController.fetchReadingContent);
 router.get('/frontend/fetch-quiz',frontendApiController.fetchQuizTopic);
-router.get('/frontend/search-quiz-question',frontendApiController.searchQuizQuestion);
+router.get('/frontend/search-quiz-question/:id',frontendApiController.searchQuizQuestion);
 
 export default router;

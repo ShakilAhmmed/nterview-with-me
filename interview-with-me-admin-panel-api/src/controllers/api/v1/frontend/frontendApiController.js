@@ -88,20 +88,25 @@ const fetchQuizTopic = async (request,response) => {
 
 const searchQuizQuestion = async (request,response) => {
     try {
-        const quizIds = request.params;
+        const quizId = request.params.id;
         const quizQuestion = await prisma.quizQuestion.findMany({
             where: {
-                quizId: {
-                    in: quizIds.id
-                },
+                quizId:parseInt(quizId),
             },
             include:{
                 quiz: true,
                 courseQuestion: true
             }
         });
+        const quiz = await prisma.quiz.findUnique({
+            where :{
+                id : parseInt(quizId)
+            }
+        })
+        // logger.info(JSON.stringify(quiz))
         const questionFormat = quizQuestion.map((question) => {
             return {
+                'question_id': question.courseQuestion.id,
                 'question': question.courseQuestion.question,
                 'choices': {
                         'choice_one': question.courseQuestion.choiceOne,
@@ -109,10 +114,15 @@ const searchQuizQuestion = async (request,response) => {
                         'choice_three':question.courseQuestion.choiceThree,
                         'choice_four':question.courseQuestion.choiceFour,
                 },
-                'correct_choice' : question.courseQuestion.correntChoice
+                'correct_choice' : question.courseQuestion.correntChoice,
+                'is_multi' : question.courseQuestion.isMulti,
             }
         })
-        return response.status(HTTP_OK).send(success(questionFormat, 'Quiz Question fetched successfully', HTTP_OK));
+        const data = [
+            questionFormat,
+            quiz
+        ]
+        return response.status(HTTP_OK).send(success(data, 'Quiz Question fetched successfully', HTTP_OK));
     } catch (exception) {
         logger.error(`quiz question fetching : ${exception.message} `);
         return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));

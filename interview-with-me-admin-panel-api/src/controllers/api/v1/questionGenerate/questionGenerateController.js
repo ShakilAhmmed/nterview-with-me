@@ -13,7 +13,7 @@ const generateQuestion = async (request, response) => {
         let data = [];
         const courses = request.body;
         const courseQuestion = await prisma.courseQuestion.findMany({
-            take: 2,
+            take: 10,
             where: {
                 courseId: {
                     in: courses.map(course => course.course_id)
@@ -32,13 +32,13 @@ const generateQuestion = async (request, response) => {
             data.push({
                 quizId: quiz.id,
                 questionsId: question.id
-            })
+            });
         });
 
         let quizQuestion = await prisma.quizQuestion.createMany({
             data: [...data],
             skipDuplicates: true
-        })
+        });
 
         return response.status(HTTP_OK).send(success(quiz, 'Generate course question Successfully', HTTP_CREATED));
     } catch (exception) {
