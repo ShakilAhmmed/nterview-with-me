@@ -10,6 +10,7 @@ import {useFormik} from "formik";
 export default function QuizQuestion() {
     const {quiz_id} = useParams();
     const [quizQuestions, setQuizQuestions] = useState([]);
+    const [questionsIds, setQuestionIds] = useState([]);
     const [quizTitle, setQuizTitle] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [isMultiple, setIsMultiple] = useState(null);
@@ -20,8 +21,12 @@ export default function QuizQuestion() {
     const fetchSearchQuestion = async () => {
         try {
             const {data: data} = await http.get(`/frontend/search-quiz-question/${quiz_id}`);
+            let questionId = [];
             setQuizTitle(data.data[1]);
-            setQuizQuestions(data.data);
+            data.data[0].forEach((question) => {
+                questionId.push(question.question_id);
+                setQuestionIds(questionId)
+            });
             setQuestions(data.data[0][currentQuestion].question);
             setQuestionId(data.data[0][currentQuestion].question_id);
             setIsMultiple(data.data[0][currentQuestion].is_multi);
@@ -29,6 +34,14 @@ export default function QuizQuestion() {
             setQuizOptions(data.data[0][currentQuestion].choices);
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const fetchQuestion  = async (question_Id) => {
+        try {
+            const {data:data} = await http.get(`/frontend/fetch-question/${question_Id}`)
+        } catch (error) {
+
         }
     }
 
@@ -41,9 +54,8 @@ export default function QuizQuestion() {
         onSubmit: (values, {resetForm}) => {
             values.quiz_id = quizTitle.id;
             values.question_id = questionId;
-            setCurrentQuestion(currentQuestion + 1);
-            fetchSearchQuestion();
-            console.log(values)
+            let question_Id = questionsIds.shift();
+            fetchQuestion(question_Id)
         },
 
     })
@@ -51,8 +63,11 @@ export default function QuizQuestion() {
     useEffect(() => {
         fetchSearchQuestion();
     }, []);
-    console.log(currentQuestion,'currentQuestion')
-    console.log(questionId,'questionId')
+    useEffect(() => {
+        let question_Id = questionsIds.shift();
+        console.log(question_Id,'question_Id 2')
+        fetchQuestion(question_Id);
+    })
     return (
         <>
             <Header/>

@@ -106,7 +106,7 @@ const searchQuizQuestion = async (request,response) => {
         // logger.info(JSON.stringify(quiz))
         const questionFormat = quizQuestion.map((question) => {
             return {
-                'question_id': question.courseQuestion.id,
+                'question_id': question.id,
                 'question': question.courseQuestion.question,
                 'choices': {
                         'choice_one': question.courseQuestion.choiceOne,
@@ -129,4 +129,22 @@ const searchQuizQuestion = async (request,response) => {
     }
 }
 
-export {fetchCourse,fetchCourseDetails,fetchCourseContent,fetchReadingContent,fetchQuizTopic,searchQuizQuestion}
+const fetchQuestion = async (request,response) => {
+    try {
+        const questionId = request.params.id;
+        const quizQuestion = await prisma.quizQuestion.findUnique({
+            where: {
+                questionsId:parseInt(questionId),
+            },
+            include:{
+                quiz: true,
+                courseQuestion: true
+            }
+        });
+        logger.info(JSON.stringify(quizQuestion))
+    } catch (error) {
+        
+    }
+}
+
+export {fetchCourse,fetchCourseDetails,fetchCourseContent,fetchReadingContent,fetchQuizTopic,searchQuizQuestion,fetchQuestion}
