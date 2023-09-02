@@ -262,7 +262,7 @@ const CourseQuestionForm = (props) => {
                                     id="correct_choice"
                                     name="correct_choice"
                                     options={correctList}
-                                    placeholder="Select color"
+                                    placeholder="Select Choice"
                                     value={selectedOptions}
                                     onChange={handleSelect}
                                     isSearchable={true}
@@ -275,7 +275,7 @@ const CourseQuestionForm = (props) => {
                                     id="correct_choice"
                                     name="correct_choice"
                                     options={correctList}
-                                    placeholder="Select color"
+                                    placeholder="Select Choice"
                                     value={selectedOptions}
                                     onChange={handleSelect}
                                     isSearchable={true}

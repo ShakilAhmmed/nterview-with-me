@@ -5,7 +5,7 @@ const QuizQuestionForm = (props) => {
         <>
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Course Content Form</h4>
+                    <h4 className="card-title"> Quiz Question</h4>
                 </div>
                 <div className="card-body">
                     <form className="row g-3 needs-validation" noValidate onSubmit={quizQuestionForm.handleSubmit}>

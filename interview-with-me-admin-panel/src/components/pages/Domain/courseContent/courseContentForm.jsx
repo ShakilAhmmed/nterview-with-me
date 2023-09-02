@@ -5,6 +5,7 @@ import {toast} from "react-toastify";
 import {useEffect, useState} from "react";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import OpenAI from 'openai';
 
 const CourseContentForm = () => {
     const courseContentForm = useFormik({
@@ -13,17 +14,21 @@ const CourseContentForm = () => {
             content_category_id: '',
             content_title: '',
             content: '',
+            Image: ''
         },
         validationSchema: Yup.object({
             course_id: Yup.string().required('Course Is Required'),
             content_category_id: Yup.string().required('Course Category Is Required'),
             content_title: Yup.string().required('Title Is Required'),
             content: Yup.string().required('Content Is Required'),
+            Image: Yup.mixed().required('File Is Required')
         }),
         onSubmit: (values, {resetForm}) => {
             console.log(values,'values')
-            http.post(`/course-content`, values)
-                .then(() => {
+            http.post(`/course-content`, values,{ 
+                headers: {
+                "Content-Type": "multipart/form-data"},
+            }).then(() => {
                     toast.success("Course Content Added Successfully");
                     // console.log(CKEditor,'content')
                     // CKEditor.instances['content'].setData('');
@@ -35,9 +40,23 @@ const CourseContentForm = () => {
         },
     });
 
+
     const [courseContentCategories, setCourseContentCategories] = useState([]);
     const [courses, setCourses] = useState([]);
-
+    const [getContentFromOpenAi, setContentFromOpenAi] = useState('');
+    const configuration =  {
+        apiKey: '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',
+        dangerouslyAllowBrowser: true
+      };
+    const openai = new OpenAI(configuration);
+    const generateContentWithOpenAi = async (value) =>{
+        const result =await openai.chat.completions.create({
+            messages: [{ role: 'user', content: value }],
+            model: 'gpt-3.5-turbo',
+          });
+        //   console.log("response", result.choices[0].message.content);
+          setContentFromOpenAi(result.choices[0].message.content);
+    };
     const getCourseContentCategories = async () => {
         try {
             const {data: data} = await http.get(`/fetch-course-content-category`)
@@ -128,6 +147,8 @@ const CourseContentForm = () => {
                                            onBlur={courseContentForm.handleBlur}
                                            value={courseContentForm.values.content_title}
                                     />
+                                    <br/>
+                                    <button type="button" class="btn btn-info" onClick={()=>generateContentWithOpenAi(courseContentForm.values.content_title)}>Generate Content With OpenAI</button>
                                     <div className="text-danger">
                                         {
                                             courseContentForm.touched.content_title &&
@@ -143,6 +164,7 @@ const CourseContentForm = () => {
                                         className="form-control"
                                         editor={ ClassicEditor }
                                         name="content"
+                                        data={getContentFromOpenAi}
                                         onChange={ ( event, editor ) => {
                                             const data = editor.getData();
                                             courseContentForm.setFieldValue('content',data)
@@ -165,6 +187,25 @@ const CourseContentForm = () => {
                                         }
                                     </div>
                                 </div>
+                                <div className="col-md-12">
+                          <label htmlFor="courseImage" className="form-label">Image</label>
+                          <input type="file"
+                                 className="form-control"
+                                 id="courseImage"
+                                 onChange={event => {
+                                    courseContentForm.setFieldValue('Image', event.currentTarget.files[0]);
+                                }}
+                                 onBlur={courseContentForm.handleBlur}
+                          />
+                          
+                          <div className="text-danger">
+                              {
+                                  courseContentForm.touched.Image &&
+                                  courseContentForm.errors.Image &&
+                                  (<div>{courseContentForm.errors.Image}</div>)
+                              }
+                          </div>
+                      </div>
 
                                 <div className="col-12">
                                     <button className="btn btn-primary" type="submit">Submit</button>

@@ -14,15 +14,19 @@ const CourseContentCategory = () => {
         initialValues : {
             course_id : '',
             content_category_title : '',
+            Image: ''
         },
         validationSchema: Yup.object({
             course_id: Yup.string().required('Course Is Required'),
             content_category_title: Yup.string().required('Title Is Required'),
+            Image: Yup.mixed().required('File Is Required')
         }),
         onSubmit: (values, {resetForm}) => {
 
-            http.post(`/course-content-category`, values)
-                .then(() => {
+            http.post(`/course-content-category`, values,{ 
+                headers: {
+                "Content-Type": "multipart/form-data"},
+            }).then(() => {
                     toast.success("Course Content Category Added Successfully");
                     resetForm({values: ''});
                     return getCourseContentCategories();

@@ -13,17 +13,22 @@ const CourseCategory = () => {
 
         initialValues : {
             name : '',
-            status : ''
+            status : '',
+            courseImage: ''
+            
         },
         validationSchema: Yup.object({
             name: Yup.string().required('Name Is Required'),
             status: Yup.string().required('Status Is Required'),
+            courseImage: Yup.mixed().required('File Is Required'),
         }),
-        onSubmit: (values, {resetForm}) => {
-            console.log(values,'values')
+        onSubmit: (values, {resetForm}) => {    
             values['status'] = values['status'] === "1";
-            http.post(`/course-categories`, values)
-                .then(() => {
+            http.post(`/course-categories`, values,{ 
+                headers: {
+                "Content-Type": "multipart/form-data"},
+            })
+            .then(() => {
                     toast.success("Course Category Added Successfully");
                     resetForm({values: ''});
                     return getCourseCategories();

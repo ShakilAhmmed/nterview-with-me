@@ -11,23 +11,23 @@ const Main = () => {
                     <ul className="nav flex-column">
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/course-categories">Course Category</Link>
+                            <Link className="nav-link" to="/course-categories">Course Categories</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/courses">Course</Link>
+                            <Link className="nav-link" to="/courses">Courses</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/course-content-categories">Course Content</Link>
+                            <Link className="nav-link" to="/course-content-categories">Course Chapters</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/course-content">Content Details</Link>
+                            <Link className="nav-link" to="/course-content">Chapter Content </Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/course-question">Course Question</Link>
+                            <Link className="nav-link" to="/course-question">Course Questions</Link>
                         </li>
 
                         {/*<li className="nav-item">*/}
@@ -47,11 +47,11 @@ const Main = () => {
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/quiz-questions">Quiz Question</Link>
+                            <Link className="nav-link" to="/quiz-questions">Quiz Questions</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/">Quiz Participator</Link>
+                            <Link className="nav-link" to="/">Quiz Participators</Link>
                         </li>
 
                         <li className="nav-item">

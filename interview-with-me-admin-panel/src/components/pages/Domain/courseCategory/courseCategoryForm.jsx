@@ -5,11 +5,11 @@ const courseCategoryForm = (props) => {
       <>
           <div className="card">
               <div className="card-header">
-                  <h4 className="card-title">Course Category Form</h4>
+                  <h4 className="card-title">Course Category</h4>
               </div>
               <div className="card-body">
                   <form className="row g-3 needs-validation" noValidate onSubmit={courseCategoryForm.handleSubmit}>
-                      <div className="col-md-6">
+                      <div className="col-md-12">
                           <label htmlFor="name" className="form-label">Name</label>
                           <input type="text"
                                  className="form-control"
@@ -27,7 +27,7 @@ const courseCategoryForm = (props) => {
                               }
                           </div>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-12">
                           <label htmlFor="status" className="form-label">Status</label>
                           <select
                               className="form-control"
@@ -49,7 +49,25 @@ const courseCategoryForm = (props) => {
                               }
                           </div>
                       </div>
-
+                      <div className="col-md-12">
+                          <label htmlFor="courseImage" className="form-label">Image</label>
+                          <input type="file"
+                                 className="form-control"
+                                 id="courseImage"
+                                 onChange={event => {
+                                    courseCategoryForm.setFieldValue('courseImage', event.currentTarget.files[0]);
+                                }}
+                                 onBlur={courseCategoryForm.handleBlur}
+                          />
+                          
+                          <div className="text-danger">
+                              {
+                                  courseCategoryForm.touched.courseImage &&
+                                  courseCategoryForm.errors.courseImage &&
+                                  (<div>{courseCategoryForm.errors.courseImage}</div>)
+                              }
+                          </div>
+                      </div>
                       <div className="col-12">
                           <button className="btn btn-primary" type="submit">Submit</button>
                       </div>

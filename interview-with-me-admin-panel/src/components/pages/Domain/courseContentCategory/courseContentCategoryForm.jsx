@@ -10,7 +10,7 @@ const CourseContentCategoryForm = (props) => {
                     <form className="row g-3 needs-validation" noValidate onSubmit={courseContentCategoryForm.handleSubmit}>
 
                         <div className="col-md-12">
-                            <label htmlFor="course_id" className="form-label">Status</label>
+                            <label htmlFor="course_id" className="form-label">Course</label>
                             <select
                                 className="form-control"
                                 id="course_id"
@@ -49,6 +49,25 @@ const CourseContentCategoryForm = (props) => {
                                 }
                             </div>
                         </div>
+                        <div className="col-md-12">
+                          <label htmlFor="courseImage" className="form-label">Image</label>
+                          <input type="file"
+                                 className="form-control"
+                                 id="courseImage"
+                                 onChange={event => {
+                                    courseContentCategoryForm.setFieldValue('Image', event.currentTarget.files[0]);
+                                }}
+                                 onBlur={courseContentCategoryForm.handleBlur}
+                          />
+                          
+                          <div className="text-danger">
+                              {
+                                  courseContentCategoryForm.touched.Image &&
+                                  courseContentCategoryForm.errors.Image &&
+                                  (<div>{courseContentCategoryForm.errors.Image}</div>)
+                              }
+                          </div>
+                      </div>
 
                         <div className="col-12">
                             <button className="btn btn-primary" type="submit">Submit</button>

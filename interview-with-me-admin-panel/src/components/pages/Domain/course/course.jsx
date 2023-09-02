@@ -16,7 +16,8 @@ const Course = () => {
             status : '',
             course_category_id: '',
             short_description: '',
-            course_overview: ''
+            course_overview: '',
+            Image: ''
         },
         validationSchema: Yup.object({
             course_category_id: Yup.string().required('Course Category Is Required'),
@@ -24,11 +25,15 @@ const Course = () => {
             status: Yup.string().required('Status Is Required'),
             short_description: Yup.string().required('Short Description Is Required'),
             course_overview: Yup.string().required('Overview Is Required'),
+            Image: Yup.mixed().required('File Is Required')
         }),
         onSubmit: (values, {resetForm}) => {
+            console.log(values,'values')
             values['status'] = values['status'] === "1";
-            http.post(`/courses`, values)
-                .then(() => {
+            http.post(`/courses`, values,{ 
+                headers: {
+                "Content-Type": "multipart/form-data"},
+            }).then(() => {
                     toast.success("Course Added Successfully");
                     resetForm({values: ''});
                     return getCourses();

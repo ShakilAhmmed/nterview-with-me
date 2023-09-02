@@ -110,6 +110,25 @@ const courseForm = (props) => {
                                 }
                             </div>
                         </div>
+                        <div className="col-md-12">
+                          <label htmlFor="courseImage" className="form-label">Image</label>
+                          <input type="file"
+                                 className="form-control"
+                                 id="courseImage"
+                                 onChange={event => {
+                                    courseForm.setFieldValue('Image', event.currentTarget.files[0]);
+                                }}
+                                 onBlur={courseForm.handleBlur}
+                          />
+                          
+                          <div className="text-danger">
+                              {
+                                  courseForm.touched.Image &&
+                                  courseForm.errors.Image &&
+                                  (<div>{courseForm.errors.Image}</div>)
+                              }
+                          </div>
+                      </div>
 
                         <div className="col-12">
                             <button className="btn btn-primary" type="submit">Submit</button>
