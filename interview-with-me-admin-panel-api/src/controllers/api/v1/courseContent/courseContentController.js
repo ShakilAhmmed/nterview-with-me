@@ -39,6 +39,12 @@ const store = async (request,response) => {
             return response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
         }
         let {course_id,content_category_id,content_title,content} = request.body;
+        let image = request.files.Image;
+        let file_path = null;
+        if(image){
+            file_path = './public/course_content/' + image.name
+            image.mv(file_path);
+        }
         const courseContent = await prisma.courseContent.create({
             data : {
                 course : {
@@ -48,7 +54,8 @@ const store = async (request,response) => {
                     connect : {id : parseInt(content_category_id)}
                 },
                 contentTitle : content_title,
-                content : content
+                content : content,
+                Image : file_path
             }
         });
         logger.info('create course content');
@@ -81,6 +88,13 @@ const update = async (request,response) => {
         }
         const id = parseInt(request.params.id) || 0;
         let {course_id,content_category_id,content_title,content} = request.body;
+        let image = request.files.Image;
+        if(image){
+            let file_path = './public/course' + image.name
+            image.mv(file_path);
+        }else{
+            let file_path = null;
+        }
         const courseContent = await prisma.courseContent.update({
             where : {
               id : id
@@ -93,7 +107,8 @@ const update = async (request,response) => {
                     connect : {id : content_category_id}
                 },
                 contentTitle : content_title,
-                content : content
+                content : content,
+                Image : file_path
             }
         });
         logger.info('update course content');

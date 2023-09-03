@@ -8,6 +8,8 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import cors from "cors";
 
+const  bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload');
 const application = express();
 config();
 
@@ -26,12 +28,14 @@ const options = {
 };
 
 const swaggerSpec = swaggerJSDoc(options);
+application.use( bodyParser({ extended: false }) )
 application.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 application.use(logger('dev'));
-application.use(httpLoggerService);
+// application.use(httpLoggerService);
 application.use(express.json());
 application.use(express.urlencoded({extended: true}));
 application.use(cookieParser());
 application.use(cors());
 application.use('/api/v1', router);
+application.use(fileUpload());
 export default application;

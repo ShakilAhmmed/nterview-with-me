@@ -34,11 +34,22 @@ const store = async (request, response) => {
         if (!errors.isEmpty()) {
             return response.status(HTTP_VALIDATION_ERROR).json({errors: errors.array()})
         }
+        
         let {name, status} = request.body;
+        let course_image = request.files.courseImage;
+        let file_path = null;
+        if(course_image){
+            file_path = './public/course_category/' + course_image.name
+            course_image.mv(file_path);
+        }
+       
+        // logger.info(file_path);
+        
         const courseCategory = await prisma.courseCategory.create({
             data: {
-                name,
-                status
+                name:name,
+                status: Boolean(status),
+                courseImage: file_path
             }
         })
         logger.info('create course category');
@@ -72,13 +83,20 @@ const update = async (request, response) => {
         }
         const id = parseInt(request.params.id) || 0;
         let {name, status} = request.body;
+        let course_image = request.files.courseImage;
+        let file_path = null ;
+        if(!course_image.isEmpty()){
+            file_path = './public/course_category' + course_image.name
+            course_image.mv(file_path);
+        }
         const courseCategory = await prisma.courseCategory.update({
             where: {
                 id: id
             },
             data: {
-                name,
-                status
+                name:name,
+                status: Boolean(status),
+                courseImage: file_path
             }
         })
         logger.info('update course category');

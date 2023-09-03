@@ -47,7 +47,7 @@ import participatorProgressRequestValidate
 import {fetchCourse, fetchCourseContent} from "../src/controllers/api/v1/frontend/frontendApiController";
 import {contentDetails} from "../src/controllers/api/v1/courseContent/fetchCourseContentDetails";
 import {generateQuestion} from "../src/controllers/api/v1/questionGenerate/questionGenerateController";
-
+const fileUpload = require('express-fileupload');
 
 const router = Router();
 
@@ -61,30 +61,30 @@ router.post('/user-login', userLoginRequest(), UserController.login);
 
 // course-category
 router.get('/course-categories', courseCategoryController.index);
-router.post('/course-categories', courseCategoryRequestValidate(), courseCategoryController.store);
+router.post('/course-categories',fileUpload(), courseCategoryController.store);
 router.get('/course-categories/:id', courseCategoryController.show);
-router.put('/course-categories/:id', courseCategoryUpdateRequestValidate(), courseCategoryController.update);
+router.put('/course-categories/:id', fileUpload(), courseCategoryUpdateRequestValidate(), courseCategoryController.update);
 router.delete('/course-categories/:id', courseCategoryController.destroy);
 
 //course
 router.get('/courses', courseController.index);
-router.post('/courses', courseRequestValidate(), courseController.store);
+router.post('/courses',fileUpload(), courseRequestValidate(), courseController.store);
 router.get('/courses/:id', courseController.show);
-router.put('/courses/:id', courseUpdateRequestValidate(), courseController.update);
+router.put('/courses/:id',fileUpload(), courseUpdateRequestValidate(), courseController.update);
 router.delete('/courses/:id', courseController.destroy);
 
 // course Content Category
 router.get('/course-content-category', courseContentCategoryController.index);
-router.post('/course-content-category', courseContentCategoryRequestValidate(), courseContentCategoryController.store);
+router.post('/course-content-category', fileUpload(),courseContentCategoryRequestValidate(), courseContentCategoryController.store);
 router.get('/course-content-category/:id', courseContentCategoryController.show);
-router.put('/course-content-category/:id', courseContentCategoryUpdateRequestValidate(), courseContentCategoryController.update);
+router.put('/course-content-category/:id',fileUpload(), courseContentCategoryUpdateRequestValidate(), courseContentCategoryController.update);
 router.delete('/course-content-category/:id', courseContentCategoryController.destroy);
 
 //course Content
 router.get('/course-content', courseContentController.index);
-router.post('/course-content', courseContentRequestValidate(), courseContentController.store);
+router.post('/course-content',fileUpload(), courseContentRequestValidate(), courseContentController.store);
 router.get('/course-content/:id', courseContentController.show);
-router.put('/course-content/:id', courseContentUpdateRequestValidate(), courseContentController.update);
+router.put('/course-content/:id',fileUpload(), courseContentUpdateRequestValidate(), courseContentController.update);
 router.delete('/course-content/:id', courseContentController.destroy);
 
 //course Question

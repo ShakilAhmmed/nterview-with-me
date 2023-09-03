@@ -48,7 +48,7 @@ model CourseCategory {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(50)
   status    Boolean  @default(false)
-  courseImage String   @db.VarChar(255)
+  courseImage String @db.VarChar(255) @map("course_image")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   Course    Course[]
@@ -62,6 +62,7 @@ model Course {
   name             String   @db.VarChar(191)
   shortDescription String   @map("short_description") @db.Text()
   courseOverview   String   @map("course_overview") @db.Text()
+  Image            String @db.VarChar(255) @map("image")
   status           Boolean  @default(false)
   categoryId       Int      @map("course_category_id")
   createdBy        Int      @map("created_by")
@@ -84,6 +85,7 @@ model CourseContentCategory {
   contentCategoryTitle String @map("content_category_title")
 
   course         Course?          @relation(fields: [courseId], references: [id])
+  Image            String @db.VarChar(255) @map("image")
   courseContent  CourseContent[]
   CourseQuestion CourseQuestion[]
 
@@ -96,7 +98,7 @@ model CourseContent {
   contentCategoryId Int    @map("content_category_id")
   contentTitle      String @map("content_title") @db.VarChar(255)
   content           String @db.Text()
-
+  Image             String @db.VarChar(255) @map("image")
   course          Course?                @relation(fields: [courseId], references: [id])
   contentCategory CourseContentCategory? @relation(fields: [contentCategoryId], references: [id])
   CourseProgress  CourseProgress[]
