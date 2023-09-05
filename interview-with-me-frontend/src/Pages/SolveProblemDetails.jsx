@@ -75,7 +75,14 @@ const SolveProblemDetails = () => {
         setError('')
         setData('')
         setAccepted(false)
+
         const userEmail = localStorage.getItem('userEmail');
+
+        if (code.replace(/ +/g, '_').length === Q.template.replace(/ +/g, '_').length) {
+            setError('Please Check Your Code');
+            return;
+        }
+
         const data = {
             user_email: userEmail,
             slug: Q.slug,
@@ -84,34 +91,36 @@ const SolveProblemDetails = () => {
             solution: code
         }
 
-        axios.post(`${API}/submission`, data)
-            .then((res) => {
-                console.log(res.data)
-                setMain(true)
-                if (res.data.status == "fail") {
-                    setAccepted(false)
-                    let o = res.data.message.split(';');
-                    setInput(o[0])
-                    setOut(o[1])
-                    setExpected('[' + o[2] + ']');
+        setTimeout(() => {
+            axios.post(`${API}/submission`, data)
+                .then((res) => {
+                    console.log(res.data)
+                    setMain(true)
+                    if (res.data.status == "fail") {
+                        setAccepted(false)
+                        let o = res.data.message.split(';');
+                        setInput(o[0])
+                        setOut(o[1])
+                        setExpected('[' + o[2] + ']');
 
-                } else if (res.data.status == "pass") {
-                    setm(res.data.message)
-                    setAccepted(true)
-                } else if (res.data.status == "err_exe" || res.data.status == "err_cmp") {
+                    } else if (res.data.status == "pass") {
+                        setm(res.data.message)
+                        setAccepted(true)
+                    } else if (res.data.status == "err_exe" || res.data.status == "err_cmp") {
+                        setAccepted(false)
+                        setError(res.data.message)
+                    }
+                    setLoading(false)
+
+                }).catch((err) => {
+                    console.log("H", err)
                     setAccepted(false)
-                    setError(res.data.message)
+                    setMain(true)
+                    setError("Error")
+                    setLoading(false)
                 }
-                setLoading(false)
-
-            }).catch((err) => {
-                console.log("H", err)
-                setAccepted(false)
-                setMain(true)
-                setError("Error")
-                setLoading(false)
-            }
-        )
+            )
+        }, 2000)
     }
 
     const clear = () => {
@@ -129,10 +138,17 @@ const SolveProblemDetails = () => {
                 {main ? <>
 
                     {error ? <>
-                        <div className="p-3 result grey rounded overflow-auto">
-                            <div className="d-flex justify-content-between">
-                                <p className='text-danger'>{error}</p>
-                            </div>
+                        <div
+                            className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
+                            <img style={{
+                                height: '150px',
+                                marginLeft: '0%'
+                            }} src="/assets/images/wired-outline-1140-error.gif"/>
+                            <i style={{
+                                fontSize: '30px',
+                                color: 'rgba(203,20,58,0.72)',
+                            }} className="fa-regular fa-times-circle-o fs-1 mb-1"/>
+                            <h5 className="text-danger">{error}</h5>
                         </div>
 
                     </> : <>
@@ -140,11 +156,11 @@ const SolveProblemDetails = () => {
                         {loading ?
                             <div
                                 className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
-                                <ClockLoader
-                                    color="#f6fef9"
-                                    size={70}
-                                    speedMultiplier={3}
-                                /></div> : <>
+                                <img style={{
+                                    height: '150px',
+                                    marginLeft: '3%'
+                                }} src="/assets/images/wired-outline-57-server.gif"/>
+                            </div> : <>
                                 {accepted ? <div
                                         className='d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden'>
                                         <img style={{
