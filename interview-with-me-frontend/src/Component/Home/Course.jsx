@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import http from "../../interceptors/http";
 import {Link} from "react-router-dom";
+import {HOST} from "../../constants/app";
 
 export default function Course() {
     const [courseCategories, setCourseCategories] = useState([]);
@@ -83,9 +84,9 @@ export default function Course() {
                                                 {/* <!-- Single Courses Start --> */}
                                                 <div className="single-course">
                                                     <div className="courses-image">
-                                                        <a href="course-details.html">
-                                                            <img src="assets/images/courses/courses-1.jpg"
-                                                            alt="Courses"/></a>
+                                                        <Link to={`/course-details/${item.id}`}>
+                                                            <img style={{ height:'150px' }} src={`${HOST}${item.Image}`} alt="Courses"/>
+                                                        </Link>
                                                     </div>
                                                     <div className="courses-content">
                                                         {/*<div className="top-meta">*/}

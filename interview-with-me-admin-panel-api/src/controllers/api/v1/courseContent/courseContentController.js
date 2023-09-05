@@ -41,8 +41,10 @@ const store = async (request,response) => {
         let {course_id,content_category_id,content_title,content} = request.body;
         let image = request.files.Image;
         let file_path = null;
+        let new_path = null;
         if(image){
-            file_path = './public/course_content/' + image.name
+            new_path = '/assets/course_content/' + image.name;
+            file_path = '.' + new_path
             image.mv(file_path);
         }
         const courseContent = await prisma.courseContent.create({
@@ -55,7 +57,7 @@ const store = async (request,response) => {
                 },
                 contentTitle : content_title,
                 content : content,
-                Image : file_path
+                Image : new_path
             }
         });
         logger.info('create course content');
@@ -89,11 +91,12 @@ const update = async (request,response) => {
         const id = parseInt(request.params.id) || 0;
         let {course_id,content_category_id,content_title,content} = request.body;
         let image = request.files.Image;
+        let file_path = null;
+        let new_path = null;
         if(image){
-            let file_path = './public/course' + image.name
+            new_path = '/assets/course_content/' + image.name;
+            file_path = '.' + new_path
             image.mv(file_path);
-        }else{
-            let file_path = null;
         }
         const courseContent = await prisma.courseContent.update({
             where : {
@@ -108,7 +111,7 @@ const update = async (request,response) => {
                 },
                 contentTitle : content_title,
                 content : content,
-                Image : file_path
+                Image : new_path
             }
         });
         logger.info('update course content');

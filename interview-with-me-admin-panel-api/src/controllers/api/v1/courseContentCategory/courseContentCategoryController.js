@@ -39,14 +39,16 @@ const store = async (request, response) => {
         let {content_category_title, course_id} = request.body;
         let course_image = request.files.Image;
         let file_path = null;
+        let new_path = null;
         if(course_image){
-            file_path = './public/course_content_category/' + course_image.name
+            new_path = '/assets/course_content_category/' + course_image.name;
+            file_path = '.' + new_path
             course_image.mv(file_path);
         }
         const courseContentCategory = await prisma.courseContentCategory.create({
             data: {
                 contentCategoryTitle: content_category_title,
-                Image: file_path,
+                Image: new_path,
                 course: {
                     connect: {id: parseInt(course_id)}
                 }
@@ -85,11 +87,13 @@ const update = async (request, response) => {
         let {content_category_title, course_id} = request.body;
         let course_image = request.files.Image;
         let file_path = null;
+        let new_path = null;
         if(course_image){
-            file_path = './public/course_content_category/' + course_image.name
+            new_path = '/assets/course_content_category/' + course_image.name;
+            file_path = '.' + new_path
             course_image.mv(file_path);
         }else{
-            file_path = '';
+            new_path = '';
         }
         const courseContentCategory = await prisma.courseContentCategory.update({
             where: {
@@ -97,7 +101,7 @@ const update = async (request, response) => {
             },
             data: {
                 contentCategoryTitle: content_category_title,
-                Image: file_path,
+                Image: new_path,
                 course: {
                     connect: {id: course_id}
                 }

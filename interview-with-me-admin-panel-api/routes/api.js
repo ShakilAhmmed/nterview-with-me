@@ -1,4 +1,4 @@
-import {Router} from "express";
+ import {Router} from "express";
 import * as loginController from "../src/controllers/api/v1/auth/loginController";
 import * as courseCategoryController from "../src/controllers/api/v1/courseCategory/courseCategoryController";
 import * as courseController from "../src/controllers/api/v1/course/courseController";
