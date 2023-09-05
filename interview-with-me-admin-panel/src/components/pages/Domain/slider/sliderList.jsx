@@ -1,5 +1,5 @@
 const sliderList = (props) => {
-    const {sliders, editSlider} = props;
+    const {sliders, editSlider, deleteSliders} = props;
 
     return (
         <>
@@ -28,7 +28,7 @@ const sliderList = (props) => {
                                                 <i className="fa fa-edit"></i>
                                             </button>
 
-                                            <button className="btn btn-de-dashed-danger">
+                                            <button onClick={()=> deleteSliders(slider.id)} className="btn btn-de-dashed-danger">
                                                 <i className="fa fa-times"></i>
                                             </button>
 

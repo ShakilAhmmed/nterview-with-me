@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 
 const CourseContentList = (props) => {
-    const {courseContents,editCourseContent} = props;
+    const {courseContents,editCourseContent, deleteCourseContent} = props;
 
     return (
         <>
@@ -36,7 +36,7 @@ const CourseContentList = (props) => {
                                             <button title='Edit Content' onClick={() => editCourseContent(course.id)} className="btn btn-de-dashed-info">
                                                 <i className="fa fa-edit"></i>
                                             </button>
-                                            <button title='Delete Content' className="btn btn-de-dashed-danger">
+                                            <button className="btn btn-de-dashed-danger" onClick={() => deleteCourseContent(course.id)}>
                                                 <i className="fa fa-times"></i>
                                             </button>
                                         </td>

@@ -1,5 +1,5 @@
 const QuizQuestionList = (props) => {
-    const {quizQuestions,editQuizQuestion} = props;
+    const {quizQuestions,editQuizQuestion, deleteQuizQuestions} = props;
     return (
         <>
             <div className="card">
@@ -28,7 +28,7 @@ const QuizQuestionList = (props) => {
                                                 <i className="fa fa-edit"></i>
                                             </button>
 
-                                            <button className="btn btn-de-dashed-danger">
+                                            <button onClick={()=> deleteQuizQuestions(question.id)} className="btn btn-de-dashed-danger">
                                                 <i className="fa fa-times"></i>
                                             </button>
 

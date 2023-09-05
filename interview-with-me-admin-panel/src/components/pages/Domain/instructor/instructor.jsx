@@ -45,6 +45,15 @@ const Instructor = () => {
             console.log(error)
         }
     }
+    const deleteCourseInstructors = async (id) => {
+        try {
+            await http.delete(`/course-instructor/${id}`);
+            toast.success("Course Instructor Deleted Successfully");
+            return getCourseInstructors();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         getCourseInstructors();
@@ -58,7 +67,10 @@ const Instructor = () => {
                     <InstructorForm instructorForm={instructorForm}/>
                 </div>
                 <div className="col-lg-8">
-                    <InstructorList courseInstructors={courseInstructors} />
+                    <InstructorList
+                        courseInstructors={courseInstructors}
+                        deleteCourseInstructors={deleteCourseInstructors}
+                    />
                 </div>
             </div>
         </>

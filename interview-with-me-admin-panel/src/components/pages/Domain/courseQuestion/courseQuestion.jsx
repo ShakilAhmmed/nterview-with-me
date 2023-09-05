@@ -19,6 +19,16 @@ const CourseQuestion = () => {
             console.log(error)
         }
     }
+    const deleteQuestion = async (id) => {
+        try {
+            await http.delete(`/course-question/${id}`);
+            toast.success("Course Question Deleted Successfully");
+            return getCourseQuestion();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     const editCourseQuestion = async () => {
         try {
@@ -40,6 +50,7 @@ const CourseQuestion = () => {
                     <CourseQuestionList
                         courseQuestions={courseQuestions}
                         editCourseQuestion={editCourseQuestion}
+                        deleteQuestion={deleteQuestion}
                     />
                 </div>
             </div>

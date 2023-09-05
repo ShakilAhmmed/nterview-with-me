@@ -59,6 +59,16 @@ const CourseCategory = () => {
             console.log(error)
         }
     }
+    const deleteCategory = async (id) => {
+        try {
+            await http.delete(`/course-categories/${id}`);
+            toast.success("Category Deleted Successfully");
+            return getCourseCategories();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     useEffect(() => {
         getCourseCategories();
@@ -72,7 +82,7 @@ const CourseCategory = () => {
                 <CourseCategoryForm courseCategoryForm={courseCategoryForm} />
                 </div>
                 <div className="col-lg-8">
-                    <CourseCategoryList courseCategories={courseCategories} editCategory={editCategory} />
+                    <CourseCategoryList courseCategories={courseCategories} editCategory={editCategory}   deleteCategory={deleteCategory}/>
                 </div>
             </div>
         </>

@@ -40,6 +40,16 @@ const Quiz = () => {
             console.log(error)
         }
     }
+    const deleteQuizs = async (id) => {
+        try {
+            await http.delete(`/quizs/${id}`);
+            toast.success("Quiz Deleted Successfully");
+            return getQuizs();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     useEffect(() => {
         getQuizs();
@@ -53,7 +63,7 @@ const Quiz = () => {
                     <QuizForm quizForm={quizForm} />
                 </div>
                 <div className="col-lg-8">
-                    <QuizList quizs={quizs} />
+                    <QuizList quizs={quizs} deleteQuizs={deleteQuizs} />
                 </div>
             </div>
         </>
