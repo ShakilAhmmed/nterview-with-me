@@ -2,10 +2,13 @@ import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import {Link, Route, useParams} from 'react-router-dom'
 import http from "../../interceptors/http";
+import {HOST} from "../../constants/app";
 
 export default function CourseList() {
     const [courseCategories, setCourseCategories] = useState([]);
     const [courses, setCourses] = useState([]);
+    const [searchIds, setSearchIds] = useState([]);
+    const [totalCourse, setTotalCourse] = useState(0);
     const getCourseCategories = async () => {
         try {
             const {data: data} = await http.get(`/fetch-course-category`)
@@ -24,10 +27,58 @@ export default function CourseList() {
         }
     }
 
+    const getTotalCourse = async () => {
+        try {
+            const {data: data} = await http.get(`/frontend/fetch-total-course`)
+            setTotalCourse(data.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    function handleSearch(id) {
+        const findValue = [...searchIds].findIndex((v) => v == id);
+        console.log({
+            findValue,
+            searchIds
+        })
+        if (findValue >= 0) {
+            const newIds = [...searchIds.splice(findValue, 1)];
+            setSearchIds(newIds);
+            return
+        }
+        setSearchIds([
+            ...searchIds,
+            id
+        ]);
+
+    }
+
+    useEffect(() => {
+        searchWiseCourse(searchIds);
+    }, [searchIds]);
+
+    const searchWiseCourse = async (id) => {
+        try {
+
+            const {data: data} = await http.get(`/frontend/fetch-multiple-category-wise-course`, {
+                params : {
+                    search : searchIds.join(',')
+                }
+            })
+            setCourses(data.data)
+            setTotalCourse(data.data.length)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getCourseCategories();
         getCourses();
+        getTotalCourse();
     }, []);
+    console.log(searchIds, 'searchIds')
     return (
         <>
             <div className="section section-padding">
@@ -41,33 +92,33 @@ export default function CourseList() {
                                 {/* <!-- Course Top Bar Start --> */}
                                 <div className="course-top-bar">
                                     <div className="course-top-text">
-                                        <p>We found <span>78</span> Courses For You</p>
+                                        <p>We found <span>{totalCourse}</span> Courses For You</p>
                                     </div>
                                     <div className="course-top-inner">
-                                        <ul className="course-top-menu">
-                                            <span className="label">View</span>
-                                            <ul className="nav">
-                                                <li>
-                                                    <button data-bs-toggle="tab" data-bs-target="#grid"><i
-                                                        className="fa fa-th-large"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button className="active" data-bs-toggle="tab"
-                                                            data-bs-target="#list"><i className="fa fa-th-list"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </ul>
-                                        <div className="course-top-action">
-                                            <span className="label"><i className="fa fa-align-left"
-                                                                       aria-hidden="true"></i> Sort By:</span>
-                                            <select className="select">
-                                                <option data-display="Default" value="1">Default</option>
-                                                <option value="1">Option 01</option>
-                                                <option value="2">Option 02</option>
-                                                <option value="3">Option 03</option>
-                                            </select>
-                                        </div>
+                                        {/*<ul className="course-top-menu">*/}
+                                        {/*    <span className="label">View</span>*/}
+                                        {/*    <ul className="nav">*/}
+                                        {/*        <li>*/}
+                                        {/*            <button data-bs-toggle="tab" data-bs-target="#grid"><i*/}
+                                        {/*                className="fa fa-th-large"></i></button>*/}
+                                        {/*        </li>*/}
+                                        {/*        <li>*/}
+                                        {/*            <button className="active" data-bs-toggle="tab"*/}
+                                        {/*                    data-bs-target="#list"><i className="fa fa-th-list"></i>*/}
+                                        {/*            </button>*/}
+                                        {/*        </li>*/}
+                                        {/*    </ul>*/}
+                                        {/*</ul>*/}
+                                        {/*<div className="course-top-action">*/}
+                                        {/*    <span className="label"><i className="fa fa-align-left"*/}
+                                        {/*                               aria-hidden="true"></i> Sort By:</span>*/}
+                                        {/*    <select className="select">*/}
+                                        {/*        <option data-display="Default" value="1">Default</option>*/}
+                                        {/*        <option value="1">Option 01</option>*/}
+                                        {/*        <option value="2">Option 02</option>*/}
+                                        {/*        <option value="3">Option 03</option>*/}
+                                        {/*    </select>*/}
+                                        {/*</div>*/}
                                     </div>
                                 </div>
                                 {/* <!-- Course Top Bar End --> */}
@@ -82,21 +133,31 @@ export default function CourseList() {
                                             {courses.map((course) => {
                                                     return (
                                                         <>
-                                                            <div className="single-course-list">
+                                                            <div className="single-course-list" key={course.id}>
                                                                 <div className="course-image">
-                                                                    <a href="course-details.html"><img
-                                                                        src="assets/images/courses/courses-5.jpg"
-                                                                        alt="Courses"/></a>
+                                                                    <Link to="">
+                                                                        <img style={{width: '400px'}}
+                                                                             src={`${HOST}${course.Image}`} alt="Courses"/>
+                                                                    </Link>
                                                                 </div>
                                                                 <div className="course-content">
                                                                     <div className="top-meta">
-                                                                        <a className="tag" href="#">Beginner</a>
+                                                                        {course.courseLevel && course.courseLevel == 1 ?
+                                                                            <span
+                                                                                className="tag">Beginner</span> : course.courseLevel == 2 ?
+                                                                                <span className="tag">Beginner</span> :
+                                                                                <span className="tag">Expert</span>
+                                                                        }
+                                                                        {/*<Link className="tag" to="#">Beginner</Link>*/}
                                                                     </div>
                                                                     <h3 className="title">
-                                                                        <Link to={`/course-details/${course.id}`}>{course.name}</Link></h3>
-                                                                        <span className="author-name">Andrew paker</span>
+                                                                        <Link
+                                                                            to={`/course-details/${course.id}`}>{course.name}</Link>
+                                                                    </h3>
+                                                                    <span
+                                                                        className="author-name">{course.instructor.name}</span>
 
-                                                                    <p>{course.shortDescription}</p>
+                                                                    <p>{course.shortDescription.substr(0, 100) + '....'}</p>
 
                                                                     <div className="bottom-meta">
                                                                         <p className="meta-action"><i
@@ -130,10 +191,12 @@ export default function CourseList() {
                                             <ul className="checkbox-list">
                                                 {courseCategories.map(({id, name}, index) =>
                                                     <li className="form-check" key={id}>
-                                                        <input className="form-check-input" type="checkbox" value=""
-                                                               id={id}/>
+                                                        <input onClick={() => handleSearch(id)}
+                                                               className="form-check-input"
+                                                               id={name}
+                                                               type="checkbox" value=""/>
                                                         <label className="form-check-label"
-                                                               for="checkbox3">{name}</label>
+                                                               for={name}>{name}</label>
                                                     </li>
                                                 )}
                                             </ul>

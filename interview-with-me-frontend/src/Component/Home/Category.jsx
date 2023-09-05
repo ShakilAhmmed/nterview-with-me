@@ -1,6 +1,24 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import http from "../../interceptors/http";
+import {HOST} from "../../constants/app";
+import {Link} from "react-router-dom";
 
 export default function Category() {
+    const [categories, setCourseCategory] = useState([]);
+
+    const getCourseCategories = async () => {
+        try {
+            const {data: data} = await http.get(`/frontend/fetch-course-category`);
+            setCourseCategory(data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getCourseCategories();
+    }, []);
+    
   return (
     <>
         {/* <!-- Top Category End --> */}
@@ -16,102 +34,28 @@ export default function Category() {
                 {/* <!-- Category Wrapper Start --> */}
                 <div className="category-wrapper">
                     <div className="row">
-                        <div className="col-lg-4 col-sm-6">
-                            {/* <!-- Single Category Start --> */}
-                            <div className="single-category">
-                                <div className="category-image">
-                                    <a href="course-grid.html"><img src="assets/images/category-1.jpg" alt="Category"/></a>
-                                </div>
-                                <div className="category-content">
-                                    <div className="category-title">
-                                        <h4 className="title"><a href="course-grid.html">Web Design</a></h4>
-                                        <p>10 Course</p>
-                                    </div>
-                                    <a href="course-grid.html" className="category-link"><i className="fa fa-long-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            {/* <!-- Single Category End --> */}
-                        </div>
-                        <div className="col-lg-4 col-sm-6">
-                            {/* <!-- Single Category Start --> */}
-                            <div className="single-category">
-                                <div className="category-image">
-                                    <a href="course-grid.html"><img src="assets/images/category-2.jpg" alt="Category"/></a>
-                                </div>
-                                <div className="category-content">
-                                    <div className="category-title">
-                                        <h4 className="title"><a href="course-grid.html">Web Design</a></h4>
-                                        <p>10 Course</p>
-                                    </div>
-                                    <a href="course-grid.html" className="category-link"><i className="fa fa-long-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            {/* <!-- Single Category End --> */}
-                        </div>
-                        <div className="col-lg-4 col-sm-6">
-                            {/* <!-- Single Category Start --> */}
-                            <div className="single-category">
-                                <div className="category-image">
-                                    <a href="course-grid.html"><img src="assets/images/category-3.jpg" alt="Category"/></a>
-                                </div>
-                                <div className="category-content">
-                                    <div className="category-title">
-                                        <h4 className="title"><a href="course-grid.html">Web Design</a></h4>
-                                        <p>10 Course</p>
-                                    </div>
-                                    <a href="course-grid.html" className="category-link"><i className="fa fa-long-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            {/* <!-- Single Category End --> */}
-                        </div>
-                        <div className="col-lg-4 col-sm-6">
-                            {/* <!-- Single Category Start --> */}
-                            <div className="single-category">
-                                <div className="category-image">
-                                    <a href="course-grid.html"><img src="assets/images/category-4.jpg" alt="Category"/></a>
-                                </div>
-                                <div className="category-content">
-                                    <div className="category-title">
-                                        <h4 className="title"><a href="course-grid.html">Web Design</a></h4>
-                                        <p>10 Course</p>
-                                    </div>
-                                    <a href="course-grid.html" className="category-link"><i className="fa fa-long-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            {/* <!-- Single Category End --> */}
-                        </div>
-                        <div className="col-lg-4 col-sm-6">
-                            {/* <!-- Single Category Start --> */}
-                            <div className="single-category">
-                                <div className="category-image">
-                                    <a href="course-grid.html"><img src="assets/images/category-5.jpg" alt="Category"/></a>
-                                </div>
-                                <div className="category-content">
-                                    <div className="category-title">
-                                        <h4 className="title"><a href="course-grid.html">Web Design</a></h4>
-                                        <p>10 Course</p>
-                                    </div>
-                                    <a href="course-grid.html" className="category-link"><i className="fa fa-long-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            {/* <!-- Single Category End --> */}
-                        </div>
-                        <div className="col-lg-4 col-sm-6">
-                            {/* <!-- Single Category Start --> */}
-                            <div className="single-category">
-                                <div className="category-image">
-                                    <a href="course-grid.html"><img src="assets/images/category-6.jpg" alt="Category"/></a>
-                                </div>
-                                <div className="category-content">
-                                    <div className="category-title">
-                                        <h4 className="title"><a href="course-grid.html">Web Design</a></h4>
-                                        <p>10 Course</p>
-                                    </div>
-                                    <a href="course-grid.html" className="category-link"><i className="fa fa-long-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            {/* <!-- Single Category End --> */}
-                        </div>
+                        {categories && categories.map(function (category){
+                           return (
+                               <div className="col-lg-4 col-sm-6">
+                                   {/* <!-- Single Category Start --> */}
+                                   <div className="single-category">
+                                       <div className="category-image">
+                                           <Link to="/"><img style={{height:'180px'}} src={`${HOST}${category.courseImage}`} alt="Category"/></Link>
+                                       </div>
+                                       <div className="category-content">
+                                           <div className="category-title">
+                                               <h4 className="title"><Link to="/">{category.name}</Link></h4>
+                                               <p>{category.Course.length}</p>
+                                           </div>
+                                           <Link to="/" className="category-link">
+                                               <i className="fa fa-long-arrow-right"></i>
+                                           </Link>
+                                       </div>
+                                   </div>
+                                   {/* <!-- Single Category End --> */}
+                               </div>
+                           );
+                        })}
                     </div>
                 </div>
                 {/* <!-- Category Wrapper End --> */}

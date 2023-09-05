@@ -31,6 +31,7 @@ const swaggerSpec = swaggerJSDoc(options);
 application.use( bodyParser({ extended: false }) )
 application.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 application.use(logger('dev'));
+application.use(express.static('public'));
 // application.use(httpLoggerService);
 application.use(express.json());
 application.use(express.urlencoded({extended: true}));

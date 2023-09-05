@@ -1,4 +1,4 @@
- import {Router} from "express";
+import {Router} from "express";
 import * as loginController from "../src/controllers/api/v1/auth/loginController";
 import * as courseCategoryController from "../src/controllers/api/v1/courseCategory/courseCategoryController";
 import * as courseController from "../src/controllers/api/v1/course/courseController";
@@ -21,7 +21,9 @@ import * as fetchCourseContentDetails from "../src/controllers/api/v1/courseCont
 
 import * as commonApiController from "../src/controllers/api/v1/commonAPI/commonAPIController";
 import * as frontendApiController from "../src/controllers/api/v1/frontend/frontendApiController";
-import * as codingChallenge from "../src/controllers/api/v1/codingChallenge/codingChanllenge"
+import * as codingChallenge from "../src/controllers/api/v1/codingChallenge/codingChanllenge";
+import * as instructorController from "../src/controllers/api/v1/instructor/instructorController";
+import * as sliderController from "../src/controllers/api/v1/slider/sliderController"
 
 import loginRequestValidate from "../src/formRequests/v1/auth/loginRequest";
 import registerRequest from "../src/formRequests/v1/auth/registerRequest";
@@ -74,6 +76,20 @@ router.get('/course-categories/:id', courseCategoryController.show);
 router.put('/course-categories/:id', fileUpload(), courseCategoryUpdateRequestValidate(), courseCategoryController.update);
 router.delete('/course-categories/:id', courseCategoryController.destroy);
 
+// instructor
+router.get('/course-instructor', instructorController.index);
+router.post('/course-instructor', fileUpload(), instructorController.store);
+router.get('/course-instructor/:id', instructorController.show);
+router.put('/course-instructor/:id', fileUpload(), instructorController.update);
+router.delete('/course-instructor/:id', instructorController.destroy);
+
+// slider
+router.get('/slider', sliderController.index);
+router.post('/slider', fileUpload(), sliderController.store);
+router.get('/slider/:id', sliderController.show);
+router.put('/slider/:id', fileUpload(), sliderController.update);
+router.delete('/slider/:id', sliderController.destroy);
+
 //course
 router.get('/courses', courseController.index);
 router.post('/courses', fileUpload(), courseRequestValidate(), courseController.store);
@@ -116,7 +132,7 @@ router.post('/course-progress', courseProgressRequestValidate(), courseProgressC
 router.get('/course-progress/:id', courseProgressController.show);
 router.put('/course-progress/:id', courseProgressRequestValidate(), courseProgressController.update);
 router.delete('/course-progress/:id', courseProgressController.destroy);
-router.get('/is-content-complete/:id',courseProgressController.isContentComplete);
+router.get('/is-content-complete/:id', courseProgressController.isContentComplete);
 
 //quiz
 router.get('/quizs', quizController.index);
@@ -175,10 +191,10 @@ router.get('/frontend/fetch-category-wise-courses/:id', frontendApiController.fe
 router.get('/frontend/fetch-course-details/:id', frontendApiController.fetchCourseDetails);
 router.get('/frontend/fetch-course-contents/:id', frontendApiController.fetchCourseContent)
 
-router.get('/frontend/fetch-reading-content/:course_id/:id',frontendApiController.fetchReadingContent);
-router.get('/frontend/fetch-quiz',frontendApiController.fetchQuizTopic);
-router.get('/frontend/search-quiz-question',frontendApiController.searchQuizQuestion);
-router.get('/frontend/check-user-subscribed/:email/:id',frontendApiController.checkUserSubscribedCourse);
+router.get('/frontend/fetch-reading-content/:course_id/:id', frontendApiController.fetchReadingContent);
+router.get('/frontend/fetch-quiz', frontendApiController.fetchQuizTopic);
+router.get('/frontend/search-quiz-question', frontendApiController.searchQuizQuestion);
+router.get('/frontend/check-user-subscribed/:email/:id', frontendApiController.checkUserSubscribedCourse);
 router.get('/frontend/fetch-reading-content/:course_id/:id', frontendApiController.fetchReadingContent);
 router.get('/frontend/fetch-quiz', frontendApiController.fetchQuizTopic);
 router.get('/frontend/search-quiz-question', frontendApiController.searchQuizQuestion);
@@ -186,6 +202,9 @@ router.get('/frontend/fetch-quiz-question/:id', frontendApiController.quizQuesti
 router.get('/frontend/fetch-problems', frontendApiController.fetchProblems);
 router.get('/frontend/fetch-submissions', frontendApiController.fetchSubmissions);
 router.get('/frontend/fetch-problems/:question_id', frontendApiController.fetchSingleProblem);
+router.get('/frontend/fetch-sliders', frontendApiController.fetchSliders);
+router.get('/frontend/fetch-latest-course', frontendApiController.fetchLatestCourse);
+router.get('/frontend/fetch-multiple-category-wise-course', frontendApiController.fetchMultipleCategoryCourse);
 
 router.post('/submission', submission)
 export default router;

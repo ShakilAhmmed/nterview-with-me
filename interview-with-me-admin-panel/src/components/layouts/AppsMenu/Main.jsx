@@ -57,11 +57,11 @@ const Main = () => {
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/">Quiz Participators</Link>
+                            <Link className={location.pathname === "/instructors" ? 'nav-link' : 'nav-link-disable'} to="/instructors">Course Instructor</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/">Participator Progress</Link>
+                            <Link className={location.pathname === "/sliders" ? 'nav-link' : 'nav-link-disable'} to="/sliders">Sliders</Link>
                         </li>
 
                     </ul>

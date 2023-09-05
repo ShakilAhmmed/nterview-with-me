@@ -23,10 +23,10 @@ export default function Home() {
             {/*<Counter />*/}
             <Course />
             <Category />
-            <Testimonial />
-            <Brand />
+            {/*<Testimonial />*/}
+            {/*<Brand />*/}
             <Blog />
-            <Action />
+            {/*<Action />*/}
             <Footer />
         </>
     )

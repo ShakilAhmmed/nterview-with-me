@@ -17,6 +17,8 @@ import CourseQuestionForm from "./pages/Domain/courseQuestion/courseQuestionForm
 import CourseForm from "./pages/Domain/course/courseForm";
 import CodingChallengeAdd from "./pages/Domain/codingChallenge/CodingChallengeAdd";
 import CodingChallengeList from "./pages/Domain/codingChallenge/CodingChallengeList";
+import Instructor from "./pages/Domain/instructor/instructor";
+import Slider from "./pages/Domain/slider/slider";
 
 const Layout = () => {
     return (<>
@@ -51,6 +53,8 @@ const Layout = () => {
                                 <Route path="/quiz-questions" element={<QuizQuestion/>}/>
                                 <Route path="/new-course-content" element={<CourseContentForm/>}/>
                                 <Route path="/new-course-question" element={<CourseQuestionForm/>}/>
+                                <Route path="/instructors" element={<Instructor/>}/>
+                                <Route path="/sliders" element={<Slider />}/>
                             </Routes>
                         </div>
                         <RightBar/>

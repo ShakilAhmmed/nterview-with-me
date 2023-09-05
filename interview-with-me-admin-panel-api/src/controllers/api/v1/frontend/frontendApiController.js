@@ -1,17 +1,18 @@
 import prisma from "../../../../services/prisma/prisma";
-import { error, success } from "../../../../helpers/apiResponse";
+import {error, success} from "../../../../helpers/apiResponse";
 import {
     HTTP_INTERNAL_SERVER_ERROR,
     HTTP_OK
 } from "../../../../constants/statusCode";
 import logger from "../../../../services/logger/loggerService";
-import { re } from "@babel/core/lib/vendor/import-meta-resolve";
+import {re} from "@babel/core/lib/vendor/import-meta-resolve";
 
 const fetchCourse = async (request, response) => {
     try {
         const course = await prisma.course.findMany({
             include: {
-                courseCategory: true
+                courseCategory: true,
+                instructor: true
             }
         });
         return response.status(HTTP_OK).send(course, 'Course Fetch Successfully', HTTP_OK)
@@ -170,7 +171,6 @@ const searchQuizQuestion = async (request, response) => {
 }
 
 
-
 const quizQuestions = async (request, response) => {
     try {
         const quizId = request.params.id;
@@ -199,7 +199,7 @@ const quizQuestions = async (request, response) => {
                     'choice_three': question.courseQuestion.choiceThree,
                     'choice_four': question.courseQuestion.choiceFour,
                 },
-                'choice_answer' : '',
+                'choice_answer': '',
                 'is_multi': parseInt(question.courseQuestion.isMulti),
             }
         })
@@ -283,6 +283,42 @@ const fetchSingleProblem = async (request, response) => {
     return response.status(HTTP_OK).send(success(problem, 'problems fetched successfully', HTTP_OK));
 }
 
+const fetchSliders = async (request, response) => {
+    const sliders = await prisma.slider.findMany();
+    return response.status(HTTP_OK).send(success(sliders, 'Slider fetched successfully', HTTP_OK));
+}
+
+const fetchLatestCourse = async (request, response) => {
+    const latestCourse = await prisma.course.findMany({
+        include: {
+            instructor: true
+        },
+        orderBy: {
+            id: 'desc'
+        },
+        take: 3
+    });
+    return response.status(HTTP_OK).send(success(latestCourse, 'fetched successfully', HTTP_OK));
+}
+
+const fetchMultipleCategoryCourse = async (request, response) => {
+    try {
+        const Id = request.query.search.split(',').map(v => parseInt(v));
+        const course = await prisma.course.findMany({
+            where: {
+                categoryId: {in: Id}
+            },
+            include: {
+                courseCategory: true,
+                instructor: true
+            }
+        });
+        return response.status(HTTP_OK).send(success(course, 'fetched successfully', HTTP_OK));
+    } catch (error) {
+
+    }
+}
+
 export {
     fetchCourse,
     fetchCourseDetails,
@@ -298,4 +334,7 @@ export {
     fetchSubmissions,
     fetchSingleProblem,
     quizQuestions,
+    fetchSliders,
+    fetchLatestCourse,
+    fetchMultipleCategoryCourse
 }

@@ -1,10 +1,27 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Carousel} from "react-responsive-carousel";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {Link} from "react-router-dom";
-
+import http from "../../interceptors/http";
+import {HOST} from "../../constants/app";
 
 export default function Slider() {
+    const [sliders, setSlider] = useState([]);
+
+    const getSliders = async () => {
+        try {
+            const {data: data} = await http.get(`/frontend/fetch-sliders`);
+            setSlider(data.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getSliders();
+    }, []);
+    console.log(sliders,'sliders')
+
     return (
         <>
             <div class="slider-section section">
@@ -49,18 +66,13 @@ export default function Slider() {
                                         interval={1000}
                                         showArrows={false}
                                     >
-                                        <div>
-                                            <img alt="" src="assets/images/courses/courses-1.jpg"/>
-                                        </div>
-                                        <div>
-                                            <img alt="" src="assets/images/courses/courses-2.jpg"/>
-                                        </div>
-                                        <div>
-                                            <img alt="" src="assets/images/courses/courses-3.jpg"/>
-                                        </div>
-                                        <div>
-                                            <img alt="" src="assets/images/courses/courses-4.jpg"/>
-                                        </div>
+                                        {sliders && sliders.map(function (slider) {
+                                            return (
+                                                <div>
+                                                    <img alt="" src={`${HOST}${slider.image}`}/>
+                                                </div>
+                                            );
+                                        })}
                                     </Carousel>
 
                                     {/*<div className="image-shape-01 parallaxed">*/}

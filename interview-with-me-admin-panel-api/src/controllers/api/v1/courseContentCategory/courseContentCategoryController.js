@@ -90,7 +90,7 @@ const update = async (request, response) => {
         let new_path = null;
         if(course_image){
             new_path = '/assets/course_content_category/' + course_image.name;
-            file_path = '.' + new_path
+            file_path = './public' + new_path
             course_image.mv(file_path);
         }else{
             new_path = '';

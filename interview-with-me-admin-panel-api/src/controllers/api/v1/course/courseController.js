@@ -112,7 +112,8 @@ const update = async (request, response) => {
         let new_path = null;
         if (course_image) {
             new_path = '/assets/course/' + course_image.name;
-            file_path = '.' + new_path;            course_image.mv(file_path);
+            file_path = './public' + new_path;
+            course_image.mv(file_path);
         }
         const course = await prisma.course.update({
             where: {
