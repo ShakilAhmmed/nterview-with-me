@@ -178,17 +178,29 @@ const SolveProblemDetails = () => {
                                     /></div> : <>
                                     {accepted ? <div
                                             className='d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden'>
-                                            <i className="fa-regular fa-square-check fs-1 green mb-1"/>
-                                            <h5 className="green">Accepted</h5>
+                                            <img style={{
+                                                height : '150px',
+                                                marginLeft : '3%'
+                                            }} src="/assets/images/wired-flat-1103-confetti.gif"/>
+                                            <i style={{
+                                                fontSize: '30px',
+                                                color: '#2fb92fb8',
+                                            }} className="fa-regular fa-square-check fs-1 mb-1"/>
+                                            <h5 className="text-success">Accepted</h5>
                                             <p>{m}</p>
                                         </div> :
+                                        <div className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
+                                            <img style={{
+                                                height : '150px',
+                                                marginLeft : '0%'
+                                            }} src="/assets/images/wired-outline-1122-thumb-down.gif"/>
                                         <div className="p-3 result grey rounded overflow-hidden">
                                             <div className="d-flex justify-content-between">
                                                 <h6 className="text-danger">Wrong Answer</h6>
                                             </div>
                                             <div className="mb-3">
                                                 <label htmlFor="formGroupExampleInput" className="form-label">
-                                                    Inputs
+                                                    <b>INPUTS</b>
                                                 </label>
                                                 <input
                                                     value={input}
@@ -203,7 +215,7 @@ const SolveProblemDetails = () => {
                                             <div className="row">
                                                 <div className="mb-3 col">
                                                     <label htmlFor="formGroupExampleInput2" className="form-label">
-                                                        Output
+                                                        <b>OUTPUT</b>
                                                     </label>
                                                     <input
                                                         value={output}
@@ -217,7 +229,7 @@ const SolveProblemDetails = () => {
                                                 </div>
                                                 <div className="mb-3 col">
                                                     <label htmlFor="formGroupExampleInput2" className="form-label">
-                                                        Expected
+                                                        <b>EXPECTED</b>
                                                     </label>
                                                     <input
                                                         value={expected}
@@ -231,6 +243,7 @@ const SolveProblemDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
 
                                     }
                                 </>}
@@ -242,11 +255,56 @@ const SolveProblemDetails = () => {
                         </div>
 
                     </>}
+                    <div className="d-flex justify-content-end">
+                        <button onClick={run} style={{marginRight : '1%'}} type="button" className="btn btn-info btn-sm">
+                            SUBMIT &nbsp;<i className="fa fa-caret-right"></i>
+                        </button>
+                    </div>
+                    <div className="row p-4">
+                        <div className="col-md-12 d-flex gap-3">
+                            <div className="col-sm-6 card" style={{
+                                marginTop: '3%',
+                                // marginLeft : '5%'
+                            }}>
+                                <div style={{margin: '2%'}}>
+                        <span className="p-2"
+                              dangerouslySetInnerHTML={{__html: Q?.problem_statement}}></span>
+                                </div>
+                            </div>
 
-                </div>
+                            <div className="col-sm-6 card" style={{
+                                marginTop: '3%',
+                            }}>
 
-            </div>
+                                {AceEditor && (
+                                    <AceEditor
+                                        placeholder={"Enter your code here"}
+                                        mode={"python"}
+                                        height={620}
+                                        width='95%'
+                                        theme="github"
+                                        name="blah2"
+                                        onChange={onChange}
+                                        fontSize={20}
+                                        showPrintMargin={true}
+                                        showGutter={true}
+                                        highlightActiveLine={true}
+                                        value={code}
+                                        setOptions={{
+                                            enableBasicAutocompletion: true,
+                                            enableLiveAutocompletion: true,
+                                            enableSnippets: true,
+                                            showLineNumbers: true,
+                                            tabSize: 4,
+                                        }}></AceEditor>
+                                )}
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
         </>
+            </div>
+            </>
     )
 }
 
