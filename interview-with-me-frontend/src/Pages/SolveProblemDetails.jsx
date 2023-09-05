@@ -131,7 +131,7 @@ const SolveProblemDetails = () => {
         <>
             <Header/>
             <Offcanvas/>
-            <PageBannerStart name="Problem Statement" minHeight="280"/>
+            <PageBannerStart name={Q?.title} minHeight="280" title="Problem Statement"/>
 
             <div className="row">
 
@@ -240,7 +240,7 @@ const SolveProblemDetails = () => {
 
                 </>}
                 <div className="d-flex justify-content-end">
-                    <button onClick={run} style={{marginRight: '1%'}} type="button" className="btn btn-info btn-sm">
+                    <button onClick={run} style={{marginRight: '1%'}} type="button" className="btn btn-outline-info btn-sm">
                         SUBMIT &nbsp;<i className="fa fa-caret-right"></i>
                     </button>
                 </div>
@@ -251,6 +251,13 @@ const SolveProblemDetails = () => {
                             // marginLeft : '5%'
                         }}>
                             <div style={{margin: '2%'}}>
+                                <a className="badge-interview badge-interview-primary text-light" href="#">
+                                    {Q?.level.toUpperCase()}
+                                </a>
+                                &nbsp;
+                                <a className="badge-interview badge-interview-info text-light" href="#">
+                                    {Q?.question_type.toUpperCase()}
+                                </a>
                         <span className="p-2"
                               dangerouslySetInnerHTML={{__html: Q?.problem_statement}}></span>
                             </div>

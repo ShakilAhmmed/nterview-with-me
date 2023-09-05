@@ -61,8 +61,7 @@ export default function StudyPlan() {
             values['email'] = localStorage.getItem('userEmail');
             values['start_date'] = new Date(values.start_date);
             values['end_date'] = values.end_date ? new Date(values.end_date) : null;
-            values['status'] = 0;
-            values['color'] = getColor;
+            values['status'] = 1;
             http.post(`/create-study-plan`, values)
                 .then(() => {
                     toast.success('Create Successfully !', {
@@ -145,7 +144,7 @@ export default function StudyPlan() {
                                     <div className="col-md-6">
                                         <label id='start_date'>Start Date</label>
                                         <input type="date"
-                                               className="form-control"
+                                               className="form-control form-control-sm"
                                                id='start_date'
                                                onChange={studyPlanForm.handleChange}
                                             // onBlur={studyPlanForm.handleBlur}
@@ -162,7 +161,7 @@ export default function StudyPlan() {
                                     <div className="col-md-6">
                                         <label id='end_date'>End Date</label>
                                         <input type="date"
-                                               className="form-control"
+                                               className="form-control form-control-sm"
                                                id='end_date'
                                                onChange={studyPlanForm.handleChange}
                                                onBlur={studyPlanForm.handleBlur}
@@ -179,7 +178,7 @@ export default function StudyPlan() {
                                     <div className="col-md-12">
                                         <label id='title'>Title</label>
                                         <input type="text"
-                                               className="form-control"
+                                               className="form-control form-control-sm"
                                                id='title'
                                                onChange={studyPlanForm.handleChange}
                                                onBlur={studyPlanForm.handleBlur}
@@ -196,11 +195,11 @@ export default function StudyPlan() {
                                     <div className="col-md-12">
                                         <label id='color'>Color</label>
                                         <input type="color"
-                                               className="form-control"
+                                               name="color"
                                                id='color'
-                                               onChange={e => setColor(e.target.value)}
+                                               onChange={studyPlanForm.handleChange}
                                                onBlur={studyPlanForm.handleBlur}
-                                               value={getColor}
+                                               value={studyPlanForm.values.color}
                                         />
                                         <div className="text-danger">
                                             {

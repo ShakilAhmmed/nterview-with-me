@@ -34,7 +34,8 @@ export default function SolveProblem() {
                             <a className="btn btn-outline-warning" style={{marginLeft: '13px'}}>
                                 <Link
                                     className="text-black"
-                                    to={`/my-submissions`}>My Submissions &nbsp; <i className="fa fa-arrow-right"></i></Link>
+                                    to={`/my-submissions`}>My Submissions &nbsp; <i
+                                    className="fa fa-arrow-right"></i></Link>
                             </a>
 
                         </div>
@@ -43,7 +44,9 @@ export default function SolveProblem() {
                                 <div className="col-lg-12" style={{margin: '1%'}} key={problem.id}>
                                     <div className="card"
                                          style={{boxShadow: '0 4px 10px rgba(0,0,0,0.16), 0 4px 10px rgba(0,0,0,0.23)'}}>
-                                        <div className="single-course-list p-4">
+                                        <div className="single-course-list p-4" style={{
+                                            minHeight: '0',
+                                        }}>
                                             <div className="course-content">
                                                 <div className="top-meta">
                                                     <a className="tag" href="#">
@@ -67,7 +70,7 @@ export default function SolveProblem() {
                                                 </div>
                                                 <span
                                                     dangerouslySetInnerHTML={{__html: problem.problem_statement.substr(0, 100) + '....'}}>
-                                                    </span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
