@@ -30,8 +30,13 @@ export default function SolveProblem() {
             <div className="section section-padding">
                 <div className="container">
                     <div className='row'>
-                        <div class="col-sm-2">
-                            <button className={'btn btn-outline-success'} style={{marginLeft: '13px'}}>My Submissions</button>
+                        <div class="d-flex justify-content-end">
+                            <a className="btn btn-outline-warning" style={{marginLeft: '13px'}}>
+                                <Link
+                                    className="text-black"
+                                    to={`/my-submissions`}>My Submissions &nbsp; <i className="fa fa-arrow-right"></i></Link>
+                            </a>
+
                         </div>
                         {problems.map((problem, index) => {
                             return (

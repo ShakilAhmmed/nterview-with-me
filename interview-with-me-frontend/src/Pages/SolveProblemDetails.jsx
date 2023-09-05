@@ -125,79 +125,47 @@ const SolveProblemDetails = () => {
             <PageBannerStart name="Problem Statement" minHeight="280"/>
 
             <div className="row">
-                <div className="col-sm-6">
-                    <div style={{margin: '2%'}}>
-                        <span className="p-2"
-                              dangerouslySetInnerHTML={{__html: Q?.problem_statement}}></span>
-                    </div>
-                </div>
-                <div className="col-sm-6">
 
-                    {AceEditor && (
-                        <AceEditor
-                            placeholder={"Enter your code here"}
-                            mode={"python"}
-                            height={500}
-                            width='95%'
-                            theme="github"
-                            name="blah2"
-                            onChange={onChange}
-                            fontSize={20}
-                            showPrintMargin={true}
-                            showGutter={true}
-                            highlightActiveLine={true}
-                            value={code}
-                            setOptions={{
-                                enableBasicAutocompletion: true,
-                                enableLiveAutocompletion: true,
-                                enableSnippets: true,
-                                showLineNumbers: true,
-                                tabSize: 4,
-                            }}></AceEditor>
-                    )}
-                    <br/>
-                    <button onClick={run} type="button" className="btn btn-primary btn-sm">Submit</button>
-                    {main ? <>
+                {main ? <>
 
-                        {error ? <>
-                            <div className="p-3 result grey rounded overflow-auto">
-                                <div className="d-flex justify-content-between">
-                                    <p className='text-danger'>{error}</p>
-                                </div>
+                    {error ? <>
+                        <div className="p-3 result grey rounded overflow-auto">
+                            <div className="d-flex justify-content-between">
+                                <p className='text-danger'>{error}</p>
                             </div>
+                        </div>
 
-                        </> : <>
+                    </> : <>
 
-                            {loading ?
-                                <div
-                                    className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
-                                    <ClockLoader
-                                        color="#f6fef9"
-                                        size={70}
-                                        speedMultiplier={3}
-                                    /></div> : <>
-                                    {accepted ? <div
-                                            className='d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden'>
-                                            <img style={{
-                                                height : '150px',
-                                                marginLeft : '3%'
-                                            }} src="/assets/images/wired-flat-1103-confetti.gif"/>
-                                            <i style={{
-                                                fontSize: '30px',
-                                                color: '#2fb92fb8',
-                                            }} className="fa-regular fa-square-check fs-1 mb-1"/>
-                                            <h5 className="text-success">Accepted</h5>
-                                            <p>{m}</p>
-                                        </div> :
-                                        <div className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
-                                            <img style={{
-                                                height : '150px',
-                                                marginLeft : '0%'
-                                            }} src="/assets/images/wired-outline-1122-thumb-down.gif"/>
+                        {loading ?
+                            <div
+                                className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
+                                <ClockLoader
+                                    color="#f6fef9"
+                                    size={70}
+                                    speedMultiplier={3}
+                                /></div> : <>
+                                {accepted ? <div
+                                        className='d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden'>
+                                        <img style={{
+                                            height: '150px',
+                                            marginLeft: '3%'
+                                        }} src="/assets/images/wired-flat-1103-confetti.gif"/>
+                                        <i style={{
+                                            fontSize: '30px',
+                                            color: '#2fb92fb8',
+                                        }} className="fa-regular fa-square-check fs-1 mb-1"/>
+                                        <h5 className="text-success">Accepted</h5>
+                                        <p>{m}</p>
+                                    </div> :
+                                    <div
+                                        className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
+                                        <img style={{
+                                            height: '150px',
+                                            marginLeft: '0%'
+                                        }} src="/assets/images/wired-outline-1122-thumb-down.gif"/>
                                         <div className="p-3 result grey rounded overflow-hidden">
-                                            <div className="d-flex justify-content-between">
-                                                <h6 className="text-danger">Wrong Answer</h6>
-                                            </div>
+                                            <h5 className="text-danger text-center">Wrong Answer</h5>
                                             <div className="mb-3">
                                                 <label htmlFor="formGroupExampleInput" className="form-label">
                                                     <b>INPUTS</b>
@@ -243,68 +211,67 @@ const SolveProblemDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        </div>
+                                    </div>
 
-                                    }
-                                </>}
-                        </>}
-                    </> : <>
-                        <div
-                            className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
-                            <p>You must run your code first</p>
-                        </div>
-
+                                }
+                            </>}
                     </>}
-                    <div className="d-flex justify-content-end">
-                        <button onClick={run} style={{marginRight : '1%'}} type="button" className="btn btn-info btn-sm">
-                            SUBMIT &nbsp;<i className="fa fa-caret-right"></i>
-                        </button>
+                </> : <>
+                    <div
+                        className="d-flex flex-column justify-content-center align-items-center p-3 result grey rounded overflow-hidden">
+                        <p>You must run your code first</p>
                     </div>
-                    <div className="row p-4">
-                        <div className="col-md-12 d-flex gap-3">
-                            <div className="col-sm-6 card" style={{
-                                marginTop: '3%',
-                                // marginLeft : '5%'
-                            }}>
-                                <div style={{margin: '2%'}}>
+
+                </>}
+                <div className="d-flex justify-content-end">
+                    <button onClick={run} style={{marginRight: '1%'}} type="button" className="btn btn-info btn-sm">
+                        SUBMIT &nbsp;<i className="fa fa-caret-right"></i>
+                    </button>
+                </div>
+                <div className="row p-4">
+                    <div className="col-md-12 d-flex gap-3">
+                        <div className="col-sm-6 card" style={{
+                            marginTop: '1%',
+                            // marginLeft : '5%'
+                        }}>
+                            <div style={{margin: '2%'}}>
                         <span className="p-2"
                               dangerouslySetInnerHTML={{__html: Q?.problem_statement}}></span>
-                                </div>
-                            </div>
-
-                            <div className="col-sm-6 card" style={{
-                                marginTop: '3%',
-                            }}>
-
-                                {AceEditor && (
-                                    <AceEditor
-                                        placeholder={"Enter your code here"}
-                                        mode={"python"}
-                                        height={620}
-                                        width='95%'
-                                        theme="github"
-                                        name="blah2"
-                                        onChange={onChange}
-                                        fontSize={20}
-                                        showPrintMargin={true}
-                                        showGutter={true}
-                                        highlightActiveLine={true}
-                                        value={code}
-                                        setOptions={{
-                                            enableBasicAutocompletion: true,
-                                            enableLiveAutocompletion: true,
-                                            enableSnippets: true,
-                                            showLineNumbers: true,
-                                            tabSize: 4,
-                                        }}></AceEditor>
-                                )}
-                                <br/>
                             </div>
                         </div>
+
+                        <div className="col-sm-6 card" style={{
+                            marginTop: '1%',
+                        }}>
+
+                            {AceEditor && (
+                                <AceEditor
+                                    placeholder={"Enter your code here"}
+                                    mode={"python"}
+                                    height={620}
+                                    width='95%'
+                                    theme="github"
+                                    name="blah2"
+                                    onChange={onChange}
+                                    fontSize={20}
+                                    showPrintMargin={true}
+                                    showGutter={true}
+                                    highlightActiveLine={true}
+                                    value={code}
+                                    setOptions={{
+                                        enableBasicAutocompletion: true,
+                                        enableLiveAutocompletion: true,
+                                        enableSnippets: true,
+                                        showLineNumbers: true,
+                                        tabSize: 4,
+                                    }}></AceEditor>
+                            )}
+                            <br/>
+                        </div>
                     </div>
-        </>
+                </div>
             </div>
-            </>
+        </>
     )
 }
 

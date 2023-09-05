@@ -220,7 +220,7 @@ export default function StudyPlan() {
                             </Modal>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="row card mt-1">
                         <div className="col-md-12" style={{marginTop: '50px'}}>
                             <FullCalendar
                                 editable={true}
