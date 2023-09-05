@@ -35,7 +35,9 @@ export default function MySubmissions() {
                                 <div className="col-lg-12" style={{margin: '1%'}} key={submission.id}>
                                     <div className="card"
                                          style={{boxShadow: '0 4px 10px rgba(0,0,0,0.16), 0 4px 10px rgba(0,0,0,0.23)'}}>
-                                        <div className="single-course-list p-4">
+                                        <div className="single-course-list p-4"  style={{
+                                            minHeight: '0',
+                                        }}>
                                             <div className="course-content">
                                                 <div className="top-meta">
                                                     <a className="tag" href="#">
