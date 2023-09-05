@@ -31,3 +31,14 @@
     text-align: center;
     position: unset !important;
 }
+
+.tag-warning {
+    border-radius: 5px;
+    background-color: rgba(59,188,167,0.071);
+    font-size: 14px;
+    font-weight: 600;
+    color: #27a1e9;
+    padding: 0 15px;
+    height: 25px;
+    line-height: 25px;
+}

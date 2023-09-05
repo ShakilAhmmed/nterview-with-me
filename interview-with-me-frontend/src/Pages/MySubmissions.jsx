@@ -44,6 +44,9 @@ export default function MySubmissions() {
                                                     <a className="tag" href="#">
                                                         {submission.question.question_type.toUpperCase()}
                                                     </a>
+                                                    <span className="tag-warning">
+                                                        {submission.run_time}&nbsp; MS
+                                                    </span>
                                                 </div>
                                                 <div className="d-flex justify-content-between">
                                                     <h3 className="title">

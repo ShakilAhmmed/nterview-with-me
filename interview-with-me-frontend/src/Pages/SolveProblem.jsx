@@ -72,8 +72,6 @@ export default function SolveProblem() {
                                         </div>
                                     </div>
                                 </div>
-
-
                             )
                         })}
 
