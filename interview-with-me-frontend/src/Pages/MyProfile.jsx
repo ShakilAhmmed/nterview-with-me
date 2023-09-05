@@ -11,6 +11,7 @@ import {toast} from "react-toastify";
 export default function MyProfile() {
     const [profile, setProfile] = useState([]);
     const [getUrl, setUrl] = useState([]);
+    const [copied, setCopied] = useState(false);
 
     const userEmail = localStorage.getItem('userEmail');
     const userForm = useFormik({
@@ -44,6 +45,14 @@ export default function MyProfile() {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(getUrl);
+        setCopied(true)
+        setTimeout(() => {
+            setCopied(false)
+        }, 10000)
     }
 
     useEffect(() => {
@@ -112,15 +121,29 @@ export default function MyProfile() {
                                         </div>
                                     </div>
                                     <div className="row mt-3">
-                                        <div className="col-md-12">
+                                        <div className="col-md-10">
                                             <label id='refer'>Refer Your Friends</label>
-                                            <input type="text"
-                                                   readOnly
-                                                   id='refer'
-                                                   className="form-control"
-                                                   value={getUrl}
-                                            />
+                                            <div className="input-group mb-3">
+
+                                                <input type="text" className="form-control"
+                                                       value={getUrl}
+                                                       aria-label="Amount (to the nearest dollar)"/>
+                                                <span style={{
+                                                    cursor: "pointer",
+                                                    border: '0px',
+                                                    background: 'aliceblue'
+                                                }} className="input-group-text"
+                                                      onClick={handleCopy}
+                                                > <i
+                                                    className="fa fa-clipboard"></i></span>
+                                                {copied && (
+                                                    <img height="50"
+                                                         src="/assets/images/wired-outline-499-clipboard-film-clap.gif" alt=""/>
+                                                )}
+
+                                            </div>
                                         </div>
+
                                     </div>
                                     <div className="mt-5 text-right">
                                         <button className="btn btn-primary profile-button" type="submit">Update Profile
