@@ -1,5 +1,5 @@
 const courseCategoryList = (props) => {
-    const {courseCategories,editCategory} = props;
+    const {courseCategories,editCategory, deleteCategory} = props;
 
   return (
       <>
@@ -29,7 +29,7 @@ const courseCategoryList = (props) => {
                                           <i className="fa fa-edit"></i>
                                       </button>
 
-                                      <button className="btn btn-de-dashed-danger">
+                                      <button className="btn btn-de-dashed-danger" onClick={() => deleteCategory(category.id)}>
                                           <i className="fa fa-times"></i>
                                       </button>
 

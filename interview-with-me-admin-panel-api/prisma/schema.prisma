@@ -276,3 +276,12 @@ model Slider {
 
   @@map("slider")
 }
+
+model referralToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  token     String   @map("token") @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("referral_token")
+}

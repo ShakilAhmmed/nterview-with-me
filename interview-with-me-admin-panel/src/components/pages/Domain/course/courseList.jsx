@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 
 const CourseList = (props) => {
-    const {courses,editCourse} = props;
+    const {courses,editCourse, deleteCourse} = props;
 
     return (
         <>
@@ -35,7 +35,7 @@ const CourseList = (props) => {
                                                 <i className="fa fa-edit"></i>
                                             </button>
 
-                                            <button className="btn btn-de-dashed-danger">
+                                            <button className="btn btn-de-dashed-danger" onClick={() => deleteCourse(course.id)}>
                                                 <i className="fa fa-times"></i>
                                             </button>
 

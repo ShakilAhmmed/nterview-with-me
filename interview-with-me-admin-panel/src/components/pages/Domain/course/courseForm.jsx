@@ -3,10 +3,12 @@ import * as Yup from "yup";
 import http from "../../../../interceptors/http";
 import {toast, ToastContainer} from "react-toastify";
 import {useEffect, useState} from "react";
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const CourseForm = (props) => {
 
     const [formValues, setFormValues] = useState([{title: ""}])
+    const [text, setText] = useState("");
     const courseForm = useFormik({
 
         initialValues: {
@@ -150,14 +152,20 @@ const CourseForm = (props) => {
                         <div className="col-md-12">
                             <label htmlFor="short_description" className="form-label">Short Description</label>
 
-                            <textarea
-                                rows="8"
-                                className="form-control"
+                            <CKEditor
+                                editor={ClassicEditor}
                                 id="short_description"
                                 name="short_description"
-                                onChange={courseForm.handleChange}
-                                onBlur={courseForm.handleBlur}
-                                value={courseForm.values.short_description}
+                                data={''}
+                                onReady={(editor) => {
+                                    // You can store the "editor" and use when it is needed.
+                                    console.log("Editor is ready to use!", editor);
+                                }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    courseForm.setFieldValue('short_description', data);
+                                    setText(data);
+                                }}
                             />
                             <div className="text-danger">
                                 {courseForm.touched.short_description && courseForm.errors.short_description && (
@@ -166,14 +174,21 @@ const CourseForm = (props) => {
                         </div>
                         <div className="col-md-12">
                             <label htmlFor="course_overview" className="form-label">Course Overview</label>
-                            <textarea
-                                rows="8"
-                                className="form-control"
+
+                            <CKEditor
+                                editor={ClassicEditor}
                                 id="course_overview"
                                 name="course_overview"
-                                onChange={courseForm.handleChange}
-                                onBlur={courseForm.handleBlur}
-                                value={courseForm.values.course_overview}
+                                data={''}
+                                onReady={(editor) => {
+                                    // You can store the "editor" and use when it is needed.
+                                    console.log("Editor is ready to use!", editor);
+                                }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    courseForm.setFieldValue('course_overview', data);
+                                    setText(data);
+                                }}
                             />
                             <div className="text-danger">
                                 {courseForm.touched.course_overview && courseForm.errors.course_overview && (

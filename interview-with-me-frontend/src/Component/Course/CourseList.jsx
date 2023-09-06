@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import axios from "axios";
-import {Link, Route, useParams} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import http from "../../interceptors/http";
 import {HOST} from "../../constants/app";
 
@@ -22,40 +21,21 @@ export default function CourseList() {
         try {
             const {data: data} = await http.get(`/frontend/fetch-course`)
             setCourses(data);
+            setTotalCourse(data.length)
         } catch (error) {
             console.log(error)
         }
     }
 
-    const getTotalCourse = async () => {
-        try {
-            const {data: data} = await http.get(`/frontend/fetch-total-course`)
-            setTotalCourse(data.data);
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
-    function handleSearch(id) {
-        const findValue = [...searchIds].findIndex((v) => v == id);
-        console.log({
-            findValue,
-            searchIds
-        })
-        if (findValue >= 0) {
-            const newIds = [...searchIds.splice(findValue, 1)];
-            setSearchIds(newIds);
-            return
-        }
-        setSearchIds([
-            ...searchIds,
-            id
-        ]);
 
-    }
 
     useEffect(() => {
-        searchWiseCourse(searchIds);
+        if(searchIds.length) {
+            searchWiseCourse(searchIds);
+        } else {
+            getCourses();
+        }
     }, [searchIds]);
 
     const searchWiseCourse = async (id) => {
@@ -75,10 +55,7 @@ export default function CourseList() {
 
     useEffect(() => {
         getCourseCategories();
-        getCourses();
-        getTotalCourse();
     }, []);
-    console.log(searchIds, 'searchIds')
     return (
         <>
             <div className="section section-padding">
@@ -191,7 +168,16 @@ export default function CourseList() {
                                             <ul className="checkbox-list">
                                                 {courseCategories.map(({id, name}, index) =>
                                                     <li className="form-check" key={id}>
-                                                        <input onClick={() => handleSearch(id)}
+                                                        <input onChange={
+                                                            (e) => {
+                                                                setSearchIds((c) => {
+                                                                    return e.target.checked ?
+                                                                        [...c, id]
+                                                                        :
+                                                                        c.filter(el => el !== id)
+                                                                })
+                                                            }
+                                                        }
                                                                className="form-check-input"
                                                                id={name}
                                                                type="checkbox" value=""/>
