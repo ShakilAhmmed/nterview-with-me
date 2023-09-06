@@ -1,5 +1,5 @@
 const instructorList = (props) => {
-    const {courseInstructors, editInstructor} = props;
+    const {courseInstructors, editInstructor,deleteCourseInstructors} = props;
 
     return (
         <>
@@ -28,7 +28,7 @@ const instructorList = (props) => {
                                                 <i className="fa fa-edit"></i>
                                             </button>
 
-                                            <button className="btn btn-de-dashed-danger">
+                                            <button onClick={()=>deleteCourseInstructors(instructor.id)} className="btn btn-de-dashed-danger">
                                                 <i className="fa fa-times"></i>
                                             </button>
 

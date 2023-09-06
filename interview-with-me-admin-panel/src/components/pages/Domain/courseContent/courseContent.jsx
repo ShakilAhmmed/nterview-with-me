@@ -27,6 +27,15 @@ const CourseContent = () => {
 
       }
     }
+    const deleteCourseContent = async (id) => {
+        try {
+            await http.delete(`/course-content/${id}`);
+            toast.success("Course Content Deleted Successfully");
+            return getCourseContents();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         getCourseContents();
@@ -40,7 +49,7 @@ const CourseContent = () => {
               {/*    <CourseContentForm courseContentForm={courseContentForm} courseContentCategories={courseContentCategories} courses={courses} />*/}
               {/*</div>*/}
               <div className="col-lg-12">
-                  <CourseContentList courseContents={courseContents} editCourseContent={editCourseContent} />
+                  <CourseContentList courseContents={courseContents} editCourseContent={editCourseContent}  deleteCourseContent={deleteCourseContent} />
               </div>
           </div>
       </>

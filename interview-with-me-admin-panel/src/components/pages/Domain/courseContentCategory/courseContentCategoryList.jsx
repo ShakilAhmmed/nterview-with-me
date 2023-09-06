@@ -21,7 +21,7 @@ Modal.setAppElement('#root');
 
 
 const CourseContentCategoryList = (props) => {
-    const {courseContentCategories, editCourseContent} = props;
+    const {courseContentCategories, editCourseContent, deleteCourseCategory} = props;
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [contentDetails, setContentDetails] = useState([]);
@@ -81,7 +81,7 @@ const CourseContentCategoryList = (props) => {
                                                 <i className="fa fa-edit"></i>
                                             </button>
 
-                                            <button className="btn btn-de-dashed-danger">
+                                            <button onClick={()=> deleteCourseCategory(category.id)} className="btn btn-de-dashed-danger">
                                                 <i className="fa fa-times"></i>
                                             </button>
 

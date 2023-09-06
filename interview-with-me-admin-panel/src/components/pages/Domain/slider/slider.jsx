@@ -41,6 +41,15 @@ const Slider = () => {
             console.log(error)
         }
     }
+    const deleteSliders = async (id) => {
+        try {
+            await http.delete(`/slider/${id}`);
+            toast.success("Slider Deleted Successfully");
+            return getSliders();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         getSliders();
@@ -54,7 +63,7 @@ const Slider = () => {
                     <SliderForm sliderForm={sliderForm} />
                 </div>
                 <div className="col-lg-8">
-                    <SliderList sliders={sliders}  />
+                    <SliderList sliders={sliders}  deleteSliders={deleteSliders} />
                 </div>
             </div>
         </>

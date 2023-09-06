@@ -28,6 +28,15 @@ const Course = () => {
             
         }
     }
+    const deleteCourse = async (id) => {
+        try {
+            await http.delete(`/courses/${id}`);
+            toast.success("Course Deleted Successfully");
+            return getCourses();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         getCourses();
@@ -38,7 +47,7 @@ const Course = () => {
           <div className="row mt-5">
               <ToastContainer/>
               <div className="col-lg-12">
-                    <CourseList courses={courses} />
+                    <CourseList courses={courses} editCourse={editCourse} deleteCourse={deleteCourse}/>
               </div>
           </div>
       </>

@@ -4,9 +4,12 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import http from "../../../../interceptors/http";
 import {toast} from "react-toastify";
+import {CKEditor} from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const CourseQuestionForm = (props) => {
     const [selectedOptions, setSelectedOptions] = useState();
+    const [text, setText] = useState("");
 
     const courseQuestionForm = useFormik({
 
@@ -138,13 +141,20 @@ const CourseQuestionForm = (props) => {
                         </div>
                         <div className="col-md-12">
                             <label htmlFor="question" className="form-label">Question</label>
-                            <textarea
-                                className="form-control"
-                                id="question"
+                            <CKEditor
+                                editor={ClassicEditor}
+                                id="short_description"
                                 name="question"
-                                onChange={courseQuestionForm.handleChange}
-                                onBlur={courseQuestionForm.handleBlur}
-                                value={courseQuestionForm.values.question}
+                                data={''}
+                                onReady={(editor) => {
+                                    // You can store the "editor" and use when it is needed.
+                                    console.log("Editor is ready to use!", editor);
+                                }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    courseQuestionForm.setFieldValue('question', data);
+                                    setText(data);
+                                }}
                             />
                             <div className="text-danger">
                                 {
