@@ -28,7 +28,7 @@ const register = async (request, response) => {
                 totpSecret: '',
                 lastLogin: '',
                 referedBy: 1,
-                remainingPoints: 300,
+                remainingPoints: 3000,
                 referralCode: md5(email)
             }
         });
@@ -46,6 +46,13 @@ const register = async (request, response) => {
                 },
                 data: {
                     remainingPoints: totalPoints
+                }
+            });
+
+            await prisma.referralToken.create({
+                data:{
+                    userId: registerForm.id,
+                    token : referral_code
                 }
             })
         }

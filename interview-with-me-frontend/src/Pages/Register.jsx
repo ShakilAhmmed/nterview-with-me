@@ -167,10 +167,11 @@ export default function Register() {
                                             <div className="single-form">
                                                 <label id='referral_code'>Referral Code</label>
                                                 <input type="text"
+                                                       readOnly
                                                        id='referral_code'
                                                        className="form-control"
                                                        placeholder="Referral Code"
-                                                       name='password'
+                                                       name='referral_code'
                                                        onChange={registerForm.handleChange}
                                                        onBlur={registerForm.handleBlur}
                                                        value={referCode}

@@ -37,6 +37,9 @@ const store = async (request, response) => {
                 'email': email
             }
         });
+        if (user.remainingPoints < 1000){
+            return response.status(HTTP_OK).send(success([], 'You Have Not Enough Points', HTTP_CREATED));
+        }
         const subscribedCourse = await prisma.subscribedCourse.create({
             data: {
                 userId: user.id,
@@ -46,6 +49,14 @@ const store = async (request, response) => {
         const courseContents = await prisma.courseContent.findFirst({
             where:{
                 'courseId' : subscribedCourse.courseId
+            }
+        });
+        await prisma.user.update({
+            where:{
+                email: email
+            },
+            data:{
+                remainingPoints : user.remainingPoints - 1000
             }
         })
         return response.status(HTTP_OK).send(success(courseContents, 'Subscribed Course created successfully', HTTP_CREATED));

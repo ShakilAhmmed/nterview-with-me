@@ -306,7 +306,7 @@ const fetchMultipleCategoryCourse = async (request, response) => {
         const Id = request.query.search.split(',').map(v => parseInt(v));
         const course = await prisma.course.findMany({
             where: {
-                categoryId: {in: Id}
+                categoryId: {in: Id ?? []}
             },
             include: {
                 courseCategory: true,

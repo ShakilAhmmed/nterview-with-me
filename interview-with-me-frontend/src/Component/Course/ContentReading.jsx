@@ -19,6 +19,8 @@ export default function ContentReading() {
         try {
             const {data: data} = await http.get(`/frontend/fetch-reading-content/${courseId}/${id}`)
             if (data.data.id) {
+                console.log(courseRead,'ddd');
+                console.log(data.data[data.data.length - 1],'dddddd');
                 setCourseRead(data.data);
                 await contentReadComplete(data.data.id);
             }
@@ -29,7 +31,8 @@ export default function ContentReading() {
 
     const getCourseContent = async () => {
         try {
-            const {data: data} = await http.get(`/frontend/fetch-course-contents/${courseId}`)
+            const {data: data} = await http.get(`/frontend/fetch-course-contents/${courseId}`);
+            console.log(data.data,'courseId')
             setCourseContentCategory(data.data);
         } catch (error) {
             console.log(error)
@@ -123,6 +126,7 @@ export default function ContentReading() {
                                                                 <ul className="lessons-list" key={content.id}>
                                                                     <a onClick={() => contentRead(content)}>
                                                                         {content.contentTitle}
+                                                                        {/*{ isContentRead ? <hr style={{ margin:'0rem 0', opacity:'1.25' ,marginTop:'-12px', }} /> : ''}*/}
                                                                     </a>
                                                                 </ul>
                                                             )}
