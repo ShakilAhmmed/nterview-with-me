@@ -7,7 +7,7 @@ const Main = () => {
 
     return (
         <>
-            <div style={{marginLeft: '22px', marginTop: '75px'}}>
+            <div style={{marginLeft: '37px'}}>
                 <div className="main-icon-menu-pane tab-pane">
                     <div className="title-box">
                         <h6 className="menu-title">Dashboard</h6>
