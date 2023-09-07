@@ -14,13 +14,21 @@ export default function ContentReading() {
     const [courseRead, setCourseRead] = useState([]);
     const [courseContentCategory, setCourseContentCategory] = useState([]);
     const [isContentRead, setContentRead] = useState(false);
+    const [isNext, setNext] = useState(false);
+    const [isPrevious, setPrevious] = useState(false);
 
     const getReadContent = async () => {
         try {
             const {data: data} = await http.get(`/frontend/fetch-reading-content/${courseId}/${id}`)
-            if (data.data.id) {
-                setCourseRead(data.data);
-                await contentReadComplete(data.data.id);
+            if (data.data[0].id) {
+                setCourseRead(data.data[0]);
+                await contentReadComplete(data.data[0].id);
+            }
+            if (data.data[1] == null){
+                setNext(true)
+            }
+            if (data.data[2] == null){
+                setPrevious(true)
             }
         } catch (error) {
             console.log(error)
@@ -91,7 +99,8 @@ export default function ContentReading() {
         getReadContent();
         getCourseContent();
     }, []);
-    let contentLength;
+    console.log(isNext,'next');
+    console.log(isPrevious,'isPrevious');
     return (<>
         <Header/>
         <Offcanvas/>
@@ -120,8 +129,6 @@ export default function ContentReading() {
                                                  data-bs-parent="#accordionCourse">
                                                 <div className="accordion-body">
                                                     {category.courseContent.map((content) => {
-                                                        let contentLength = content.contentTitle.length;
-                                                        console.log(contentLength,'contentLength')
                                                             return (
                                                                 <ul className="lessons-list" key={content.id}>
                                                                     {/*{content.CourseProgress.length > 0 ? <hr style={{*/}
@@ -181,6 +188,7 @@ export default function ContentReading() {
                             <div className="d-flex justify-content-between" style={{marginTop: '5%'}}>
                                 <div>
                                     <button className="btn btn-outline-info"
+                                            disabled={isPrevious}
                                             onClick={() => previousFunction(courseRead)}>
                                         <i className="fa fa-arrow-alt-circle-left"></i> &nbsp; BACK
                                     </button>
@@ -196,6 +204,7 @@ export default function ContentReading() {
 
                                 <div>
                                     <button className="btn btn-outline-primary"
+                                            disabled={isNext}
                                             onClick={() => nextFunction(courseRead)}>
                                         NEXT  &nbsp;<i className="fa fa-arrow-alt-circle-right"></i>
                                     </button>

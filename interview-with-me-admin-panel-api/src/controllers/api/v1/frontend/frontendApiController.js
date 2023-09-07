@@ -125,9 +125,19 @@ const fetchReadingContent = async (request, response) => {
 				id: contentId
 			}
 		});
+		const isNext = await prisma.courseContent.findUnique({
+			where:{
+				id: contentId + 1
+			}
+		});
+		const isPrevious = await prisma.courseContent.findUnique({
+			where: {
+				id: contentId - 1
+			}
+		})
 		return response
 			.status(HTTP_OK)
-			.send(success(courseDetail, 'content reading fetched successfully', HTTP_OK));
+			.send(success([courseDetail,isNext,isPrevious], 'content reading fetched successfully', HTTP_OK));
 	} catch (exception) {
 		logger.error(`content fetching : ${exception.message} `);
 		return response.status(HTTP_INTERNAL_SERVER_ERROR).send(error(exception.message));
