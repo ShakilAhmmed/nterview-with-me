@@ -146,7 +146,9 @@ export default function MyProfile() {
 
                                     </div>
                                     <div className="mt-5 text-right">
-                                        <button className="btn btn-primary profile-button" type="submit">Update Profile
+                                        <button className="btn btn-outline-info" type="submit">Update Profile
+                                        </button>
+                                        &nbsp;&nbsp;<button className="btn btn-outline-success" type="submit">Referral Users
                                         </button>
                                     </div>
                                 </div>

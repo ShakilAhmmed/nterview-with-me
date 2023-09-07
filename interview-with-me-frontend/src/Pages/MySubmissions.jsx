@@ -7,11 +7,10 @@ import PageBannerStart from "../Component/Course/PageBannerStart";
 
 export default function MySubmissions() {
     const [submissions, setSubmissions] = useState([]);
-
+    const email = localStorage.getItem('userEmail');
     const getProblems = async () => {
         try {
-            const {data: data} = await http.get(`frontend/fetch-submissions`);
-            // console.log(data.data)
+            const {data: data} = await http.get(`frontend/fetch-submissions/${email}`);
             setSubmissions(data.data);
         } catch (error) {
             console.log(error)
@@ -48,6 +47,9 @@ export default function MySubmissions() {
                                                     </a>
                                                     <span className="tag-warning">
                                                         {submission.run_time}&nbsp; MS
+                                                    </span>
+                                                    <span className="tag-warning">
+                                                        {new Date(submission.createdAt).toLocaleString('en-US')}
                                                     </span>
                                                 </div>
                                                 <div className="d-flex justify-content-between">

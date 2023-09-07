@@ -62,12 +62,14 @@ export default function Quiz() {
             <Offcanvas/>
             <PageBannerStart name="Quizes" title='Click To Choose Course for Playing Quiz'/>
             <div className="section p-5">
-                <div className="d-flex justify-content-end">
-                    <button className='btn btn-sm btn-info text-center' onClick={() => handleJump()}>
+                <div className="d-flex justify-content-end" style={{
+                    marginRight : '2%'
+                }}>
+                    <button className='btn btn-sm btn-outline-info text-center' onClick={() => handleJump()}>
                         Start Quiz &nbsp; <i className="fa fa-arrow-right"></i>
                     </button>
                 </div>
-                <div className="container">
+                <div className="container mt-5">
 
                     <div className='row g-5'>
                         {courses.map((course, index) => {

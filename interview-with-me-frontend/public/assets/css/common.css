@@ -73,3 +73,35 @@
     display: flex;
     padding: 15px 0;
 }
+
+button.outlined-default {
+    border: 1px solid rgba(0,0,0,.23);
+    color: rgba(0,0,0,.87);
+    background-color: transparent;
+    font-weight: 700;
+}
+
+.dark button.outlined-default {
+    --tw-border-opacity: 1;
+    border-color: rgb(193 193 198/var(--tw-border-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(193 193 198/var(--tw-text-opacity));
+}
+
+.navigation-text {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}

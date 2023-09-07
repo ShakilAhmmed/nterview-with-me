@@ -95,7 +95,11 @@ const fetchCourseContent = async (request, response) => {
                 courseId: id
             },
             include: {
-                courseContent: true
+                courseContent: {
+                    include: {
+                        CourseProgress: true
+                    }
+                },
             }
         });
         return response.status(HTTP_OK).send(success(courseDetail, 'course content fetched successfully', HTTP_OK));
@@ -251,7 +255,16 @@ const fetchProblems = async (request, response) => {
 }
 
 const fetchSubmissions = async (request, response) => {
+    const email = request.params.email;
+    const user = await prisma.user.findUnique({
+        where: {
+            'email': email
+        }
+    });
     let submissions = await prisma.submission.findMany({
+        where: {
+            userId: parseInt(user.id)
+        },
         include: {
             question: {
                 select: {

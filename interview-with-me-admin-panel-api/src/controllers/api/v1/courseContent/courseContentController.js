@@ -44,7 +44,7 @@ const store = async (request,response) => {
         let new_path = null;
         if(image){
             new_path = '/assets/course_content/' + image.name;
-            file_path = '.' + new_path
+            file_path = './public' + new_path
             image.mv(file_path);
         }
         const courseContent = await prisma.courseContent.create({

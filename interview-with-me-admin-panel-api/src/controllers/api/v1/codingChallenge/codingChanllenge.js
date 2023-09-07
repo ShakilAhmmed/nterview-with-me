@@ -33,7 +33,7 @@ const store = async (request, response) => {
             template,
         } = request.body;
 
-        const slug = title.toLowerCase().replace(' ', '-');
+        const slug = title.toLowerCase().replaceAll(' ', '-');
         const targetDir = path.resolve(
             `${appRoot}`,
             "public/coding-problems",

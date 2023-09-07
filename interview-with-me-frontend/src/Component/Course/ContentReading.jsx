@@ -19,8 +19,6 @@ export default function ContentReading() {
         try {
             const {data: data} = await http.get(`/frontend/fetch-reading-content/${courseId}/${id}`)
             if (data.data.id) {
-                console.log(courseRead,'ddd');
-                console.log(data.data[data.data.length - 1],'dddddd');
                 setCourseRead(data.data);
                 await contentReadComplete(data.data.id);
             }
@@ -32,7 +30,7 @@ export default function ContentReading() {
     const getCourseContent = async () => {
         try {
             const {data: data} = await http.get(`/frontend/fetch-course-contents/${courseId}`);
-            console.log(data.data,'courseId')
+            console.log(data.data, 'courseId')
             setCourseContentCategory(data.data);
         } catch (error) {
             console.log(error)
@@ -51,7 +49,7 @@ export default function ContentReading() {
         window.location.reload();
     }
 
-    const contentRead = async(content) => {
+    const contentRead = async (content) => {
         let path = `/course-content-reading/${content.courseId}/${content.id}`;
         await contentReadComplete(content.id);
         navigate(path);
@@ -61,16 +59,15 @@ export default function ContentReading() {
     const contentComplete = async (courseRead) => {
         try {
             const values = {
-                course_id : courseRead.courseId,
-                course_content_id : courseRead.id
+                course_id: courseRead.courseId, course_content_id: courseRead.id
             }
-            const {data: data} = await http.post(`/course-progress`,values);
-            if (data.code === 201){
+            const {data: data} = await http.post(`/course-progress`, values);
+            if (data.code === 201) {
                 setContentRead(false);
                 await contentReadComplete(courseRead.id)
             }
 
-            if (data.code === 200){
+            if (data.code === 200) {
                 setContentRead(true);
                 await contentReadComplete(courseRead.id)
             }
@@ -79,10 +76,10 @@ export default function ContentReading() {
         }
     }
 
-    const contentReadComplete = async(id) => {
+    const contentReadComplete = async (id) => {
         try {
             const {data: data} = await http.get(`/is-content-complete/${id}`);
-            if (data.data){
+            if (data.data) {
                 setContentRead(true);
             }
         } catch (error) {
@@ -94,122 +91,124 @@ export default function ContentReading() {
         getReadContent();
         getCourseContent();
     }, []);
-    return (
-        <>
-            <Header/>
-            <Offcanvas/>
-            <PageBannerStart name={courseRead.contentTitle} />
+    let contentLength;
+    return (<>
+        <Header/>
+        <Offcanvas/>
+        <PageBannerStart name={courseRead.contentTitle}/>
 
-            <div className="section section-padding">
-                <div className="container">
+        <div className="section section-padding">
+            <div className="container">
 
-                    {/* <!-- Course List Wrapper Start --> */}
-                    <div className="course-list-wrapper">
-                        <div className="row">
-                            <div className="col-lg-3">
+                {/* <!-- Course List Wrapper Start --> */}
+                <div className="course-list-wrapper">
+                    <div className="row">
+                        <div className="col-lg-3">
+                            {/* <!-- Sidebar Wrapper Start --> */}
+                            <div>
+
                                 {/* <!-- Sidebar Wrapper Start --> */}
                                 <div>
+                                    <h3 className="widget-title">Contents</h3>
 
-                                    {/* <!-- Sidebar Wrapper Start --> */}
-                                    <div>
-                                        <h3 className="widget-title">Contents</h3>
-
-                                        <div className="course-accordion accordion" id="accordionCourse">
-                                            {courseContentCategory.map((category) =>
-                                                <div className="accordion-item" key={category.id}>
-                                                    <button data-bs-toggle="collapse"
-                                                            data-bs-target="#collapseOne">{category.contentCategoryTitle} </button>
-                                                    <div id="collapseOne" className="accordion-collapse collapse show"
-                                                         data-bs-parent="#accordionCourse">
-                                                        <div className="accordion-body">
-                                                            {category.courseContent.map((content) =>
+                                    <div className="course-accordion accordion" id="accordionCourse">
+                                        {courseContentCategory.map((category) => <div className="accordion-item"
+                                                                                      key={category.id}>
+                                            <button data-bs-toggle="collapse"
+                                                    data-bs-target="#collapseOne">{category.contentCategoryTitle} </button>
+                                            <div id="collapseOne" className="accordion-collapse collapse show"
+                                                 data-bs-parent="#accordionCourse">
+                                                <div className="accordion-body">
+                                                    {category.courseContent.map((content) => {
+                                                        let contentLength = content.contentTitle.length;
+                                                        console.log(contentLength,'contentLength')
+                                                            return (
                                                                 <ul className="lessons-list" key={content.id}>
+                                                                    {/*{content.CourseProgress.length > 0 ? <hr style={{*/}
+                                                                    {/*    margin: '0rem 0',*/}
+                                                                    {/*    opacity: '1.25',*/}
+                                                                    {/*    marginBottom: '-15px',*/}
+                                                                    {/*    marginLeft: '20px',*/}
+                                                                    {/*}}/> : ''}*/}
+                                                                    {content.CourseProgress.length > 0 ?
+                                                                        (<i className='fa-solid fa-circle-check'></i>) :
+                                                                        (<i className='fa fa-times-circle'></i>)}
+                                                                    &nbsp;
                                                                     <a onClick={() => contentRead(content)}>
                                                                         {content.contentTitle}
-                                                                        {/*{ isContentRead ? <hr style={{ margin:'0rem 0', opacity:'1.25' ,marginTop:'-12px', }} /> : ''}*/}
                                                                     </a>
+
                                                                 </ul>
-                                                            )}
-                                                        </div>
-                                                    </div>
+                                                            );
+                                                        }
+                                                    )}
                                                 </div>
-                                            )}
+                                            </div>
+                                        </div>)}
 
-                                        </div>
                                     </div>
-                                    {/* <!-- Sidebar Wrapper End --> */}
-
-
                                 </div>
                                 {/* <!-- Sidebar Wrapper End --> */}
+
+
                             </div>
-                            <div className="col-lg-9">
-                                <div className="tab-content">
-                                    <div className="tab-pane fade show active" id="list">
-                                        {/* <!-- Course List Start --> */}
-                                        <div className="course-list-items">
-                                            <div className="course-content">
-                                                <h3 className="title">
-                                                    {courseRead.contentTitle}
-                                                </h3>
-                                                <p>
+                            {/* <!-- Sidebar Wrapper End --> */}
+                        </div>
+                        <div className="col-lg-9">
+                            <div className="tab-content">
+                                <div className="tab-pane fade show active" id="list">
+                                    {/* <!-- Course List Start --> */}
+                                    <div className="course-list-items">
+                                        <div className="course-content">
+                                            <h3 className="title">
+                                                {courseRead.contentTitle}
+                                            </h3>
+                                            <p>
                                                      <span dangerouslySetInnerHTML={{__html: courseRead.content}}>
                                                         </span>
-                                                </p>
-                                            </div>
-
+                                            </p>
                                         </div>
+
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="row" style={{marginTop: '5%'}}>
-                            <div className='col-lg-3'></div>
-                            <div className='col-lg-2'>
-                                <button className="outlined-default m-0 h-11 navigation-text"
-                                        style={{backgroundColor: 'white', padding: '2%'}}
-                                        onClick={() => previousFunction(courseRead)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                         strokeLinejoin="round" className="icon-left">
-                                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                                        <polyline points="12 19 5 12 12 5"></polyline>
-                                    </svg>
-                                    <span>Back</span>
-                                    <span className="tailwind-hidden ml-1.5 sm:inline"></span>
-                                </button>
-                            </div>
-                            <div className='col-lg-3'></div>
-                            <div className='col-lg-2'>
-                                <div style={{
-                                    boxSizing: 'content-box',
-                                    width: '100%',
-                                    border: '2px solid grey',
-                                    padding: '2%',
-                                    marginLeft: '45%'
-                                }}>
-                                    <input type='checkbox' checked={isContentRead} name='is_checked' style={{marginLeft: '6%'}} onChange={() => contentComplete(courseRead)}/>
-                                    Mark As Completed
-                                </div>
-                            </div>
-                            <div className='col-lg-2'>
-                                <button className="outlined-primary m-0 h-11"
-                                        style={{backgroundColor: 'white', padding: '2%', float: 'right'}}
-                                        onClick={() => nextFunction(courseRead)}>
-                                    <span>Next<span className="tailwind-hidden sm:inline"></span></span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="24" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                         strokeLinejoin="round" className="icon-right order-last">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </button>
                             </div>
                         </div>
                     </div>
 
+                    <div className="row">
+                        <div className="col-sm-3"></div>
+                        <div className="col-sm-9">
+                            <div className="d-flex justify-content-between" style={{marginTop: '5%'}}>
+                                <div>
+                                    <button className="btn btn-outline-info"
+                                            onClick={() => previousFunction(courseRead)}>
+                                        <i className="fa fa-arrow-alt-circle-left"></i> &nbsp; BACK
+                                    </button>
+                                </div>
+
+
+                                <div>
+                                    <button className="btn btn-outline-success"
+                                            onClick={() => contentComplete(courseRead)}>
+                                        <i className="fa fa-circle-check"></i> &nbsp; MARK AS COMPLETE
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <button className="btn btn-outline-primary"
+                                            onClick={() => nextFunction(courseRead)}>
+                                        NEXT  &nbsp;<i className="fa fa-arrow-alt-circle-right"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
+
             </div>
-        </>
-    )
+        </div>
+    </>)
 }

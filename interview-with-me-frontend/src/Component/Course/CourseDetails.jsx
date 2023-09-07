@@ -35,7 +35,7 @@ export default function CourseDetails() {
 
     const getCourseContent = async () => {
         try {
-            const {data: data} = await http.get(`/frontend/fetch-course-contents/${id}`)
+            const {data: data} = await http.get(`/frontend/fetch-course-contents/${id}`);
             setCourseContentCategory(data.data);
         } catch (error) {
             console.log(error)
@@ -44,7 +44,8 @@ export default function CourseDetails() {
     const checkUserSubscribedCourse = async (email, courseId) => {
         try {
             const {data: data} = await http.get(`/frontend/check-user-subscribed/${email}/${courseId}`);
-            setSubscribedCourseUser(data)
+            console.log(data,'data')
+            setSubscribedCourseUser(data.data)
         } catch (error) {
             console.log(error)
         }
@@ -96,7 +97,7 @@ export default function CourseDetails() {
                 <div className="course-details-banner-content">
                     <h2 className="title">{courseDetail.name}</h2>
 
-                    <p>{courseDetail.courseOverview}</p>
+                    <p dangerouslySetInnerHTML={{ __html:courseDetail.shortDescription }}></p>
 
                     <div className="course-details-meta">
                         <div className="meta-action">
@@ -124,7 +125,7 @@ export default function CourseDetails() {
                             {/* <!-- Course Overview Start --> */}
                             <div className="course-overview">
                                 <h3 className="title">Course Overview</h3>
-                                <p>{courseDetail.courseOverview}</p>
+                                <p dangerouslySetInnerHTML={{ __html:courseDetail.courseOverview }}></p>
                             </div>
 
                             <div className="course-learn-list">
@@ -155,12 +156,12 @@ export default function CourseDetails() {
                                         <div id="collapseOne" className="accordion-collapse collapse show"
                                              data-bs-parent="#accordionCourse">
                                             <div className="accordion-body">
-                                                {category.courseContent.map((content) => <ul
-                                                    className="lessons-list" key={content.id}>
+                                                {category.courseContent.map((content) => <ul className="lessons-list" key={content.id}>
                                                     <li>
                                                         <Link
-                                                            style={{  pointerEvents: subscribedCourseUser.length && subscribedCourseUser.length > 0 ? "" : 'none' }}
+                                                            style={{  pointerEvents: subscribedCourseUser && subscribedCourseUser.id ? "" : 'none' }}
                                                             to={`/course-content-reading/${content.courseId}/${content.id}`}>
+                                                            {subscribedCourseUser && subscribedCourseUser.id ? <i className='fa-solid fa-lock-open'></i> : <i className='fa-solid fa-lock'></i>}
                                                             {content.contentTitle}
                                                         </Link>
                                                     </li>
@@ -224,7 +225,7 @@ export default function CourseDetails() {
                                             <i className="fa fa-sliders"></i> Level
                                             {courseDetail.courseLevel && courseDetail.courseLevel == 1 ?
                                                 <span>Beginner</span> : courseDetail.courseLevel == 2 ?
-                                                    <span>Beginner</span> : <span>Expert</span>}
+                                                    <span>Expert</span> : <span>Expert</span>}
                                         </li>
                                         <li><i
                                             className="fa fa-file-o"></i> Lectures <span>{totalLecture && totalLecture} Chapter</span>
@@ -232,7 +233,7 @@ export default function CourseDetails() {
                                         {/*<li><i className="fa fa-language"></i> Language <span>English</span></li>*/}
                                         {/*<li><i className="fa fa-user-o"></i> Enrolled <span>4 Enrolled</span></li>*/}
                                     </ul>
-                                    {subscribedCourseUser.length && subscribedCourseUser.length ?
+                                    {subscribedCourseUser && subscribedCourseUser.id ?
                                         <button type='button' onClick={() => continueCourse(courseDetail.id)}
                                                 className="btn btn-primary w-100">Continue</button> :
                                         <button type='button' onClick={() => courseSubscribed(courseDetail.id)}

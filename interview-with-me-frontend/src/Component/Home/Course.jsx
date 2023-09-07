@@ -32,7 +32,7 @@ export default function Course() {
     const fetchTotalCourses = async () => {
         try {
             const {data: data} = await http.get(`/frontend/fetch-total-course`);
-            console.log(data.data,'course')
+            console.log(data.data, 'course')
             setTotalCourse(data.data)
         } catch (error) {
             console.log(error)
@@ -82,23 +82,28 @@ export default function Course() {
                                         {course.Course && course.Course.map(function (item) {
                                             return (<div className="col-lg-3 col-sm-6" key={item.id}>
                                                 {/* <!-- Single Courses Start --> */}
-                                                <div className="single-course">
+                                                <div className="single-course" style={{height: '370px'}}>
                                                     <div className="courses-image">
                                                         <Link to={`/course-details/${item.id}`}>
-                                                            <img style={{ height:'150px' }} src={`${HOST}${item.Image}`} alt="Courses"/>
+                                                            <img style={{height: '180px'}} src={`${HOST}${item.Image}`}
+                                                                 alt="Courses"/>
                                                         </Link>
                                                     </div>
-                                                    <div className="courses-content">
-                                                        {/*<div className="top-meta">*/}
-                                                        {/*    <a className="tag" href=".">Beginner</a>*/}
-                                                        {/*    <span className="price"><span*/}
-                                                        {/*        className="sale-price">Free</span></span>*/}
-                                                        {/*</div>*/}
+                                                    <div className="courses-content"
+                                                         style={{padding: '0px 7px', height: '115px'}}>
+                                                        <div className="top-meta">
+                                                            {item.courseLevel && item.courseLevel == 1 ?
+                                                                <span
+                                                                    className="tag">Beginner</span> : item.courseLevel == 2 ?
+                                                                    <span className="tag">Expert</span> :
+                                                                    <span className="tag">Expert</span>}
+
+                                                        </div>
                                                         <h3 className="title">
                                                             <Link to={`/course-details/${item.id}`}>{item.name}</Link>
                                                         </h3>
                                                     </div>
-                                                    <div className="courses-meta" style={{marginTop: '50px'}}>
+                                                    <div className="courses-meta" style={{height: '70px'}}>
                                                         <div>
                                                             <span></span>
                                                         </div>
@@ -128,7 +133,8 @@ export default function Course() {
                         <img className="shape-2" src="assets/images/shape/shape-9.png" alt="Shape"/>
 
                         <p><strong>{totalCourse}</strong> more skillful courses you can explore</p>
-                        <Link to='/course'  className="btn btn-primary btn-hover-heading-color">Explore All Courses</Link>
+                        <Link to='/course' className="btn btn-primary btn-hover-heading-color">Explore All
+                            Courses</Link>
                     </div>
 
                 </div>

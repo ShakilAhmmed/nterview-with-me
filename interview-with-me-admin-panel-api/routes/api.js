@@ -200,7 +200,7 @@ router.get('/frontend/fetch-quiz', frontendApiController.fetchQuizTopic);
 router.get('/frontend/search-quiz-question', frontendApiController.searchQuizQuestion);
 router.get('/frontend/fetch-quiz-question/:id', frontendApiController.quizQuestions);
 router.get('/frontend/fetch-problems', frontendApiController.fetchProblems);
-router.get('/frontend/fetch-submissions', frontendApiController.fetchSubmissions);
+router.get('/frontend/fetch-submissions/:email', frontendApiController.fetchSubmissions);
 router.get('/frontend/fetch-problems/:question_id', frontendApiController.fetchSingleProblem);
 router.get('/frontend/fetch-sliders', frontendApiController.fetchSliders);
 router.get('/frontend/fetch-latest-course', frontendApiController.fetchLatestCourse);
