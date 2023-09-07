@@ -58,7 +58,7 @@ export default function CourseDetails() {
             }
             setLoading(true);
             const {data: data} = await http.post(`/subscribed-course/${email}/${id}`);
-            navigate(`/course-content-reading/${data.data.courseId}/${data.data.contentCategoryId}`);
+            navigate(`/course-content-reading/${data.data.courseId}/${data.data.id}`);
         } catch (error) {
             console.log(error)
         } finally {

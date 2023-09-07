@@ -261,6 +261,7 @@ router.get('/frontend/fetch-submissions/:email', frontendApiController.fetchSubm
 router.get('/frontend/fetch-problems/:question_id', frontendApiController.fetchSingleProblem);
 router.get('/frontend/fetch-sliders', frontendApiController.fetchSliders);
 router.get('/frontend/fetch-latest-course', frontendApiController.fetchLatestCourse);
+router.get('/frontend/fetch-referral-user/:email', frontendApiController.fetchReferralUser);
 router.get(
 	'/frontend/fetch-multiple-category-wise-course',
 	frontendApiController.fetchMultipleCategoryCourse

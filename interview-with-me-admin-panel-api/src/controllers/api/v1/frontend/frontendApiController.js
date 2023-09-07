@@ -457,6 +457,24 @@ const submitResult = async (request, response) => {
 	}
 };
 
+const fetchReferralUser = async (request, response) => {
+	const email = request.params.email;
+	const user = await prisma.user.findUnique({
+		where: {
+			'email': email
+		}
+	});
+	const referralUsers = await prisma.referralToken.findMany({
+		where:{
+			token: user.referralCode
+		},
+		include: {
+			user: true,
+		}
+	});
+	return response.status(HTTP_OK).send(success(referralUsers, 'fetched successfully', HTTP_OK));
+}
+
 export {
 	fetchCourse,
 	fetchCourseDetails,
@@ -476,5 +494,6 @@ export {
 	fetchLatestCourse,
 	fetchMultipleCategoryCourse,
 	submitQuiz,
-	submitResult
+	submitResult,
+	fetchReferralUser
 };

@@ -42,6 +42,7 @@ model User {
   QuizParticipator     QuizParticipator[]
   ParticipatorProgress ParticipatorProgress[]
   Submission           Submission[]
+  referralToken        referralToken[]
 
   @@map("users")
 }
@@ -282,6 +283,8 @@ model referralToken {
   userId    Int      @map("user_id")
   token     String   @map("token") @db.VarChar(255)
   createdAt DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id])
 
   @@map("referral_token")
 }

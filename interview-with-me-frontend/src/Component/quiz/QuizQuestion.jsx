@@ -176,8 +176,7 @@ export default function QuizQuestion() {
 														className='needs-validation'
 														noValidate
 														onSubmit={quizForm.handleSubmit}>
-														<h2 className='q-heading'>
-															{currentQuestion?.question}
+														<h2 className='q-heading' dangerouslySetInnerHTML={{ __html: currentQuestion?.question}}>
 														</h2>
 														<div className='form-inner'>
 															{Object.keys(

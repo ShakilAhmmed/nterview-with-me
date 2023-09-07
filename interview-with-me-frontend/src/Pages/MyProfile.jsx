@@ -7,8 +7,10 @@ import axios from "axios";
 import http from "../interceptors/http";
 import {useFormik} from "formik";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 export default function MyProfile() {
+    let navigate = useNavigate();
     const [profile, setProfile] = useState([]);
     const [getUrl, setUrl] = useState([]);
     const [copied, setCopied] = useState(false);
@@ -45,6 +47,11 @@ export default function MyProfile() {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    function referralUsers() {
+        let path = `/referral-users/`;
+        navigate(path);
     }
 
     const handleCopy = () => {
@@ -138,7 +145,8 @@ export default function MyProfile() {
                                                     className="fa fa-clipboard"></i></span>
                                                 {copied && (
                                                     <img height="50"
-                                                         src="/assets/images/wired-outline-499-clipboard-film-clap.gif" alt=""/>
+                                                         src="/assets/images/wired-outline-499-clipboard-film-clap.gif"
+                                                         alt=""/>
                                                 )}
 
                                             </div>
@@ -148,7 +156,9 @@ export default function MyProfile() {
                                     <div className="mt-5 text-right">
                                         <button className="btn btn-outline-info" type="submit">Update Profile
                                         </button>
-                                        &nbsp;&nbsp;<button className="btn btn-outline-success" type="submit">Referral Users
+                                        &nbsp;&nbsp;
+                                        <button className="btn btn-outline-success" type="button"
+                                                onClick={() => referralUsers()}>Referral Users
                                         </button>
                                     </div>
                                 </div>

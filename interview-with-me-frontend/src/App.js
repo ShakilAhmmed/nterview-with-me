@@ -15,6 +15,7 @@ import StudyPlan from "./Component/Home/StudyPlan";
 import SolveProblem from "./Pages/SolveProblem";
 import SolveProblemDetails from "./Pages/SolveProblemDetails";
 import MySubmissions from "./Pages/MySubmissions";
+import UserReferralList from "./Pages/UserReferralList";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path='/my-profile' element={<MyProfile />} />
           <Route path="/register/:id" element={<Register />} />
           <Route path="/study-plan" element={<StudyPlan />} />
+          <Route path="/referral-users" element={<UserReferralList />} />
         </Routes>
     </div>
   );
