@@ -76,13 +76,15 @@ const LeftBarTab = () => {
                 <div className="topbar-left">
                     <a href="/" className="logo">
                           <span>
-                            <img src="assets/images/document.webp" style={{height: '55px'}} alt="logo-large"
+                            <img src="assets/images/logo.png" style={{
+                                height: '55px',
+                                marginLeft: '22%',
+                                marginTop: '6%'
+                            }} alt="logo-large"
                                  className="logo-lg logo-dark"/>
-                             <span style={{
-                                 fontSize: '14px', fontWeight: 'bold', color: '#4d86b7'
-                             }}></span>
                             <img src="assets/images/logo.png" alt="logo-large" className="logo-lg logo-light"/>
-                          </span>
+                          </span><br/>
+                        <span style={{marginLeft: '12%'}}><b>Interview With Me</b></span>
                     </a>
                 </div>
                 {/*end logo*/}
