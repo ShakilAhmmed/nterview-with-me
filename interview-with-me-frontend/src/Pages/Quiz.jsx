@@ -9,6 +9,7 @@ import http from "../interceptors/http";
 import {current} from "@reduxjs/toolkit";
 import {array} from "yup";
 import PageBannerStart from "../Component/Course/PageBannerStart";
+import {HOST} from "../constants/app";
 
 export default function Quiz() {
     let navigate = useNavigate();
@@ -91,19 +92,23 @@ export default function Quiz() {
                                         <div className="single-course-list">
 
                                             <div className="course-image">
-                                                <img
-                                                    src="assets/images/courses/courses-5.jpg"
-                                                    alt="Courses"/>
+                                                <img style={{width: '200px'}}
+                                                     src={`${HOST}${course.Image}`} alt="Courses"/>
                                             </div>
                                             <div className="course-content">
                                                 <div className="top-meta">
-                                                    <a className="tag" href="#">Beginner</a>
+                                                    {course.courseLevel && course.courseLevel == 1 ?
+                                                        <span
+                                                            className="tag">Beginner</span> : course.courseLevel == 2 ?
+                                                            <span className="tag">Beginner</span> :
+                                                            <span className="tag">Expert</span>
+                                                    }
                                                 </div>
                                                 <h3 className="title">
                                                     {course.name.length > 50 ? course.name.substr(0, 50) + '...' : course.name}
                                                 </h3>
                                                 <p className="course-description">
-                                                    {course.shortDescription.length > 100 ? course.shortDescription.substr(0, 100) + '...' : course.shortDescription}
+                                                   <span dangerouslySetInnerHTML={{__html :  course.shortDescription.length > 100 ? course.shortDescription.substr(0, 100) + '...' : course.shortDescription}}></span>
                                                 </p>
                                                 <div className="bottom-meta">
                                                     <p className="meta-action"><i

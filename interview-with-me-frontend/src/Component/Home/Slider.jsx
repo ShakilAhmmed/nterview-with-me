@@ -7,20 +7,28 @@ import {HOST} from "../../constants/app";
 
 export default function Slider() {
     const [sliders, setSlider] = useState([]);
+    const [startSlide, setStartSlide] = useState(false);
 
     const getSliders = async () => {
         try {
             const {data: data} = await http.get(`/frontend/fetch-sliders`);
             setSlider(data.data);
+            setStartSlide(true);
         } catch (error) {
             console.log(error)
         }
     }
 
     useEffect(() => {
+        if (startSlide) {
+            setStartSlide(false);
+        }
+    }, [startSlide]);
+
+    useEffect(() => {
         getSliders();
     }, []);
-    console.log(sliders,'sliders')
+
 
     return (
         <>
@@ -53,27 +61,31 @@ export default function Slider() {
                                 <div className="slider-content">
                                     <h2 className="title">Experience a learning platform that take you next level</h2>
                                     <p>World-class training and development programs developed by top teachers</p>
-                                    <Link to="/course" className="btn btn-primary btn-hover-heading-color">Explore All Courses</Link>
+                                    <Link to="/course" className="btn btn-primary btn-hover-heading-color">Explore All
+                                        Courses</Link>
                                 </div>
                             </div>
 
                             <div className="col-md-6 col-sm-8">
                                 <div className="slider-images-02">
-                                    <Carousel
-                                        showThumbs={false}
-                                        autoPlay={true}
-                                        infiniteLoop={true}
-                                        interval={1000}
-                                        showArrows={false}
-                                    >
-                                        {sliders && sliders.map(function (slider) {
-                                            return (
-                                                <div>
-                                                    <img alt="" src={`${HOST}${slider.image}`}/>
-                                                </div>
-                                            );
-                                        })}
-                                    </Carousel>
+                                    {!startSlide && (
+                                        <Carousel
+                                            showThumbs={false}
+                                            autoPlay={true}
+                                            infiniteLoop={true}
+                                            interval={3000}
+                                            showArrows={true}
+                                        >
+                                            {sliders && sliders.map(function (slider) {
+                                                return (
+                                                    <div>
+                                                        <img height={300} style={{width: 'fit-content'}} alt=""
+                                                             src={`${HOST}${slider.image}`}/>
+                                                    </div>
+                                                );
+                                            })}
+                                        </Carousel>
+                                    )}
 
                                     {/*<div className="image-shape-01 parallaxed">*/}
                                     {/*    <img src="assets/images/shape/shape-11.svg" alt="Shape"/>*/}
